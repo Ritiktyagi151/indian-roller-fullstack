@@ -1,0 +1,42 @@
+const mongoose = require("mongoose");
+
+const seoSettingsSchema = new mongoose.Schema(
+  {
+    websiteName: { type: String, default: "Indian Roller" },
+    metaTitleFormat: { type: String, default: "{Page Title} | {Site Name}" },
+    defaultMetaTitle: { type: String, default: "" },
+    defaultMetaDescription: { type: String, default: "" },
+    defaultKeywords: { type: String, default: "" },
+    defaultMetaAuthor: { type: String, default: "" },
+    defaultMetaPublisher: { type: String, default: "" },
+    defaultMetaLanguage: { type: String, default: "en" },
+    defaultRobots: { type: String, default: "index,follow" },
+    defaultThemeColor: { type: String, default: "" },
+    defaultOgImage: { type: String, default: "" },
+    defaultOgSiteName: { type: String, default: "Indian Roller" },
+    defaultOgLocale: { type: String, default: "en_IN" },
+    defaultTwitterSite: { type: String, default: "" },
+    defaultTwitterCreator: { type: String, default: "" },
+    faviconUrl: { type: String, default: "" },
+    appleTouchIconUrl: { type: String, default: "" },
+    manifestUrl: { type: String, default: "" },
+    googleAnalyticsId: { type: String, default: "" },
+    googleSearchConsoleCode: { type: String, default: "" },
+    bingWebmasterCode: { type: String, default: "" },
+    yandexVerificationCode: { type: String, default: "" },
+    pinterestVerificationCode: { type: String, default: "" },
+    baiduVerificationCode: { type: String, default: "" },
+    facebookPixelId: { type: String, default: "" },
+    robotsTxt: { type: String, default: "" },
+    htaccessRedirects: { type: String, default: "" },
+    siteUrl: { type: String, default: "https://indianroller.com" },
+    googleVerification: { type: String, default: "" },
+    schemaType: { type: String, default: "Organization" },
+    organizationName: { type: String, default: "" },
+    organizationUrl: { type: String, default: "" },
+    robotsDefault: { type: String, default: "index, follow" },
+  },
+  { timestamps: true },
+);
+
+module.exports = mongoose.model("SeoSettings", seoSettingsSchema);
