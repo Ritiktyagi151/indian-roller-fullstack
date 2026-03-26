@@ -1,0 +1,15 @@
+# robots.txt for https://www.indianroller.com/
+
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /my-account/
+
+
+# Allow all other content
+Allow: /
+
+# Sitemap locations
+Sitemap: https://www.indianroller.com/sitemap.xml

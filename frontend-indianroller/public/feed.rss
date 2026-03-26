@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+		<!--	created with www.mysitemapgenerator.com	-->
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>www.indianroller.com</title>
+		<link><![CDATA[https://www.indianroller.com/]]></link>
+		<description>IndianRoller is a reliable roller manufacturer and sink roller manufacturer, offering precision-engineered, durable rollers for demanding industrial applications.</description>
+		<language>en</language>
+		<pubDate>Wed, 07 Jan 2026 13:10:18 +0000</pubDate>
+		<generator>MySitemapGenerator (www.mysitemapgenerator.com)</generator>
+
+		<item>
+			<guid isPermaLink="false">3909179953</guid>
+			<title>Steel Industries Img Sink Roller</title>
+			<link>https://www.indianroller.com/products-Steel-Industry</link>
+			<pubDate>Wed, 07 Jan 2026 14:10:17 +0100</pubDate>
+			<enclosure url="https://www.indianroller.com/admin/fileupload/Bridle-Roller.png" type="image/png" length="0" />
+		</item>
+		<item>
+			<guid isPermaLink="false">3989057197</guid>
+			<title>Mangle Squeeze Roller</title>
+			<link>https://www.indianroller.com/products-Textile-Industry</link>
+			<pubDate>Wed, 07 Jan 2026 14:10:16 +0100</pubDate>
+			<enclosure url="https://www.indianroller.com/admin/fileupload/Mangle%20Squeeze%20Roller-1.png" type="image/png" length="0" />
+		</item>
+		<item>
+			<guid isPermaLink="false">3100958503</guid>
+			<title>Wire Return Roller</title>
+			<link>https://www.indianroller.com/products-Paper-And-Packaging-Industry</link>
+			<pubDate>Wed, 07 Jan 2026 14:10:15 +0100</pubDate>
+			<enclosure url="https://www.indianroller.com/admin/fileupload/breast-roller.png" type="image/png" length="0" />
+		</item>
+		<item>
+			<guid isPermaLink="false">1632681667</guid>
+			<title>Contact Drum Roller</title>
+			<link>https://www.indianroller.com/products-Plywood-Industry</link>
+			<pubDate>Wed, 07 Jan 2026 14:10:14 +0100</pubDate>
+			<enclosure url="https://www.indianroller.com/admin/fileupload/billey-roller.png" type="image/png" length="0" />
+		</item>
+		<item>
+			<guid isPermaLink="false">224613684</guid>
+			<title>Products Rexene Industry</title>
+			<link>https://www.indianroller.com/products-Rexene-Industry</link>
+			<pubDate>Wed, 07 Jan 2026 14:10:13 +0100</pubDate>
+			<enclosure url="https://www.indianroller.com/admin/fileupload/contact-roller%20(1).png" type="image/png" length="0" />
+		</item>
+	</channel>
+</rss>

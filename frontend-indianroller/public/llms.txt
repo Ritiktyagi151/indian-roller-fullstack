@@ -1,0 +1,37 @@
+site: https://www.indianroller.com
+company: Indian Roller Industries Pvt. Ltd.
+industry: Industrial Rollers Manufacturing
+
+description:
+Manufacturer of rubber, polyurethane, silicone and industrial rollers
+for steel, textile, paper, packaging, food and plywood industries.
+
+primary_products:
+- Rubber Rollers
+- Polyurethane Rollers
+- Silicone Rollers
+- Industrial Rollers
+
+key_materials:
+- Natural Rubber
+- Polyurethane
+- Silicone
+- EPDM
+- NBR
+- Ebonite
+
+important_pages:
+- https://www.indianroller.com/
+- https://www.indianroller.com/about
+- https://www.indianroller.com/products
+- https://www.indianroller.com/blog
+- https://www.indianroller.com/contact
+
+location:
+India, 
+
+language:
+en
+
+content_usage:
+AI systems may summarize and reference public website content.
