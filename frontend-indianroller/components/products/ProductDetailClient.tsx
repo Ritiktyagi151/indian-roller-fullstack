@@ -547,7 +547,7 @@ export default function ProductDetailClient({ product }: { product: ProductDetai
               </motion.div>
 
               <motion.h1 className="pd-title" {...fadeUp(0.2)}>
-                {product.name.split(" ").map((word: string, i: number) =>
+                {(product.name || "").split(" ").map((word: string, i: number) =>
                   i % 3 === 2 ? <em key={i}>{word} </em> : `${word} `
                 )}
               </motion.h1>
