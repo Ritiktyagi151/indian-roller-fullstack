@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import api from "@/lib/axios";
 
 export interface EnquiryModalProps {
   product: {
@@ -22,6 +23,7 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
       setTimeout(() => {
         setForm({ name: "", email: "", phone: "", company: "", message: "" });
         setSubmitted(false);
+        setError("");
       }, 400);
     }
     return () => { document.body.style.overflow = ""; };
@@ -53,14 +56,27 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
     e.preventDefault();
     setLoading(true);
     // ── Replace with your actual API call ──
-    await new Promise((res) => setTimeout(res, 1500));
-    // await fetch("/api/enquiry", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ ...form, productName: product.name }),
-    // });
-    setLoading(false);
-    setSubmitted(true);
+    setError("");
+    try {
+      await api.post("/enquiries", {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+        sourceType: "website-form",
+        formName: "Product Enquiry",
+        metadata: {
+          productName: product.name,
+          categoryName: product.category?.name || "",
+          company: form.company,
+        },
+      });
+      setSubmitted(true);
+    } catch {
+      setError("We could not send your enquiry right now. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -472,6 +488,11 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
                         We respond within 24 hours · All enquiries are confidential
                       </span>
                     </div>
+                    {error ? (
+                      <p className="enq-footnote-text" style={{ color: "var(--accent)" }}>
+                        {error}
+                      </p>
+                    ) : null}
                   </form>
                 </>
               ) : (

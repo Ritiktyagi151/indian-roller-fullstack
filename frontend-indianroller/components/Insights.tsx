@@ -1,9 +1,12 @@
 'use client';
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion"; // Variants import kiya
+import api from "@/lib/axios";
 
 export default function Insights() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [email, setEmail] = useState("");
+  const [submitState, setSubmitState] = useState<"idle" | "saving" | "success" | "error">("idle");
 
   const slides = [
     {
@@ -29,6 +32,30 @@ export default function Insights() {
     }, 6000);
     return () => clearInterval(timer);
   }, [slides.length]);
+
+  async function handleNewsletterSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitState("saving");
+
+    try {
+      await api.post("/enquiries", {
+        name: "Newsletter Subscriber",
+        email,
+        phone: "",
+        message: "Newsletter subscription request",
+        sourceType: "website-form",
+        formName: "Newsletter Subscription",
+        metadata: {
+          subscriptionSource: "Homepage Insights",
+        },
+      });
+
+      setEmail("");
+      setSubmitState("success");
+    } catch {
+      setSubmitState("error");
+    }
+  }
 
   // Yahan Types define kar diye hain taaki build fail na ho
   const containerVariants: Variants = {
@@ -136,19 +163,23 @@ export default function Insights() {
             Good news & event details as well straight to your incoming mail!
           </p>
 
-          <form className="relative flex items-center border-b border-white/50 pb-2 group focus-within:border-white transition-all">
+          <form onSubmit={handleNewsletterSubmit} className="relative flex items-center border-b border-white/50 pb-2 group focus-within:border-white transition-all">
             <input
               type="email"
               required
               placeholder="Enter Your E-mail"
               className="bg-transparent border-none outline-none text-white placeholder:text-white/60 text-sm w-full py-2 italic"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
-            <button type="submit" className="text-white p-2">
+            <button type="submit" className="text-white p-2" disabled={submitState === "saving"}>
               <svg className="w-6 h-6 transform rotate-[-45deg]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
             </button>
           </form>
+          {submitState === "success" ? <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-white">Subscription received. Please check your email.</p> : null}
+          {submitState === "error" ? <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-white">Subscription failed. Please try again.</p> : null}
         </motion.div>
       </div>
     </section>

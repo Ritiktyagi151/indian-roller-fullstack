@@ -5,6 +5,7 @@ import {
   FaTimes, FaUser, FaEnvelope, FaPhoneAlt,
   FaCommentAlt, FaBuilding, FaBoxes, FaCheckCircle,
 } from "react-icons/fa";
+import api from "@/lib/axios";
 
 interface InquiryModalProps {
   isOpen: boolean;
@@ -13,15 +14,59 @@ interface InquiryModalProps {
 
 const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    productType: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      await api.post("/enquiries", {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+        sourceType: "website-form",
+        formName: "Quick Inquiry",
+        metadata: {
+          company: form.company,
+          productType: form.productType,
+        },
+      });
+
+      setSubmitted(true);
+    } catch {
+      setError("We could not send your inquiry right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {
     onClose();
-    setTimeout(() => setSubmitted(false), 400);
+    setTimeout(() => {
+      setSubmitted(false);
+      setIsSubmitting(false);
+      setError("");
+      setForm({
+        name: "",
+        company: "",
+        email: "",
+        phone: "",
+        productType: "",
+        message: "",
+      });
+    }, 400);
   };
 
   const inp =
@@ -95,14 +140,14 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
                         <label className={lbl}>Full Name</label>
                         <div className="relative">
                           <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500" size={13} />
-                          <input required type="text" placeholder="Your Name" className={inp} />
+                          <input required type="text" placeholder="Your Name" className={inp} value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
                         </div>
                       </div>
                       <div>
                         <label className={lbl}>Company</label>
                         <div className="relative">
                           <FaBuilding className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500" size={13} />
-                          <input required type="text" placeholder="Your Company" className={inp} />
+                          <input required type="text" placeholder="Your Company" className={inp} value={form.company} onChange={(event) => setForm((current) => ({ ...current, company: event.target.value }))} />
                         </div>
                       </div>
                     </div>
@@ -112,14 +157,14 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
                         <label className={lbl}>Email</label>
                         <div className="relative">
                           <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500" size={13} />
-                          <input required type="email" placeholder="info@company.com" className={inp} />
+                          <input required type="email" placeholder="info@company.com" className={inp} value={form.email} onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))} />
                         </div>
                       </div>
                       <div>
                         <label className={lbl}>Phone Number</label>
                         <div className="relative">
                           <FaPhoneAlt className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500" size={13} />
-                          <input required type="tel" placeholder="+91 00000 00000" className={inp} />
+                          <input required type="tel" placeholder="+91 00000 00000" className={inp} value={form.phone} onChange={(event) => setForm((current) => ({ ...current, phone: event.target.value }))} />
                         </div>
                       </div>
                     </div>
@@ -128,7 +173,7 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
                       <label className={lbl}>Product / Roller Type</label>
                       <div className="relative">
                         <FaBoxes className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500 z-10" size={13} />
-                        <select required className="w-full bg-[#1a1a1a] border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-orange-500 text-white font-bold transition-all text-sm appearance-none cursor-pointer">
+                        <select required className="w-full bg-[#1a1a1a] border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-orange-500 text-white font-bold transition-all text-sm appearance-none cursor-pointer" value={form.productType} onChange={(event) => setForm((current) => ({ ...current, productType: event.target.value }))}>
                           <option value="" disabled>Select product / industry</option>
                           <optgroup label="── Industries ──">
                             <option>Steel Industry</option>
@@ -166,20 +211,24 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
                       <label className={lbl}>Message</label>
                       <div className="relative">
                         <FaCommentAlt className="absolute left-4 top-5 text-orange-500" size={13} />
-                        <textarea
-                          rows={4}
-                          placeholder="Your requirements, quantity, dimensions, etc."
-                          className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-orange-500 text-white font-bold transition-all resize-none placeholder:text-white/20 text-sm"
-                        />
+                          <textarea
+                            rows={4}
+                            placeholder="Your requirements, quantity, dimensions, etc."
+                            className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-orange-500 text-white font-bold transition-all resize-none placeholder:text-white/20 text-sm"
+                            value={form.message}
+                            onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))}
+                          />
                       </div>
                     </div>
 
-                    <button
-                      type="submit"
-                      className="w-full bg-orange-600 hover:bg-white hover:text-black py-5 rounded-2xl font-black text-xs uppercase tracking-[4px] transition-all"
-                    >
-                      Send Inquiry Now
-                    </button>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-orange-600 hover:bg-white hover:text-black py-5 rounded-2xl font-black text-xs uppercase tracking-[4px] transition-all"
+                      >
+                        {isSubmitting ? "Sending..." : "Send Inquiry Now"}
+                      </button>
+                      {error ? <p className="text-xs text-rose-400 font-bold uppercase tracking-[0.2em]">{error}</p> : null}
                   </form>
                 </motion.div>
               )}

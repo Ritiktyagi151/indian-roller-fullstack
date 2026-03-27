@@ -74,7 +74,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto flex justify-between items-center text-[12px] opacity-80 uppercase tracking-widest font-bold">
           <div className="flex gap-8 ml-10">
             <Link href="tel:+911234567890" className="flex items-center gap-2 hover:text-orange-500 transition"><FaPhoneAlt className="text-orange-500"/>+91-9811885000</Link>
-            <Link href="mailto:info@indianroller.com" className="flex items-center gap-2 hover:text-orange-500 transition"><FaEnvelope className="text-orange-500"/> info@indianroller.com</Link>
+            <Link href="mailto:sales@indianroller.com" className="flex items-center gap-2 hover:text-orange-500 transition"><FaEnvelope className="text-orange-500"/> sales@indianroller.com</Link>
           </div>
           <div className="flex gap-5 text-lg">
             <Link href="https://facebook.com" target="_blank"><FaFacebookF className="text-[#1877F2] hover:opacity-80 transition-opacity cursor-pointer" /></Link>

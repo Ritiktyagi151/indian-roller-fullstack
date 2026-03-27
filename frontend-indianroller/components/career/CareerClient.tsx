@@ -1,7 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion, Variants, useScroll, useTransform } from "framer-motion";
 import { FaIndustry, FaCogs, FaVial, FaRocket, FaCloudUploadAlt, FaChevronRight, FaArrowRight } from "react-icons/fa";
+import api from "@/lib/axios";
 
 // Diverse & Smooth Slide Animations
 const slideLeft: Variants = {
@@ -47,6 +48,14 @@ const jobRoles = [
 
 export default function CareerClient() {
   const heroRef = useRef(null);
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    position: "",
+    resumeFileName: "",
+  });
+  const [submitState, setSubmitState] = useState<"idle" | "saving" | "success" | "error">("idle");
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
@@ -54,6 +63,37 @@ export default function CareerClient() {
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitState("saving");
+
+    try {
+      await api.post("/enquiries", {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: `Career application received for ${form.position || "an open position"}.`,
+        sourceType: "website-form",
+        formName: "Career Application",
+        metadata: {
+          position: form.position,
+          resumeFileName: form.resumeFileName,
+        },
+      });
+
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        position: "",
+        resumeFileName: "",
+      });
+      setSubmitState("success");
+    } catch {
+      setSubmitState("error");
+    }
+  }
 
   return (
     <main className="bg-white overflow-hidden text-sm md:text-base">
@@ -363,12 +403,14 @@ export default function CareerClient() {
             <h3 className="text-2xl font-black uppercase mb-2">Apply Now</h3>
             <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-8">Join the leader in roller technology</p>
             
-            <form className="space-y-5 relative z-10">
+            <form className="space-y-5 relative z-10" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <motion.input 
                   type="text" 
                   placeholder="Full Name" 
                   className="bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 text-xs uppercase font-bold transition-all" 
+                  value={form.name}
+                  onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
                   required 
                   whileFocus={{ scale: 1.02, borderColor: "#f97316" }}
                 />
@@ -376,17 +418,32 @@ export default function CareerClient() {
                   type="tel" 
                   placeholder="Phone Number" 
                   className="bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 text-xs uppercase font-bold transition-all" 
+                  value={form.phone}
+                  onChange={(event) => setForm((current) => ({ ...current, phone: event.target.value }))}
                   required 
                   whileFocus={{ scale: 1.02, borderColor: "#f97316" }}
                 />
               </div>
-              
+
+              <motion.input
+                type="email"
+                placeholder="Email Address"
+                className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 text-xs uppercase font-bold transition-all"
+                value={form.email}
+                onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+                required
+                whileFocus={{ scale: 1.02, borderColor: "#f97316" }}
+              />
+               
               <motion.select 
                 className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 text-xs uppercase font-bold transition-all appearance-none cursor-pointer"
+                value={form.position}
+                onChange={(event) => setForm((current) => ({ ...current, position: event.target.value }))}
+                required
                 whileFocus={{ scale: 1.02 }}
               >
-                <option className="bg-black">Select Position</option>
-                {jobRoles.map(j => <option key={j.id} className="bg-black">{j.role}</option>)}
+                <option value="" className="bg-black">Select Position</option>
+                {jobRoles.map((j) => <option key={j.id} value={j.role} className="bg-black">{j.role}</option>)}
               </motion.select>
 
               <motion.div 
@@ -405,11 +462,23 @@ export default function CareerClient() {
                 >
                   <FaCloudUploadAlt className="text-3xl mx-auto mb-2 text-gray-600 group-hover:text-orange-500" />
                 </motion.div>
-                <p className="text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-white">Upload PDF Resume</p>
-                <input type="file" className="hidden" accept=".pdf" />
+                <p className="text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-white">{form.resumeFileName || "Upload PDF Resume"}</p>
+                <input
+                  type="file"
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  accept=".pdf"
+                  onChange={(event) =>
+                    setForm((current) => ({
+                      ...current,
+                      resumeFileName: event.target.files?.[0]?.name || "",
+                    }))
+                  }
+                />
               </motion.div>
-              
+               
               <motion.button 
+                type="submit"
+                disabled={submitState === "saving"}
                 className="w-full bg-orange-500 py-4 font-black uppercase tracking-[3px] text-xs hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2 relative overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -424,9 +493,11 @@ export default function CareerClient() {
                     ease: "linear"
                   }}
                 />
-                <span className="relative z-10">Submit Application</span>
+                <span className="relative z-10">{submitState === "saving" ? "Submitting..." : "Submit Application"}</span>
                 <FaChevronRight size={10} className="relative z-10" />
               </motion.button>
+              {submitState === "success" ? <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400">Application submitted. Please check your email.</p> : null}
+              {submitState === "error" ? <p className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-400">Application failed. Please try again.</p> : null}
             </form>
           </motion.div>
         </div>

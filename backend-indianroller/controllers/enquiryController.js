@@ -1,24 +1,43 @@
 const Enquiry = require("../models/Enquiry");
+const { sendAdminNotification, sendAutoResponder } = require("../services/mailService");
 
 exports.createEnquiry = async (req, res) => {
   try {
     const { name, email, phone, message, sourceType, formName, metadata } = req.body;
 
-    if (!name || !phone) {
-      return res.status(400).json({ message: "Name and phone are required." });
+    if (!email && !phone) {
+      return res.status(400).json({ message: "At least an email or phone number is required." });
     }
 
     const enquiry = await Enquiry.create({
-      name,
-      email,
-      phone,
-      message,
+      name: name || "Website Visitor",
+      email: email || "",
+      phone: phone || "",
+      message: message || "",
       sourceType: sourceType || "contact",
       formName: formName || "Contact Form",
       metadata: metadata || {},
     });
 
-    res.status(201).json(enquiry);
+    const [adminMail, autoReplyMail] = await Promise.allSettled([
+      sendAdminNotification(enquiry),
+      sendAutoResponder(enquiry),
+    ]);
+
+    const warnings = [];
+
+    if (adminMail.status === "rejected") {
+      warnings.push("Admin notification email could not be sent.");
+    }
+
+    if (autoReplyMail.status === "rejected") {
+      warnings.push("Auto-responder email could not be sent.");
+    }
+
+    res.status(201).json({
+      enquiry,
+      warnings,
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

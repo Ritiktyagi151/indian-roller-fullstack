@@ -13,8 +13,8 @@ const enquirySchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
       trim: true,
+      default: "Website Visitor",
     },
     email: {
       type: String,

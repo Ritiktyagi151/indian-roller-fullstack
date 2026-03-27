@@ -48,7 +48,7 @@ export default function RootLayout({
               "image": "https://www.indianroller.com/admin/fileupload/1%20(10).png",
               "description": "Indian Roller Industries Pvt. Ltd. is an ISO 9001 certified manufacturer of industrial rubber rollers, polyurethane rollers, and customized rollers for steel, textile, paper, packaging, food, and plywood industries.",
               "foundingDate": "1990",
-              "email": "info@indianroller.com",
+              "email": "sales@indianroller.com",
               "telephone": "+91-9811885000",
               "address": {
                 "@type": "PostalAddress",
@@ -90,7 +90,7 @@ export default function RootLayout({
               "image": "https://www.indianroller.com/admin/fileupload/1%20(10).png",
               "description": "Indian Roller Industries Pvt. Ltd. is a leading manufacturer of industrial rubber rollers, polyurethane rollers, and customized rollers serving steel, textile, paper, packaging, food, and plywood industries worldwide.",
               "telephone": "+91-9811885000",
-              "email": "info@indianroller.com",
+              "email": "sales@indianroller.com",
               "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
