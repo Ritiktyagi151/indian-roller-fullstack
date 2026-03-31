@@ -23,7 +23,7 @@ const ContactMirror = () => {
               </div>
               <div className="overflow-hidden">
                 <p className="text-orange-500 font-bold text-[9px] md:text-[10px] tracking-[2px] md:tracking-[3px] uppercase mb-2">Mail Us Anytime</p>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-black text-black mb-2 lowercase break-words">sales@indianroller.com</h3>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-black text-black mb-2 lowercase break-words">info@indianroller.com</h3>
                 <p className="text-gray-400 text-[10px] md:text-xs font-medium italic">Mail 24/7 Anytime For Your Problem</p>
               </div>
             </motion.div>
@@ -37,7 +37,7 @@ const ContactMirror = () => {
                   <div className="text-4xl md:text-5xl opacity-50 shrink-0"><FaEnvelopeOpenText /></div>
                   <div>
                     <p className="font-bold text-[9px] md:text-[10px] tracking-[2px] md:tracking-[3px] uppercase mb-2">Mail Us Anytime</p>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-black mb-2 lowercase">sales@indianroller.com</h3>
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-black mb-2 lowercase">info@indianroller.com</h3>
                   </div>
                </div>
             </div>

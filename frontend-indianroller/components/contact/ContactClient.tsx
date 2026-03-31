@@ -282,7 +282,7 @@ export default function ContactClient() {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 ">
             {[
-              { label: "GET AN EMAIL", val: "sales@indianroller.com", icon: <FaEnvelope />, color: "from-orange-500 to-red-600" },
+              { label: "GET AN EMAIL", val: "info@indianroller.com", icon: <FaEnvelope />, color: "from-orange-500 to-red-600" },
               { label: "MAKE A CALL", val: "+91 120 4167923\n+971 588211690", icon: <FaPhoneAlt />, color: "from-cyan-400 to-blue-500" },
               { label: "SERVICE SUPPORT", val: "+91-9811885000\n+91-8744885000", icon: <FaPhoneAlt />, color: "from-orange-400 to-orange-600" },
               { label: "GO FOR LOCATION", val: "Sahibabad-201010, UP, India", icon: <FaMapMarkerAlt />, color: "from-cyan-400 to-blue-600" }

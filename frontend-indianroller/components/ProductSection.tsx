@@ -40,6 +40,7 @@ const productData = [
   {
     id: 1,
     name: "Steel Industry Roller",
+    slug: "steel-industry",
     cat: "industries",
     desc: "Heavy-duty rollers for steel rolling mills, coil handling, and strip processing lines — built for extreme loads.",
     images: ["/product-img/Bridle-Roller.png", "/product-img/Applicator-Roller.png"],
@@ -50,6 +51,7 @@ const productData = [
   {
     id: 2,
     name: "Textile Industry",
+    slug: "textile-industry",
     cat: "industries",
     desc: "FDA-compliant food-grade rollers for bakery, confectionery, and dairy processing lines. Non-toxic, easy-clean silicone formulations.",
     images: ["/product-img/mangle-squeeze-roller.png", "/product-img/merceriser-roller.png"],
@@ -60,6 +62,7 @@ const productData = [
   {
     id: 3,
     name: "Paper And Packaging Industry",
+    slug: "paper-and-packaging-industry",
     cat: "industries",
     desc: "Heavy-duty press rollers and glue-spreader rollers for plywood and MDF manufacturing units.",
     images: ["/product-img/breast-roller.png", "/product-img/couch-roller.png"],
@@ -70,6 +73,7 @@ const productData = [
   {
     id: 4,
     name: "Food Industry Rollers",
+    slug: "food-industry",
     cat: "industries",
     desc: "FDA-compliant food-grade rollers for bakery, confectionery, and dairy processing lines. Non-toxic, easy-clean silicone formulations.",
     images: ["/product-img/printing-roller.png", "/product-img/food-grade.png"],
@@ -80,6 +84,7 @@ const productData = [
   {
     id: 5,
     name: "Turnkey Project",
+    slug: "turnkey-project",
     cat: "special",
     desc: "Complete turnkey roller solutions from design, fabrication, rubber bonding, grinding, and installation.",
     images: ["/product-img/world-data-locator-map-russia.webp", "/product-img/tanzania.jpg"],
@@ -90,41 +95,12 @@ const productData = [
   {
     id: 6,
     name: "Miscellaneous Roller",
+    slug: "miscellaneous-roller",
     cat: "rubber-rollers",
     desc: "General-purpose industrial rubber rollers for conveyor systems, printing, lamination, and guiding applications.",
     images: ["/product-img/woven-sacks-industries.jpg", "/product-img/tin-printing.jpg"],
     tags: ["Conveyor", "Lamination"],
     specs: [{ val: "NR/SBR", lbl: "Material" }, { val: "Custom", lbl: "Dimensions" }],
-    isNew: false,
-  },
-  {
-    id: 7,
-    name: "Natural Rubber Roller",
-    cat: "rubber-rollers",
-    desc: "Classic natural rubber (NR) rollers offering excellent resilience, high tensile strength, and low heat build-up.",
-    images: ["/product-img/natural-rubber.png"],
-    tags: ["NR", "High Tensile"],
-    specs: [{ val: "40–90 Shore", lbl: "Hardness" }, { val: "Natural", lbl: "Compound" }],
-    isNew: false,
-  },
-  {
-    id: 8,
-    name: "Silicon Rubber Roller",
-    cat: "rubber-rollers",
-    desc: "Industrial silicone rollers with extreme heat resistance up to 250°C. Ideal for textile, food, and printing industries.",
-    images: ["/product-img/silicon-white-roller.png"],
-    tags: ["250°C Rated", "Non-Stick"],
-    specs: [{ val: "Silicone", lbl: "Material" }, { val: "Up to 250°C", lbl: "Heat Resist." }],
-    isNew: true,
-  },
-  {
-    id: 10,
-    name: "EPDM Rubber Roller",
-    cat: "rubber-rollers",
-    desc: "EPDM rollers offering excellent weather, ozone, and UV resistance. Widely used in outdoor and chemical-exposure environments.",
-    images: ["/product-img/EPDM.png"],
-    tags: ["EPDM", "UV Resistant"],
-    specs: [{ val: "EPDM", lbl: "Material" }, { val: "Black", lbl: "Colour" }],
     isNew: false,
   },
 ];
@@ -140,7 +116,6 @@ type Product = (typeof productData)[0];
 
 /* ─── useInView ──────────────────────────────────────────────────────────────
    Lightweight IntersectionObserver hook. Fires once, then disconnects.
-   Replaces framer-motion's useInView + whileInView.
 ────────────────────────────────────────────────────────────────────────────── */
 function useInView(margin = "-50px"): [React.RefObject<HTMLDivElement>, boolean] {
   const ref = useRef<HTMLDivElement>(null!);
@@ -160,10 +135,7 @@ function useInView(margin = "-50px"): [React.RefObject<HTMLDivElement>, boolean]
   return [ref, inView];
 }
 
-/* ─── IMAGE SLIDER ───────────────────────────────────────────────────────────
-   Pure CSS slide transition via inline animation styles.
-   animationend event unmounts the exiting slide cleanly.
-────────────────────────────────────────────────────────────────────────────── */
+/* ─── IMAGE SLIDER ───────────────────────────────────────────────────────────── */
 const SLIDE_DURATION = "0.45s cubic-bezier(0.32,0.72,0,1)";
 
 const ImageSlider = ({
@@ -232,7 +204,6 @@ const ImageSlider = ({
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* Exiting slide */}
       {exitIdx !== null && (
         <div
           className="absolute inset-0"
@@ -249,7 +220,6 @@ const ImageSlider = ({
         </div>
       )}
 
-      {/* Current / entering slide */}
       <div key={current} className="absolute inset-0" style={enterStyle}>
         <Image
           src={images[current]}
@@ -314,7 +284,6 @@ const ProductSection = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selected, setSelected] = useState<Product | null>(null);
   const [closing, setClosing] = useState(false);
-  // Bump this key to re-trigger card-in animation when filter changes
   const [filterKey, setFilterKey] = useState(0);
 
   const filtered =
@@ -332,7 +301,6 @@ const ProductSection = () => {
 
   const closeModal = () => setClosing(true);
   const handleModalAnimEnd = (e: React.AnimationEvent<HTMLDivElement>) => {
-    // Only act on the sheet's own animation, not bubbled ones from children
     if (e.currentTarget === e.target && closing) {
       setSelected(null);
       setClosing(false);
@@ -395,7 +363,6 @@ const ProductSection = () => {
                 </span>
               </h2>
 
-              {/* Orange underbar — width animated from 0 → 80px */}
               <div
                 ref={barRef}
                 className="h-1 bg-orange-500 mt-4 sm:mt-6"
@@ -443,25 +410,37 @@ const ProductSection = () => {
             </div>
           </div>
 
-          {/* ── PRODUCT GRID ──
-              key={filterKey} forces React to re-mount the grid so card-in
-              animations replay on every filter change.
-          */}
+          {/* ── PRODUCT GRID ── */}
           <div
             key={filterKey}
             className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5 md:gap-6"
           >
             {filtered.map((p, i) => (
-              <div
+              /* Entire card is a Link to /products-{slug} */
+              <Link
                 key={p.id}
-                onClick={() => setSelected(p)}
-                className="group relative cursor-pointer bg-white border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden rounded-sm"
+                href={`/products-${p.slug}`}
+                className="group relative cursor-pointer bg-white border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden rounded-sm block"
                 style={{ animation: `card-in 0.5s ease-out ${i * 0.05}s both` }}
+                onClick={(e) => {
+                  // If user clicks on the image area, open modal instead of navigating
+                  const target = e.target as HTMLElement;
+                  const isImageArea = target.closest("[data-image-area]");
+                  if (isImageArea) {
+                    e.preventDefault();
+                    setSelected(p);
+                  }
+                }}
               >
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] group-hover:opacity-[0.05] transition-opacity" />
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
 
-                <div className="relative w-full h-[200px] sm:h-[220px] md:h-[240px] overflow-hidden bg-gray-50 border-b border-gray-50">
+                {/* Image area — click opens modal, not navigate */}
+                <div
+                  data-image-area="true"
+                  className="relative w-full h-[200px] sm:h-[220px] md:h-[240px] overflow-hidden bg-gray-50 border-b border-gray-50"
+                  onClick={(e) => { e.preventDefault(); setSelected(p); }}
+                >
                   <ImageSlider
                     images={p.images}
                     alt={p.name}
@@ -480,6 +459,7 @@ const ProductSection = () => {
                   </div>
                 </div>
 
+                {/* Text content — clicking navigates to product page */}
                 <div className="relative z-10 p-3 sm:p-5 md:p-6 bg-white group-hover:bg-white/95 transition-colors">
                   <h3
                     style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -491,7 +471,8 @@ const ProductSection = () => {
                     {p.desc}
                   </p>
                   <div className="mt-2 sm:mt-5 flex justify-between items-center border-t pt-2 sm:pt-4 border-gray-50">
-                    <span className="text-[7px] sm:text-[9px] font-mono text-gray-400 group-hover:text-gray-600 transition-colors uppercase tracking-widest">
+                    {/* Category label — also links to product page */}
+                    <span className="text-[7px] sm:text-[9px] font-mono text-gray-400 group-hover:text-orange-500 transition-colors uppercase tracking-widest">
                       {p.cat.replace("-", " ")}
                     </span>
                     <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gray-50 group-hover:bg-orange-500 group-hover:text-white flex items-center justify-center transition-all">
@@ -499,7 +480,7 @@ const ProductSection = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -517,7 +498,7 @@ const ProductSection = () => {
             onClick={closeModal}
           />
 
-          {/* Sheet — plays exit animation before unmount via onAnimationEnd */}
+          {/* Sheet */}
           <div
             className="relative w-full sm:max-w-4xl bg-white shadow-2xl flex flex-col md:flex-row overflow-hidden"
             style={{
@@ -554,12 +535,17 @@ const ProductSection = () => {
               <span className="text-[#c85a1a] font-mono text-[9px] sm:text-[10px] tracking-[4px] uppercase mb-3 sm:mb-4 block">
                 Industrial Grade
               </span>
-              <h2
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#111] leading-none mb-3 sm:mb-6"
-              >
-                {selected.name}
-              </h2>
+
+              {/* Product name — links to product page */}
+              <Link href={`/products-${selected.slug}`}>
+                <h2
+                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#111] leading-none mb-3 sm:mb-6 hover:text-orange-500 transition-colors cursor-pointer"
+                >
+                  {selected.name}
+                </h2>
+              </Link>
+
               <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-8">
                 {selected.desc}
               </p>
@@ -577,7 +563,8 @@ const ProductSection = () => {
                 {selected.images.length} image{selected.images.length !== 1 ? "s" : ""} — swipe or use arrows to browse
               </p>
 
-              <Link href="/contact">
+              {/* Enquire Now → navigates to product page */}
+              <Link href={`/products-${selected.slug}`}>
                 <button className="w-full bg-[#111] text-white py-3 sm:py-4 text-[9px] sm:text-[10px] font-mono tracking-[3px] sm:tracking-[4px] uppercase hover:text-orange-500 transition-colors">
                   Enquire Now →
                 </button>

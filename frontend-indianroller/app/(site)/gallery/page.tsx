@@ -105,7 +105,7 @@ export default function GalleryPage() {
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
             {[
               { label: "Manufacturing Units", value: "05" },
-              { label: "Coverage", value: "India + Bangladesh" },
+              { label: "Coverage", value: "All Over the world" },
               { label: "Built For", value: "Custom Industrial Rollers" },
             ].map((item) => (
               <div

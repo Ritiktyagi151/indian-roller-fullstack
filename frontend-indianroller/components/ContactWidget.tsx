@@ -66,7 +66,7 @@ const ContactWidget = () => {
         variants={itemVariants}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        href="mailto:sales@indianroller.com"
+        href="mailto:info@indianroller.com"
         className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-gray-800 text-white rounded-full shadow-lg hover:bg-black transition-colors"
       >
         <Mail size={24} />

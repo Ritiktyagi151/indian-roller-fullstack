@@ -11,6 +11,8 @@ import TeamSection from "@/components/TeamSection";
 import { getSeoMetadataByPath } from "@/lib/seo";
 import IndustrialSourcesSection from "@/components/IndustrialSourcesSection";
 import ProductSection from "@/components/ProductSection";
+import JourneyMissionVision from "@/components/Journey";
+import LocationSection from "@/components/Location";
 
 export async function generateMetadata() {
   return getSeoMetadataByPath("/", {
@@ -25,6 +27,7 @@ export default function Home() {
       <Hero />
      <AboutSection />
      <ProductSection/>
+      <JourneyMissionVision/>
       <TeamSection/>
       <Advantages />
       <IndustrialSourcesSection/>
@@ -32,6 +35,7 @@ export default function Home() {
       <Partners/>
       <Insights/>
       <WhyChooseUs/>
+      <LocationSection/>
       <BlogSlider/>
     </main>
   );
