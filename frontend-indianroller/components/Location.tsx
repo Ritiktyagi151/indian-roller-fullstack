@@ -1,14 +1,16 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Line,
-  Marker,
-  Annotation
-} from "react-simple-maps";
+// import {
+//   ComposableMap,
+//   Geographies,
+//   Geography,
+//   Line,
+//   Marker,
+//   Annotation
+// } from "react-simple-maps";
+// @ts-expect-error no types available
+import {Line, ComposableMap, Geographies, Geography, Marker, Annotation } from "react-simple-maps";
 
 // Official TopoJSON for the world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -54,7 +56,7 @@ const LocationSection = () => {
           >
             {/* World Geography Layer */}
             <Geographies geography={geoUrl}>
-              {({ geographies }) =>
+              {({ geographies }: { geographies  : any[] }) =>
                 geographies.map((geo) => (
                   <Geography
                     key={geo.rsmKey}
