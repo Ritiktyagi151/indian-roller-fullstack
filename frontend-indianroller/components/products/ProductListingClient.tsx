@@ -8,8 +8,8 @@ export default function ProductListingClient({ categorySlug, initialProducts = [
   const [mounted, setMounted] = useState(false);
   const categoryName = categorySlug.replace(/-/g, ' ');
 
-  useEffect(() => { 
-    setMounted(true); 
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   if (!mounted) return <div className="min-h-screen bg-white" />;
@@ -17,34 +17,34 @@ export default function ProductListingClient({ categorySlug, initialProducts = [
   return (
     <main className="min-h-screen   pb-20  selection:bg-orange-500/30">
       <div className="w-full h-[450px] relative">
-  <img
-    className="w-full  h-[450px]"
-    src="/banners/productpage-banner.webp"
-    alt="product banner"
-  />
+        <img
+          className="w-full  h-[450px]"
+          src="/banners/productpage-banner.webp"
+          alt="product banner"
+        />
 
-  {/* Text Overlay */}
-  <div className="absolute inset-0 flex items-center justify-center">
-       
-        <header className=" border-l-4 px-6 border-orange-500 pl-8">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-orange-500 font-black tracking-[0.4em] uppercase text-[10px] mb-2 italic">
-              Premium Solutions
-            </p>
-            <h1 className="text-5xl md:text-8xl font-black text-white uppercase italic tracking-tighter leading-[0.8]">
-              {categoryName} <br />
-              
-            </h1>
-          </motion.div>
-        </header>
-  </div>
-</div>
+        {/* Text Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center">
+
+          <header className=" border-l-4 px-6 border-orange-500 pl-8">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-orange-500 font-black tracking-[0.4em] uppercase text-[10px] mb-2 italic">
+                Premium Solutions
+              </p>
+              <h1 className="text-5xl md:text-8xl font-black text-white uppercase italic tracking-tighter leading-[0.8]">
+                {categoryName} <br />
+
+              </h1>
+            </motion.div>
+          </header>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto">
-        
+
         {/* <header className="mb-16 mt-6 border-l-4 px-6 border-orange-500 pl-8">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -65,7 +65,7 @@ export default function ProductListingClient({ categorySlug, initialProducts = [
           {initialProducts.length > 0 ? (
             initialProducts.map((item, index) => (
               <motion.div
-                key={item._id} 
+                key={item._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}

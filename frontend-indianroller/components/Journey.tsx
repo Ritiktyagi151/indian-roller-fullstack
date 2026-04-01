@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, Variants, useScroll, useTransform } from "framer-motion";
 
 /* ─────────────────────────────────────────────
@@ -44,7 +44,7 @@ const pillars = [
       </svg>
     ),
     heading: "Honestly Made.\nSincerely Served.",
-    body: "To engineer rubber rollers and polyurethane products of exceptional quality — combining advanced technology, skilled craftsmanship and disciplined delivery — so that every client receives not just a product, but a promise fulfilled.",
+    body: "To engineered rubber rollers and polyurethane products of exceptional quality — combining advanced technology, skilled craftsmanship and disciplined delivery — so that every client receives not just a product, but a promise fulfilled.",
   },
   {
     tag: "Our Vision",
@@ -94,6 +94,22 @@ const JourneyMissionVision = () => {
     offset: ["start 80%", "end 20%"],
   });
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const [lineWidth, setLineWidth] = useState(0);
+
+useEffect(() => {
+  const handleScroll = () => {
+    if (!timelineRef.current) return;
+    const rect = timelineRef.current.getBoundingClientRect();
+    const totalHeight = timelineRef.current.offsetHeight;
+    const scrolled = Math.max(0, window.innerHeight - rect.top);
+    const progress = Math.min(scrolled / (totalHeight + window.innerHeight), 1);
+    // Map progress to full width of the timeline
+    setLineWidth(progress * timelineRef.current.offsetWidth);
+  };
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   return (
     <>
@@ -181,115 +197,97 @@ const JourneyMissionVision = () => {
           JOURNEY / TIMELINE SECTION
       ══════════════════════════════════ */}
       <section className="py-20 bg-black overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
+  <div className="max-w-7xl mx-auto px-6">
 
-          {/* Heading */}
-          <div className="flex flex-col lg:flex-row gap-12 items-end mb-16">
-            <div className="lg:w-1/3">
-              <motion.p
-                variants={slideFromLeft}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.8 }}
-                className="text-orange-500 font-bold text-xs tracking-[3px] uppercase mb-4"
-              >
-                Our Journey
-              </motion.p>
-              <motion.h2
-                variants={slideFromLeft}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.8 }}
-                className="text-4xl md:text-5xl font-black uppercase leading-tight tracking-tighter text-white"
-              >
-                35 Years <br /> Of Precision <br />
-                <span className="text-orange-500">& Pride.</span>
-              </motion.h2>
-              <motion.div
-                className="w-20 h-1 bg-orange-500 mt-6"
-                initial={{ width: 0 }}
-                whileInView={{ width: 80 }}
-                viewport={{ once: false }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
-            </div>
-            <motion.p
-              variants={slideFromRight}
+    {/* Heading */}
+    <div className="flex flex-col lg:flex-row gap-12 items-end mb-16">
+      <div className="lg:w-1/3">
+        <motion.p
+          variants={slideFromLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.8 }}
+          className="text-orange-500 font-bold text-xs tracking-[3px] uppercase mb-4"
+        >
+          Our Journey
+        </motion.p>
+        <motion.h2
+          variants={slideFromLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.8 }}
+          className="text-4xl md:text-5xl font-black uppercase leading-tight tracking-tighter text-white"
+        >
+          35 Years <br /> Of Precision <br />
+          <span className="text-orange-500">& Pride.</span>
+        </motion.h2>
+        <motion.div
+          className="w-20 h-1 bg-orange-500 mt-6"
+          initial={{ width: 0 }}
+          whileInView={{ width: 80 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1, delay: 0.5 }}
+        />
+      </div>
+      <motion.p
+        variants={slideFromRight}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.6 }}
+        className="lg:w-2/3 text-gray-400 text-[13px] leading-7 font-medium border-l-4 border-orange-500 pl-4 italic"
+      >
+        From a small team with a bold dream in 1990 to a globally trusted ISO-certified manufacturer — every milestone in our journey reflects our uncompromising commitment to quality, innovation and honest service.
+      </motion.p>
+    </div>
+
+    {/* Horizontal Timeline */}
+    <div ref={timelineRef} className="relative">
+
+      {/* Horizontal line track */}
+      <div className="absolute left-0 right-0 top-[28px] h-px bg-white/10" />
+      {/* Animated fill left to right */}
+      <motion.div
+        className="absolute left-0 top-[28px] h-px bg-orange-500 origin-left"
+        style={{ width: lineWidth }} // use a lineWidth motionValue instead of lineHeight
+      />
+
+      {/* Milestones row */}
+      <div className="flex items-start justify-between gap-4 overflow-x-auto pb-4">
+        {milestones.map((m, i) => (
+          <div key={m.year} className="relative flex flex-col items-center flex-1 min-w-[140px]">
+
+            {/* Dot */}
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="w-[14px] h-[14px] rounded-full bg-orange-500 ring-4 ring-black z-10 mb-6"
+            />
+
+            {/* Content — alternate above/below for breathing room */}
+            <motion.div
+              variants={i % 2 === 0 ? slideFromLeft : slideFromRight}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.6 }}
-              className="lg:w-2/3 text-gray-400 text-[13px] leading-7 font-medium border-l-4 border-orange-500 pl-4 italic"
+              className="text-center px-2"
             >
-              From a small team with a bold dream in 1990 to a globally trusted ISO-certified manufacturer — every milestone in our journey reflects our uncompromising commitment to quality, innovation and honest service.
-            </motion.p>
+              <span className="text-orange-500 font-black text-3xl tracking-tighter leading-none block mb-2">
+                {m.year}
+              </span>
+              <h3 className="text-white font-black uppercase text-sm tracking-tight mb-1">
+                {m.title}
+              </h3>
+              <p className="text-gray-400 text-[12px] leading-5 font-medium">{m.desc}</p>
+            </motion.div>
+
           </div>
-
-          {/* Timeline */}
-          <div ref={timelineRef} className="relative">
-
-            {/* Vertical line track */}
-            <div className="absolute left-[18px] md:left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-px" />
-            {/* Animated fill */}
-            <motion.div
-              className="absolute left-[18px] md:left-1/2 top-0 w-px bg-orange-500 -translate-x-px origin-top"
-              style={{ height: lineHeight }}
-            />
-
-            <div className="space-y-12 md:space-y-0">
-              {milestones.map((m, i) => {
-                const isEven = i % 2 === 0;
-                return (
-                  <div
-                    key={m.year}
-                    className={`relative flex flex-col md:flex-row md:items-center gap-0 md:gap-0 ${
-                      isEven ? "md:flex-row" : "md:flex-row-reverse"
-                    }`}
-                  >
-                    {/* Content card */}
-                    <motion.div
-                      custom={i}
-                      variants={isEven ? slideFromLeft : slideFromRight}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: false, amount: 0.6 }}
-                      className="md:w-[calc(50%-2rem)] pl-12 md:pl-0 md:pr-12 md:text-right"
-                      style={isEven ? {} : { marginLeft: "auto", paddingRight: 0, paddingLeft: "3rem", textAlign: "left" }}
-                    >
-                      <div
-                        className={`inline-block mb-3 ${isEven ? "md:ml-auto" : ""}`}
-                        style={{ display: "block" }}
-                      >
-                        <span className="text-orange-500 font-black text-4xl tracking-tighter leading-none">
-                          {m.year}
-                        </span>
-                      </div>
-                      <h3 className="text-white font-black uppercase text-lg tracking-tight mb-2">
-                        {m.title}
-                      </h3>
-                      <p className="text-gray-400 text-[13px] leading-6 font-medium">{m.desc}</p>
-                    </motion.div>
-
-                    {/* Dot */}
-                    <div className="absolute left-[14px] md:left-1/2 md:-translate-x-1/2 top-1 md:top-auto flex-shrink-0 z-10">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        viewport={{ once: false }}
-                        transition={{ duration: 0.4, delay: i * 0.1 }}
-                        className="w-[10px] h-[10px] rounded-full bg-orange-500 ring-4 ring-black ring-offset-0"
-                      />
-                    </div>
-
-                    {/* Spacer for opposite side */}
-                    <div className="hidden md:block md:w-[calc(50%-2rem)]" />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
       {/* ══════════════════════════════════
           MISSION & VISION SECTION
       ══════════════════════════════════ */}

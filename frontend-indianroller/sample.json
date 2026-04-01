@@ -1,0 +1,180 @@
+[{
+  "_id": {
+    "$oid": "69b92a4bff4e4a1fd1ae9af2"
+  },
+  "name": "HNBR Roller",
+  "slug": "hnbr-roller",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:17:47.865Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T06:38:13.031Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92ac6ff4e4a1fd1ae9b20"
+  },
+  "name": "Polyurethane Rubber",
+  "slug": "polyurethane-rubber",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:19:50.842Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:19:50.842Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92ae8ff4e4a1fd1ae9b2a"
+  },
+  "name": "Miscellaneous Roller",
+  "slug": "miscellaneous-roller",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:20:24.688Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:20:24.688Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92afbff4e4a1fd1ae9b2f"
+  },
+  "name": "Turnkey Project",
+  "slug": "turnkey-project",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:20:43.229Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:20:43.229Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92b0aff4e4a1fd1ae9b34"
+  },
+  "name": "Rexene Industry",
+  "slug": "rexene-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:20:58.622Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:20:58.622Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92b16ff4e4a1fd1ae9b3f"
+  },
+  "name": "Plywood Industry",
+  "slug": "plywood-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:21:10.977Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:21:10.977Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92b21ff4e4a1fd1ae9b44"
+  },
+  "name": "Food Industry",
+  "slug": "food-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:21:21.584Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:21:21.584Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92b2bff4e4a1fd1ae9b49"
+  },
+  "name": "Paper And Packaging Industry",
+  "slug": "paper-and-packaging-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:21:31.764Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:21:31.764Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92b38ff4e4a1fd1ae9b4e"
+  },
+  "name": "Textile Industry",
+  "slug": "textile-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:21:44.543Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:21:44.543Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69b92b48ff4e4a1fd1ae9b53"
+  },
+  "name": "Steel Industry",
+  "slug": "steel-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-17T10:22:00.940Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T10:22:00.940Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cab5eeca2766999a7fa506"
+  },
+  "name": "Cement Industry",
+  "slug": "cement-industry",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-30T17:42:06.408Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-30T17:42:06.408Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cb5a2fca2766999a7faadd"
+  },
+  "name": "Rubber Compounds",
+  "slug": "rubber-compounds",
+  "description": "",
+  "createdAt": {
+    "$date": "2026-03-31T05:22:55.375Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-31T05:22:55.375Z"
+  },
+  "__v": 0
+}]

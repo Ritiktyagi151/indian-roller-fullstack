@@ -46,7 +46,7 @@ export default function AdvantagesSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative h-[450px] md:inset-y-64 rounded-2xl group overflow-hidden"
         >
-          <Image src="/71v8jfCWSvL._AC_UF1000,1000_QL80_.jpg" alt="Architecture" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+          <Image src="/industry-img/Pickup.jpeg" alt="Architecture" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
              {/* <h3 className="text-white font-bold tracking-[3px] uppercase">Architecture</h3> */}
           </div>
@@ -60,7 +60,7 @@ export default function AdvantagesSection() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
           className="relative h-[450px] md:inset-y-44 rounded-2xl group overflow-hidden"
         >
-          <Image src="/China-Decai-Rubber-Roller-Factory-Neoprene-Rubber-Coating-Conveyor-Roller.avif" alt="Engineering" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+          <Image src="/team-img/ahmdabad.JPG" alt="Engineering" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
              {/* <h3 className="text-white font-bold tracking-[3px] uppercase">Engineering</h3> */}
           </div>
@@ -74,7 +74,7 @@ export default function AdvantagesSection() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           className="relative h-[450px] group rounded-2xl md:inset-y-28 overflow-hidden"
         >
-          <Image src="/industrial-roller-conveyor-with-metal-rollers-and-vibrant-yellow-rails-in-a-spacious-modern-warehouse-or-manufacturing-facility-with-bright-overhead-lighting-photo.jpg" alt="Interior" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+          <Image src="/team-img/KH2_2663.JPG" alt="Interior" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
              {/* <h3 className="text-white font-bold tracking-[3px] uppercase">Interior Design</h3> */}
           </div>

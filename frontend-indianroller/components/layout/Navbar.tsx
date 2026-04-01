@@ -13,6 +13,15 @@ import {
 } from "react-icons/fa";
 import { GiGearStickPattern, GiRolledCloth, GiWaterRecycling } from "react-icons/gi"; 
 
+const INDUSTRY_SLUGS = [
+  "steel-industry",
+  "textile-industry",
+  "paper-and-packaging-industry",
+  "food-industry",
+  "plywood-industry",
+  "rexene-industry",
+];
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,6 +73,9 @@ const Navbar = () => {
     setIsMenuOpen(false);
     setMobileProductOpen(false);
   };
+
+  const industryItems = categories.filter(c => INDUSTRY_SLUGS.includes(c.slug));
+  const materialItems = categories.filter(c => !INDUSTRY_SLUGS.includes(c.slug));
 
   return (
     <header className="w-full fixed top-0 left-0 z-[100] font-sans">
@@ -142,25 +154,82 @@ const Navbar = () => {
           </button>
         </div>
 
+        {/* --- MEGA MENU --- */}
         <AnimatePresence>
           {showProducts && (
-            <motion.div variants={megaMenuVars} initial="initial" animate="animate" exit="exit" onMouseEnter={() => setShowProducts(true)} onMouseLeave={() => setShowProducts(false)} className="absolute left-0 top-full w-full bg-[#0a0a0b] border-t-2 border-orange-600 shadow-2xl hidden lg:block">
-              <div className="max-w-[1400px] mx-auto p-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {categories.map((item, index) => (
-                  <motion.div key={index} whileHover={{ x: 5 }}>
-                    <Link href={`/products-${item.slug}`} onClick={closeMenus} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/50 hover:bg-orange-600/5 transition-all group">
-                      <div className="text-lg text-orange-500 group-hover:scale-110 transition-transform p-2 bg-orange-500/5 rounded-lg">{getIcon(item.slug)}</div>
-                      <span className="text-[11px] font-black text-gray-300 group-hover:text-white uppercase leading-tight tracking-tight transition-colors">{item.name}</span>
-                    </Link>
-                  </motion.div>
-                ))}
+            <motion.div
+              variants={megaMenuVars}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              onMouseEnter={() => setShowProducts(true)}
+              onMouseLeave={() => setShowProducts(false)}
+              className="absolute left-0 top-full w-full bg-[#0a0a0b] border-t-2 border-orange-600 shadow-2xl hidden lg:block"
+            >
+              <div className="max-w-[1400px] mx-auto p-10 flex gap-12">
+
+                {/* BY INDUSTRY */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-5">
+                    <span className="w-3 h-3 bg-orange-500 rounded-sm inline-block shrink-0"></span>
+                    <h3 className="text-orange-500 text-[11px] font-black uppercase tracking-[3px]">By Industry</h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {industryItems.map((item, index) => (
+                      <motion.div key={index} whileHover={{ x: 5 }}>
+                        <Link
+                          href={`/products-${item.slug}`}
+                          onClick={closeMenus}
+                          className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/50 hover:bg-orange-600/5 transition-all group"
+                        >
+                          <div className="text-lg text-orange-500 group-hover:scale-110 transition-transform p-2 bg-orange-500/5 rounded-lg shrink-0">
+                            {getIcon(item.slug)}
+                          </div>
+                          <span className="text-[11px] font-black text-gray-300 group-hover:text-white uppercase leading-tight tracking-tight transition-colors">
+                            {item.name}
+                          </span>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="w-px bg-white/10 self-stretch"></div>
+
+                {/* BY MATERIAL */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-5">
+                    <span className="w-3 h-3 bg-orange-500 rounded-sm inline-block shrink-0"></span>
+                    <h3 className="text-orange-500 text-[11px] font-black uppercase tracking-[3px]">By Material</h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {materialItems.map((item, index) => (
+                      <motion.div key={index} whileHover={{ x: 5 }}>
+                        <Link
+                          href={`/products-${item.slug}`}
+                          onClick={closeMenus}
+                          className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/50 hover:bg-orange-600/5 transition-all group"
+                        >
+                          <div className="text-lg text-orange-500 group-hover:scale-110 transition-transform p-2 bg-orange-500/5 rounded-lg shrink-0">
+                            {getIcon(item.slug)}
+                          </div>
+                          <span className="text-[11px] font-black text-gray-300 group-hover:text-white uppercase leading-tight tracking-tight transition-colors">
+                            {item.name}
+                          </span>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* --- MOBILE SIDEBAR WITH ENHANCED ANIMATION --- */}
+      {/* --- MOBILE SIDEBAR --- */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -193,29 +262,35 @@ const Navbar = () => {
                 </motion.div>
               ))}
               
-              {/* Mobile Products Section with Slide */}
+              {/* Mobile Products Section */}
               <motion.div 
-                 initial={{ x: 50, opacity: 0 }} 
-                 animate={{ x: 0, opacity: 1 }} 
-                 transition={{ delay: 0.4 }}
-                 className="pt-6 border-t border-white/10"
+                initial={{ x: 50, opacity: 0 }} 
+                animate={{ x: 0, opacity: 1 }} 
+                transition={{ delay: 0.4 }}
+                className="pt-6 border-t border-white/10"
               >
-                 <button 
-                   onClick={() => setMobileProductOpen(!mobileProductOpen)}
-                   className="flex items-center justify-between w-full text-4xl font-black text-orange-500 italic uppercase tracking-tighter"
-                 >
-                   PRODUCTS <FaChevronDown className={`transition-transform duration-300 ${mobileProductOpen ? 'rotate-180' : ''}`} />
-                 </button>
-                 
-                 <AnimatePresence>
-                   {mobileProductOpen && (
-                     <motion.div 
-                       initial={{ height: 0, opacity: 0 }}
-                       animate={{ height: "auto", opacity: 1 }}
-                       exit={{ height: 0, opacity: 0 }}
-                       className="overflow-hidden mt-4 space-y-3"
-                     >
-                        {categories.map((cat, idx) => (
+                <button 
+                  onClick={() => setMobileProductOpen(!mobileProductOpen)}
+                  className="flex items-center justify-between w-full text-4xl font-black text-orange-500 italic uppercase tracking-tighter"
+                >
+                  PRODUCTS <FaChevronDown className={`transition-transform duration-300 ${mobileProductOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                <AnimatePresence>
+                  {mobileProductOpen && (
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden mt-4"
+                    >
+                      {/* BY INDUSTRY heading */}
+                      <div className="flex items-center gap-2 mb-3 mt-2">
+                        <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm inline-block shrink-0"></span>
+                        <span className="text-orange-500 text-[10px] font-black uppercase tracking-[3px]">By Industry</span>
+                      </div>
+                      <div className="space-y-2 mb-5">
+                        {industryItems.map((cat, idx) => (
                           <Link 
                             key={idx} 
                             href={`/products-${cat.slug}`} 
@@ -226,9 +301,29 @@ const Navbar = () => {
                             {cat.name}
                           </Link>
                         ))}
-                     </motion.div>
-                   )}
-                 </AnimatePresence>
+                      </div>
+
+                      {/* BY MATERIAL heading */}
+                      <div className="flex items-center gap-2 mb-3 mt-2 border-t border-white/10 pt-4">
+                        <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm inline-block shrink-0"></span>
+                        <span className="text-orange-500 text-[10px] font-black uppercase tracking-[3px]">By Material</span>
+                      </div>
+                      <div className="space-y-2">
+                        {materialItems.map((cat, idx) => (
+                          <Link 
+                            key={idx} 
+                            href={`/products-${cat.slug}`} 
+                            onClick={closeMenus}
+                            className="flex items-center gap-3 p-3 bg-white/5 rounded-lg text-gray-300 text-sm font-bold uppercase italic"
+                          >
+                            <span className="text-orange-500">{getIcon(cat.slug)}</span>
+                            {cat.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             </div>
 
