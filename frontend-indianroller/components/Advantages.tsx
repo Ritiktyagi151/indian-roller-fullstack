@@ -97,7 +97,7 @@ export default function AdvantagesSection() {
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: false }} 
+          viewport={{ once: false }}     
           transition={{ duration: 0.8, delay: 0.3 }}
           className="relative z-10 w-full lg:w-1/2 p-8 md:p-12 lg:p-24 text-white"
         >
