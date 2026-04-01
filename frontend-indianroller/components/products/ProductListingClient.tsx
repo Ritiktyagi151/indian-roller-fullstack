@@ -19,8 +19,8 @@ export default function ProductListingClient({ categorySlug, initialProducts = [
       <div className="w-full h-[450px] relative">
   <img
     className="w-full  h-[450px]"
-    src="https://www.analog.com/en/_/media/project/analogweb/analogweb/solutions-overview/industry-overview-images/industrial-automation.jpg?rev=fdfa1709bb424bc2b3ea10b7825abcd9&sc_lang=en&la=en&h=498&w=2560&hash=7BD8254A3F5A7B67680CE596A2BDBB08"
-    alt=""
+    src="/banners/productpage-banner.webp"
+    alt="product banner"
   />
 
   {/* Text Overlay */}

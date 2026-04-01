@@ -90,7 +90,7 @@ export default function AdvantagesSection() {
           transition={{ duration: 1.5 }}
           className="absolute inset-0 z-0"
         >
-          <Image src="/roller-factory-img.webp" alt="bg" fill className="object-cover" />
+          <Image src="/homepage-img/factory-area.JPG" alt="bg" fill className="object-cover" />
           <div className="absolute inset-0 bg-orange-500/90 mix-blend-multiply"></div>
         </motion.div>
 

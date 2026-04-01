@@ -54,7 +54,7 @@ const productData = [
     slug: "textile-industry",
     cat: "industries",
     desc: "FDA-compliant food-grade rollers for bakery, confectionery, and dairy processing lines. Non-toxic, easy-clean silicone formulations.",
-    images: ["/product-img/mangle-squeeze-roller.png", "/product-img/merceriser-roller.png"],
+    images: ["/product-img/mangle-squeeze-roller.png"],
     tags: ["Textile Mills"],
     specs: [{ val: "Mangle Squeeze Roller, Merceriser Roller", lbl: "Material" }, { val: "White", lbl: "Colour" }],
     isNew: true,

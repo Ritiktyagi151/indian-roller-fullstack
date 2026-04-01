@@ -3,10 +3,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, Variants } from "framer-motion";
 
 const carouselSlides = [
-  { src: "/about-img/about-bg.jpg", label: "Precision Engineering" },
-  { src: "/about-img/about-bg.jpg", label: "Precision Engineering" },
-  { src: "/about-img/about-bg.jpg", label: "Precision Engineering" },
-  { src: "/about-img/about-bg.jpg", label: "Precision Engineering" },
+  { src: "/homepage-img/factory-view.JPG", label: "Precision Engineering" },
+  { src: "/homepage-img/factory-view3.JPG", label: "Precision Engineering" },
+  { src: "/homepage-img/factory-view2.JPG", label: "Precision Engineering" },
+  { src: "/homepage-img/factory-view4.JPG", label: "Precision Engineering" },
+  { src: "/homepage-img/factory-view5.JPG", label: "Precision Engineering" },
+
   
 ];
 
@@ -147,37 +149,57 @@ const AboutSection = () => {
             <div className="col-span-12 md:col-span-5 bg-orange-500 flex flex-col justify-between h-[200px] md:h-[450px] p-8">
 
               {/* Carousel — 3 boxes side by side, sits at top */}
-              <div className="flex flex-col gap-3">
-                <div className="flex gap-2">
-                  {visibleSlides.map((slide, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 overflow-hidden"
-                      style={{ height: "120px" }}
-                    >
-                      <img
-                        src={slide.src}
-                        alt={slide.label}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
+             <div className="flex flex-col gap-3">
+  <div className="flex flex-col gap-2">
+    {/* Row 1 */}
+    <div className="flex gap-2">
+      {visibleSlides.slice(0, Math.ceil(visibleSlides.length / 2)).map((slide, i) => (
+        <div
+          key={i}
+          className="flex-1 overflow-hidden"
+          style={{ height: "120px" }}
+        >
+          <img
+            src={slide.src}
+            alt={slide.label}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
 
-                {/* Dot indicators */}
-                <div className="flex gap-2 justify-end">
-                  {carouselSlides.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => goTo(i)}
-                      className={`w-2 h-2 rounded-full border-none transition-all duration-300 ${
-                        i === current ? "bg-white scale-125" : "bg-white/40"
-                      }`}
-                      aria-label={`Go to slide ${i + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
+    {/* Row 2 */}
+    <div className="flex gap-2">
+      {visibleSlides.slice(Math.ceil(visibleSlides.length / 2)).map((slide, i) => (
+        <div
+          key={i}
+          className="flex-1 overflow-hidden"
+          style={{ height: "120px" }}
+        >
+          <img
+            src={slide.src}
+            alt={slide.label}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Dot indicators */}
+  {/* <div className="flex gap-2 justify-end">
+    {carouselSlides.map((_, i) => (
+      <button
+        key={i}
+        onClick={() => goTo(i)}
+        className={`w-2 h-2 rounded-full border-none transition-all duration-300 ${
+          i === current ? "bg-white scale-125" : "bg-white/40"
+        }`}
+        aria-label={`Go to slide ${i + 1}`}
+      />
+    ))}
+  </div> */}
+</div>
 
               {/* Footer Text — sits at bottom */}
               <div>
