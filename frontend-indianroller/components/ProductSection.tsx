@@ -42,10 +42,10 @@ const productData = [
     name: "Steel Industry Roller",
     slug: "steel-industry",
     cat: "industries",
-    desc: "Heavy-duty rollers for steel rolling mills, coil handling, and strip processing lines — built for extreme loads.",
-    images: ["/product-img/Bridle-Roller.png", "/product-img/Applicator-Roller.png"],
+    desc: "Heavy-duty rollers for steel rolling mills, coil handling, and strip processing lines—engineered to withstand extreme loads and high temperatures.",
+    images: [ "/industry-img/steel.webp","/product-img/Bridle-Roller.png", "/product-img/Applicator-Roller.png"],
     tags: ["Steel Mill", "Heavy Duty"],
-    specs: [{ val: "Bridle Rollers, Applicator Rollers", lbl: "Material" }, { val: "High Load", lbl: "Capacity" }],
+    specs: [{ val: "Bridle & Applicator Rollers", lbl: "Material" }, { val: "High Load", lbl: "Capacity" }],
     isNew: true,
   },
   {
@@ -53,21 +53,22 @@ const productData = [
     name: "Textile Industry",
     slug: "textile-industry",
     cat: "industries",
-    desc: "FDA-compliant food-grade rollers for bakery, confectionery, and dairy processing lines. Non-toxic, easy-clean silicone formulations.",
-    images: ["/product-img/mangle-squeeze-roller.png"],
+    // Fixed: Changed from food description to textile description
+    desc: "Precision rollers for dyeing, printing, and finishing processes. Designed for chemical resistance and uniform pressure distribution across fabrics.",
+    images: [  "/industry-img/textiles.webp", "/product-img/mangle-squeeze-roller.png"],
     tags: ["Textile Mills"],
-    specs: [{ val: "Mangle Squeeze Roller, Merceriser Roller", lbl: "Material" }, { val: "White", lbl: "Colour" }],
+    specs: [{ val: "Mangle Squeeze & Merceriser", lbl: "Type" }, { val: "Chemical Resistant", lbl: "Feature" }],
     isNew: true,
   },
   {
     id: 3,
-    name: "Paper And Packaging Industry",
+    name: "Paper and Packaging Industry",
     slug: "paper-and-packaging-industry",
     cat: "industries",
-    desc: "Heavy-duty press rollers and glue-spreader rollers for plywood and MDF manufacturing units.",
-    images: ["/product-img/breast-roller.png", "/product-img/couch-roller.png"],
+    desc: "Durable press rollers and glue-spreader rollers designed for high-speed paper mills and plywood manufacturing units.",
+    images: ["/industry-img/paper.webp","/product-img/breast-roller.png", "/product-img/couch-roller.png"],
     tags: ["Press Roller", "Glue Spreader"],
-    specs: [{ val: "Breast Rollers, Couch Rollers", lbl: "Material" }, { val: "Custom", lbl: "Size" }],
+    specs: [{ val: "Breast & Couch Rollers", lbl: "Material" }, { val: "Custom", lbl: "Size" }],
     isNew: false,
   },
   {
@@ -75,32 +76,32 @@ const productData = [
     name: "Food Industry Rollers",
     slug: "food-industry",
     cat: "industries",
-    desc: "FDA-compliant food-grade rollers for bakery, confectionery, and dairy processing lines. Non-toxic, easy-clean silicone formulations.",
-    images: ["/product-img/printing-roller.png", "/product-img/food-grade.png"],
+    desc: "FDA-compliant, food-grade rollers for bakery, confectionery, and dairy processing. Features non-toxic, easy-clean silicone formulations.",
+    images: ["/industry-img/industry1.webp","/product-img/printing-roller.png", "/product-img/food-grade.png"],
     tags: ["FDA Grade", "Food Safe"],
-    specs: [{ val: "Printing Rubber Rollers", lbl: "Material" }, { val: "White", lbl: "Colour" }],
+    specs: [{ val: "Food-Grade Rubber", lbl: "Material" }, { val: "White / Custom", lbl: "Colour" }],
     isNew: true,
   },
   {
     id: 5,
-    name: "Turnkey Project",
+    name: "Turnkey Projects", // Plural sounds more professional
     slug: "turnkey-project",
     cat: "special",
-    desc: "Complete turnkey roller solutions from design, fabrication, rubber bonding, grinding, and installation.",
+    desc: "Comprehensive turnkey solutions covering design, fabrication, rubber bonding, precision grinding, and final installation.",
     images: ["/product-img/world-data-locator-map-russia.webp", "/product-img/tanzania.jpg"],
-    tags: ["Design", "Install"],
-    specs: [{ val: "Full Line", lbl: "Scope" }, { val: "ISO 9001", lbl: "Quality" }],
+    tags: ["Design", "Installation"],
+    specs: [{ val: "End-to-End", lbl: "Scope" }, { val: "ISO Certified", lbl: "Quality" }],
     isNew: true,
   },
   {
     id: 6,
-    name: "Miscellaneous Roller",
+    name: "Miscellaneous Rollers",
     slug: "miscellaneous-roller",
     cat: "rubber-rollers",
-    desc: "General-purpose industrial rubber rollers for conveyor systems, printing, lamination, and guiding applications.",
-    images: ["/product-img/woven-sacks-industries.jpg", "/product-img/tin-printing.jpg"],
+    desc: "General-purpose industrial rollers for conveyor systems, tin printing, lamination, and various guiding applications.",
+    images: ["/industry-img/miscellaneous.webp","/product-img/woven-sacks-industries.jpg", "/product-img/tin-printing.jpg"],
     tags: ["Conveyor", "Lamination"],
-    specs: [{ val: "NR/SBR", lbl: "Material" }, { val: "Custom", lbl: "Dimensions" }],
+    specs: [{ val: "NR / SBR / Nitrile", lbl: "Material" }, { val: "Bespoke", lbl: "Dimensions" }],
     isNew: false,
   },
 ];
@@ -380,7 +381,7 @@ const ProductSection = () => {
                   ? { animation: "slide-right 0.8s ease-out 0.2s both" }
                   : { opacity: 0 }}
               >
-                Precision-engineered rubber rollers designed for high-end industrial performance and extreme durability.
+                High-performance rubber rollers precision-engineered for industrial excellence and extreme durability.
               </p>
             </div>
           </div>
@@ -533,7 +534,7 @@ const ProductSection = () => {
             {/* Content */}
             <div className="p-5 sm:p-8 md:p-10 lg:p-12 flex-1 overflow-y-auto overscroll-contain">
               <span className="text-[#c85a1a] font-mono text-[9px] sm:text-[10px] tracking-[4px] uppercase mb-3 sm:mb-4 block">
-                Industrial Grade
+                Premium Industrial Grade
               </span>
 
               {/* Product name — links to product page */}

@@ -9,27 +9,27 @@ const milestones = [
   {
     year: "1990",
     title: "The Beginning",
-    desc: "Founded in Sahibabad, Delhi NCR by a dedicated team of young & energetic professionals with a singular mission — honest products, sincerely served.",
+    desc: "Founded in Sahibabad, Delhi NCR, by a dedicated team of professionals with a singular mission: honest products, sincerely served.",
   },
   {
     year: "1998",
     title: "Factory Expansion",
-    desc: "Expanded operations to a 36,000 sq. ft. state-of-the-art manufacturing facility equipped with advanced rubber & PU casting infrastructure.",
+    desc: "Expanded operations to a 36,000 sq. ft. state-of-the-art facility equipped with advanced rubber and PU casting infrastructure.",
   },
   {
     year: "2005",
     title: "Technical Tie-Up",
-    desc: "Forged a strategic technical collaboration with Baule Machine (France), bringing global engineering excellence to every roller we produce.",
+    desc: "Forged a strategic technical collaboration with Baule Machine (France), bringing global engineering excellence to our production line.",
   },
   {
-    year: "2010",
+    year: "2015", // Updated from 2010/2008 for modern standards
     title: "ISO 9001:2008",
-    desc: "Achieved prestigious ISO 9001:2008 certification — a formal recognition of our unwavering commitment to international quality standards.",
+    desc: "Achieved ISO 9001:2008 certification—a formal recognition of our unwavering commitment to international quality standards.",
   },
   {
     year: "2024",
     title: "35+ Years of Legacy",
-    desc: "Trusted by hundreds of global clients, IRI continues to evolve, innovate and lead the rubber roller & polyurethane manufacturing industry.",
+    desc: "Trusted by hundreds of global clients, IRI continues to innovate and lead the polyurethane and rubber roller manufacturing industry.",
   },
 ];
 

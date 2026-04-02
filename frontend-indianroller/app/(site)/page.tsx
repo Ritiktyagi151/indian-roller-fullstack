@@ -31,7 +31,7 @@ export default function Home() {
       <TeamSection/>
       <Advantages />
       <IndustrialSourcesSection/>
-      <Projects/>
+      {/* <Projects/> */}
       <Partners/>
       <Insights/>
       <WhyChooseUs/>

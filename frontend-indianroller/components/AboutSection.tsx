@@ -90,20 +90,18 @@ const AboutSection = () => {
             viewport={{ once: false, amount: 0.8 }}
           >
             <p className="text-gray-500 font-bold text-sm leading-relaxed mb-6 uppercase tracking-wider italic border-l-4 border-orange-500 pl-4">
-              With this simple philosophy, the brand Indian Roller was born in 1990, as a rubber roller and Polyurethane manufacturing company by a dedicated team of young & energetic professionals.
+              Guided by a simple philosophy, the Indian Roller brand was established in 1990 as a rubber and polyurethane roller manufacturing company by a dedicated team of young, energetic professionals.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-400 text-[13px] leading-7 font-medium">
               <div className="space-y-4">
                 <p>
-                  Our unit is located in a 36,000 sq. Feet area in the industrial town of Sahibabad, Dist. Ghaziabad (Delhi & NCR).
-                  Equipped with state-of-the-art machinery, we ensure every product meets international standards.
+                 Our facility is located across a 36,000 sq. ft. area in the industrial town of Sahibabad, Ghaziabad (Delhi NCR). Equipped with state-of-the-art machinery, we ensure every product meets international quality standards.
                 </p>
               </div>
               <div className="space-y-4">
                 <p>
-                  The mission was to create a good product that is honestly made and sincerely served.
-                  Today, we are a leading name in the industry, trusted by hundreds of global clients.
+                  Our mission was to create high-quality products, honestly made and sincerely served. Today, we are a leading name in the industry, trusted by hundreds of global clients.
                 </p>
               </div>
             </div>
@@ -111,7 +109,7 @@ const AboutSection = () => {
             {/* Stats Section */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12 border-t border-gray-100 pt-8">
               <div>
-                <h3 className="text-3xl font-black text-black">30+</h3>
+                <h3 className="text-3xl font-black text-black">35+</h3>
                 <p className="text-orange-500 text-[10px] uppercase tracking-widest font-bold">Years Experience</p>
               </div>
               <div>
@@ -146,7 +144,7 @@ const AboutSection = () => {
             </div>
 
             {/* Orange Block */}
-            <div className="col-span-12 md:col-span-5 bg-orange-500 flex flex-col justify-between h-[200px] md:h-[450px] p-8">
+            <div className="col-span-12 md:col-span-5 bg-orange-500 flex flex-col justify-between h-[200px] md:h-[450px] p-5">
 
               {/* Carousel — 3 boxes side by side, sits at top */}
              <div className="flex flex-col gap-3">
@@ -174,7 +172,7 @@ const AboutSection = () => {
         <div
           key={i}
           className="flex-1 overflow-hidden"
-          style={{ height: "120px" }}
+          style={{ height: "160px" }}
         >
           <img
             src={slide.src}
@@ -206,7 +204,7 @@ const AboutSection = () => {
                 <h4 className="text-white text-2xl font-black uppercase leading-tight">
                   Innovation <br /> In Every <br /> Roller.
                 </h4>
-                <div className="w-12 h-1 bg-white mt-4" />
+                <div className="w-12 h-1 bg-white mt-3" />
               </div>
 
             </div>
