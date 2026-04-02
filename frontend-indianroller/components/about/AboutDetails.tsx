@@ -65,7 +65,7 @@ const AboutDetails = () => {
 
             {/* Main Heading */}
             <h2 className="text-3xl md:text-5xl font-black text-black uppercase tracking-tighter leading-tight mb-8">
-              Greeting From All Of Us IRI Is An <span className="text-orange-500">ISO 9001 : 2008 Certified</span> Company
+              Greetings From All Of Us IRI Is An <span className="text-orange-500">ISO 9001 : 2008 Certified</span> Company
             </h2>
 
             {/* Description Text */}

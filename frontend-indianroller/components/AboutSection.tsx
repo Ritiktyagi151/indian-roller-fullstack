@@ -68,7 +68,7 @@ const AboutSection = () => {
               viewport={{ once: false, amount: 0.8 }}
               className="text-4xl md:text-5xl font-black uppercase leading-tight tracking-tighter text-black"
             >
-              Greeting From <br /> All Of Us <br />
+              Greetings From <br /> All Of Us <br />
               <span className="text-orange-500 text-3xl md:text-4xl">IRI ISO 9001:2008 Certified</span>
             </motion.h2>
 
