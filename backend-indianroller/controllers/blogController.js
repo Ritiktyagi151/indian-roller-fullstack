@@ -14,15 +14,8 @@ const slugify = (text) => {
 // --- 🚀 CREATE BLOG ---
 exports.createBlog = async (req, res) => {
   try {
-    const {
-      title,
-      slug,
-      author,
-      customDate,
-      category,
-      description,
-      status,
-    } = req.body;
+    const { title, slug, author, customDate, category, description, status } =
+      req.body;
 
     if (!title || !category || !description) {
       return res.status(400).json({
@@ -51,10 +44,14 @@ exports.createBlog = async (req, res) => {
   }
 };
 
-// --- 🔍 GET ALL BLOGS ---
+// --- 🔍 GET ALL BLOGS (Optimized - sirf zaruri fields) ---
 exports.getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find().sort({ customDate: -1, createdAt: -1 });
+    const blogs = await Blog.find()
+      .select(
+        "title slug image shortDescription category customDate createdAt status author",
+      )
+      .sort({ customDate: -1, createdAt: -1 });
     res.status(200).json(blogs);
   } catch (err) {
     res.status(500).json(err);
@@ -120,7 +117,7 @@ exports.updateBlog = async (req, res) => {
       { $set: updateData },
       {
         new: true,
-        returnDocument: "after", // 🔥 Deprecation warning fix
+        returnDocument: "after",
       },
     );
     res.status(200).json(updated);

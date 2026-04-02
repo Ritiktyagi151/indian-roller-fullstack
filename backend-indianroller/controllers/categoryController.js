@@ -24,10 +24,12 @@ exports.createCategory = async (req, res) => {
   }
 };
 
-// ✅ 2. Get All Categories
+// ✅ 2. Get All Categories - OPTIMIZED (sirf zaruri fields)
 exports.getAllCategories = async (req, res) => {
   try {
-    const categories = await Category.find().sort({ createdAt: -1 });
+    const categories = await Category.find()
+      .select("name slug image description createdAt")
+      .sort({ createdAt: -1 });
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });

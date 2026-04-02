@@ -85,6 +85,7 @@ function normalizeProductData(body, files) {
   return data;
 }
 
+// ✅ OPTIMIZED - Sirf zaruri fields fetch karta hai
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find()
@@ -103,7 +104,9 @@ exports.createProduct = async (req, res) => {
     const data = normalizeProductData(req.body, req.files || {});
 
     if (!data.name || !data.category) {
-      return res.status(400).json({ message: "Product name and category are required." });
+      return res
+        .status(400)
+        .json({ message: "Product name and category are required." });
     }
 
     const product = await Product.create(data);
@@ -113,14 +116,18 @@ exports.createProduct = async (req, res) => {
   }
 };
 
+// ✅ OPTIMIZED - Pehle category find karo, phir direct DB filter (JS filter hataya)
 exports.getProductsByCategory = async (req, res) => {
   try {
     const { categorySlug } = req.params;
-    const products = await Product.find().populate("category");
-    const filtered = products.filter(
-      (product) => product.category && product.category.slug === categorySlug,
-    );
-    res.json(filtered || []);
+    const Category = require("../models/Category");
+    const category = await Category.findOne({ slug: categorySlug });
+    if (!category) return res.json([]);
+    const products = await Product.find({ category: category._id })
+      .select("name slug image shortDescription category")
+      .populate("category", "name slug")
+      .sort({ createdAt: -1 });
+    res.json(products || []);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
