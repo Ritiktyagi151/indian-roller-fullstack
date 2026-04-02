@@ -88,7 +88,8 @@ function normalizeProductData(body, files) {
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find()
-      .populate("category")
+      .select("name slug image shortDescription category")
+      .populate("category", "name slug")
       .populate("relatedProducts", "name slug image")
       .sort({ createdAt: -1 });
     res.json(products || []);
