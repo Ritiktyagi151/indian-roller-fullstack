@@ -33,11 +33,11 @@ const staggerContainer: Variants = {
 };
 
 const plants = [
-  { id: "01", name: "Unit - 1 (Sahibabad)", address: "Plot No. 62/2/1&2, Site IV, Industrial Area, Sahibabad-201010 UP", phone: "+91-9540408844", img: "/team-img/shahibabad.JPG" },
-  { id: "02", name: "Unit - 2 (Jamshedpur)", address: "Shed no.1, Plot No-743, Ghamaria, Jamshedpur, Jharkhand - 832108", phone: "+91-8744885000", img: "/team-img/jamshedpur-team.JPG" },
+  { id: "01", name: "Unit - 1 (Sahibabad)", address: "Plot No. 62/2/1&2, Site IV, Industrial Area, Sahibabad-201010 UP", phone: "+91-9540408844", img: "/team-img/shahibabad.png" },
+  { id: "02", name: "Unit - 2 (Jamshedpur)", address: "Shed no.1, Plot No-743, Ghamaria, Jamshedpur, Jharkhand - 832108", phone: "+91-8744885000", img: "/team-img/jamshedpur-plant.png" },
   { id: "03", name: "Unit - 3 (Ahmedabad)", address: "Plot No. 226 to 229, Gopalcharan-2, Industrial Park, Ahmedabad-382433", phone: "+91-9376921082", img: "/team-img/ahmdabad.JPG" },
-  { id: "04", name: "Unit - 4 (Ballari)", address: "Property No-5331481412, Kurekuppa Village, Sandur, Ballari, Karnataka - 583119", phone: "+91-9540404842", img: "/team-img/kanatka2.JPG" },
-  { id: "05", name: "Unit - 5 (Bangladesh)", address: "South Kashimpur Panchagachia, Mohipal Feni, Bangladesh", phone: "+880-01741064260", img: "/about-img/about-bg.jpg" },
+  { id: "04", name: "Unit - 4 (Ballari)", address: "Property No-5331481412, Kurekuppa Village, Sandur, Ballari, Karnataka - 583119", phone: "+91-9540404842", img: "/team-img/kanatka2.png" },
+  { id: "05", name: "Unit - 5 (Bangladesh)", address: "South Kashimpur Panchagachia, Mohipal Feni, Bangladesh", phone: "+880-01741064260", img: "/team-img/bangladesh.png" },
 ];
 
 export default function ContactClient() {

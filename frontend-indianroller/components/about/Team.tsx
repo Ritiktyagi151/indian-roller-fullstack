@@ -8,14 +8,14 @@ const factoryData = [
     name: "Unit - 1 (Sahibabad)",
     location: "Greater Noida, UP",
     description: "Plot No. 62/2/1&2, Site IV, Industrial Area, Sahibabad-201010 UP.",
-    image: "/team-img/shahibabad.JPG", // Yahan apni 1st factory ki team photo lagayein
+    image: "/team-img/shahibabad.png", // Yahan apni 1st factory ki team photo lagayein
   },
   {
     id: "02",
     name: "Unit - 2 (Jamshedpur)",
     location: "Shed no.1, Plot No-743, Ghamaria, Jamshedpur, Jharkhand - 832108",
     description: "Specialized in high-precision rubber and polymer coating.",
-    image: "/team-img/jamshedpur-team.JPG", // 2nd factory
+    image: "/team-img/jamshedpur-plant.png", // 2nd factory
   },
   {
     id: "03",
@@ -29,14 +29,14 @@ const factoryData = [
     name: "Unit - 4 (Ballari)",
     location: "Property No-5331481412, Kurekuppa Village, Sandur, Ballari, Karnataka - 583119",
     description: "Innovation lab and final testing facility for all products.",
-    image: "/team-img/kanatka2.JPG", // 4th factory
+    image: "/team-img/kanatka2.png", // 4th factory
   },
    {
     id: "05",
     name: "Unit - 5 (Bangladesh)",
     location: "South Kashimpur Panchagachia, Mohipal Feni, Bangladesh",
     description: "Innovation lab and final testing facility for all products.",
-    image: "/about-img/about-bg.jpg", // 4th factory
+    image: "/team-img/bangladesh.png", // 4th factory
   },
 ];
 

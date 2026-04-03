@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,10 +16,6 @@ import Link from "next/link";
      "fade-out":       { "0%": { opacity:"1" },                                "100%": { opacity:"0" } },
      "card-in":        { "0%": { opacity:"0", transform:"translateY(30px)" },  "100%": { opacity:"1", transform:"translateY(0)" } },
      "width-grow":     { "0%": { width:"0px" },                                "100%": { width:"80px" } },
-     "slide-next":     { "0%": { transform:"translateX(100%)",  opacity:"0" }, "100%": { transform:"translateX(0)",    opacity:"1" } },
-     "slide-prev":     { "0%": { transform:"translateX(-100%)", opacity:"0" }, "100%": { transform:"translateX(0)",    opacity:"1" } },
-     "exit-next":      { "0%": { transform:"translateX(0)",     opacity:"1" }, "100%": { transform:"translateX(-100%)",opacity:"0" } },
-     "exit-prev":      { "0%": { transform:"translateX(0)",     opacity:"1" }, "100%": { transform:"translateX(100%)", opacity:"0" } },
    },
    animation: {
      "slide-left":     "slide-left 0.8s ease-out both",
@@ -31,8 +27,6 @@ import Link from "next/link";
      "fade-out":       "fade-out 0.3s ease-out both",
      "card-in":        "card-in 0.5s ease-out both",
      "width-grow":     "width-grow 1s ease-out 0.5s both",
-     "slide-next":     "slide-next 0.45s cubic-bezier(0.32,0.72,0,1) both",
-     "slide-prev":     "slide-prev 0.45s cubic-bezier(0.32,0.72,0,1) both",
    },
 ────────────────────────────────────────────────────────────────────────────── */
 
@@ -43,7 +37,7 @@ const productData = [
     slug: "steel-industry",
     cat: "industries",
     desc: "Heavy-duty rollers for steel rolling mills, coil handling, and strip processing lines—engineered to withstand extreme loads and high temperatures.",
-    images: [ "/industry-img/steel.webp","/product-img/Bridle-Roller.png", "/product-img/Applicator-Roller.png"],
+    image: "/industry-img/steel.webp",
     tags: ["Steel Mill", "Heavy Duty"],
     specs: [{ val: "Bridle & Applicator Rollers", lbl: "Material" }, { val: "High Load", lbl: "Capacity" }],
     isNew: true,
@@ -53,9 +47,8 @@ const productData = [
     name: "Textile Industry",
     slug: "textile-industry",
     cat: "industries",
-    // Fixed: Changed from food description to textile description
     desc: "Precision rollers for dyeing, printing, and finishing processes. Designed for chemical resistance and uniform pressure distribution across fabrics.",
-    images: [  "/industry-img/textiles.webp", "/product-img/mangle-squeeze-roller.png"],
+    image: "/industry-img/textiles.webp",
     tags: ["Textile Mills"],
     specs: [{ val: "Mangle Squeeze & Merceriser", lbl: "Type" }, { val: "Chemical Resistant", lbl: "Feature" }],
     isNew: true,
@@ -66,7 +59,7 @@ const productData = [
     slug: "paper-and-packaging-industry",
     cat: "industries",
     desc: "Durable press rollers and glue-spreader rollers designed for high-speed paper mills and plywood manufacturing units.",
-    images: ["/industry-img/paper.webp","/product-img/breast-roller.png", "/product-img/couch-roller.png"],
+    image: "/industry-img/paper.webp",
     tags: ["Press Roller", "Glue Spreader"],
     specs: [{ val: "Breast & Couch Rollers", lbl: "Material" }, { val: "Custom", lbl: "Size" }],
     isNew: false,
@@ -77,18 +70,18 @@ const productData = [
     slug: "food-industry",
     cat: "industries",
     desc: "FDA-compliant, food-grade rollers for bakery, confectionery, and dairy processing. Features non-toxic, easy-clean silicone formulations.",
-    images: ["/industry-img/industry1.webp","/product-img/printing-roller.png", "/product-img/food-grade.png"],
+    image: "/industry-img/food-industry.png",
     tags: ["FDA Grade", "Food Safe"],
     specs: [{ val: "Food-Grade Rubber", lbl: "Material" }, { val: "White / Custom", lbl: "Colour" }],
     isNew: true,
   },
   {
     id: 5,
-    name: "Turnkey Projects", // Plural sounds more professional
+    name: "Turnkey Projects",
     slug: "turnkey-project",
     cat: "special",
     desc: "Comprehensive turnkey solutions covering design, fabrication, rubber bonding, precision grinding, and final installation.",
-    images: ["/product-img/world-data-locator-map-russia.webp", "/product-img/tanzania.jpg"],
+    image: "/product-img/world-data-locator-map-russia.webp",
     tags: ["Design", "Installation"],
     specs: [{ val: "End-to-End", lbl: "Scope" }, { val: "ISO Certified", lbl: "Quality" }],
     isNew: true,
@@ -99,11 +92,28 @@ const productData = [
     slug: "miscellaneous-roller",
     cat: "rubber-rollers",
     desc: "General-purpose industrial rollers for conveyor systems, tin printing, lamination, and various guiding applications.",
-    images: ["/industry-img/miscellaneous.webp","/product-img/woven-sacks-industries.jpg", "/product-img/tin-printing.jpg"],
+    image: "/industry-img/miscellaneous.webp",
     tags: ["Conveyor", "Lamination"],
     specs: [{ val: "NR / SBR / Nitrile", lbl: "Material" }, { val: "Bespoke", lbl: "Dimensions" }],
     isNew: false,
   },
+   {
+  id: 7,
+  name: "Cement Industry ",
+  slug: "cement-industry",
+  cat: "rubber-rollers",
+  desc: "Heavy-duty rubber rollers designed for the cement industry, built to withstand abrasive materials, high loads, and harsh operating conditions. These rollers are widely used in conveyor systems, clinker handling, raw material transport, and grinding units, ensuring smooth operation, durability, and minimal maintenance in demanding environments.",
+  image: "/industry-img/cememt-industry.png",
+  tags: ["Conveyor", "Clinker Handling", "Heavy Duty", "Abrasion Resistant"],
+  specs: [
+    { val: "NR / SBR / Nitrile / EPDM", lbl: "Material" },
+    { val: "High Abrasion Resistant", lbl: "Surface Property" },
+    { val: "Up to 120°C", lbl: "Temperature Resistance" },
+    { val: "Custom (Bespoke)", lbl: "Dimensions" },
+    { val: "High Load Bearing", lbl: "Capacity" }
+  ],
+  isNew: false,
+}
 ];
 
 const FILTERS = [
@@ -135,150 +145,6 @@ function useInView(margin = "-50px"): [React.RefObject<HTMLDivElement>, boolean]
   }, [margin]);
   return [ref, inView];
 }
-
-/* ─── IMAGE SLIDER ───────────────────────────────────────────────────────────── */
-const SLIDE_DURATION = "0.45s cubic-bezier(0.32,0.72,0,1)";
-
-const ImageSlider = ({
-  images,
-  alt,
-  className = "",
-  autoPlay = false,
-  interval = 3500,
-  showArrowsAlways = false,
-}: {
-  images: string[];
-  alt: string;
-  className?: string;
-  autoPlay?: boolean;
-  interval?: number;
-  showArrowsAlways?: boolean;
-}) => {
-  const [current, setCurrent] = useState(0);
-  const [exitIdx, setExitIdx] = useState<number | null>(null);
-  const [direction, setDirection] = useState<"next" | "prev">("next");
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const total = images.length;
-
-  const go = useCallback(
-    (idx: number, dir: "next" | "prev") => {
-      setExitIdx(current);
-      setDirection(dir);
-      setCurrent((idx + total) % total);
-    },
-    [current, total]
-  );
-
-  const goNext = useCallback((e?: React.MouseEvent) => { e?.stopPropagation(); go(current + 1, "next"); }, [current, go]);
-  const goPrev = useCallback((e?: React.MouseEvent) => { e?.stopPropagation(); go(current - 1, "prev"); }, [current, go]);
-
-  useEffect(() => {
-    if (!autoPlay || total <= 1) return;
-    timerRef.current = setTimeout(goNext, interval);
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-  }, [current, autoPlay, interval, goNext, total]);
-
-  const touchStart = useRef<number | null>(null);
-  const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStart.current === null) return;
-    const diff = touchStart.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) diff > 0 ? goNext() : goPrev();
-    touchStart.current = null;
-  };
-
-  if (total === 0) return null;
-
-  const enterStyle: React.CSSProperties = exitIdx !== null
-    ? { animation: `${direction === "next" ? "slide-next" : "slide-prev"} ${SLIDE_DURATION} both` }
-    : {};
-
-  const exitStyle: React.CSSProperties = {
-    animation: `${direction === "next" ? "exit-next" : "exit-prev"} ${SLIDE_DURATION} both`,
-  };
-
-  const arrowCls = showArrowsAlways ? "opacity-100" : "opacity-0 group-hover:opacity-100";
-
-  return (
-    <div
-      className={`relative w-full h-full overflow-hidden select-none ${className}`}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      {exitIdx !== null && (
-        <div
-          className="absolute inset-0"
-          style={exitStyle}
-          onAnimationEnd={() => setExitIdx(null)}
-        >
-          <Image
-            src={images[exitIdx]}
-            alt={`${alt} — ${exitIdx + 1}`}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover"
-          />
-        </div>
-      )}
-
-      <div key={current} className="absolute inset-0" style={enterStyle}>
-        <Image
-          src={images[current]}
-          alt={`${alt} — ${current + 1}`}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover"
-          priority={current === 0}
-        />
-      </div>
-
-      {total > 1 && (
-        <>
-          <button
-            onClick={goPrev}
-            aria-label="Previous image"
-            className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white/80 hover:bg-white text-black transition-all duration-200 ${arrowCls} hover:scale-110 shadow-md`}
-            style={{ backdropFilter: "blur(4px)" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-              <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <button
-            onClick={goNext}
-            aria-label="Next image"
-            className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white/80 hover:bg-white text-black transition-all duration-200 ${arrowCls} hover:scale-110 shadow-md`}
-            style={{ backdropFilter: "blur(4px)" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-              <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1 sm:gap-1.5">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={(e) => { e.stopPropagation(); go(i, i > current ? "next" : "prev"); }}
-                aria-label={`Go to image ${i + 1}`}
-                className={`rounded-full transition-all duration-300 ${
-                  i === current ? "w-4 sm:w-5 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
-                }`}
-              />
-            ))}
-          </div>
-
-          <div
-            className="absolute top-2 right-2 z-10 bg-black/50 text-white text-[8px] sm:text-[9px] font-mono px-1.5 sm:px-2 py-0.5 rounded-full"
-            style={{ backdropFilter: "blur(4px)" }}
-          >
-            {current + 1}/{total}
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
 
 /* ─── MAIN COMPONENT ─────────────────────────────────────────────────────────── */
 const ProductSection = () => {
@@ -328,10 +194,6 @@ const ProductSection = () => {
         @keyframes fade-out-bg    { from{opacity:1} to{opacity:0} }
         @keyframes card-in        { from{opacity:0;transform:translateY(30px)}  to{opacity:1;transform:translateY(0)} }
         @keyframes width-grow     { from{width:0px} to{width:80px} }
-        @keyframes slide-next     { from{transform:translateX(100%);opacity:0}  to{transform:translateX(0);opacity:1} }
-        @keyframes slide-prev     { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
-        @keyframes exit-next      { from{transform:translateX(0);opacity:1}     to{transform:translateX(-100%);opacity:0} }
-        @keyframes exit-prev      { from{transform:translateX(0);opacity:1}     to{transform:translateX(100%);opacity:0} }
       `}</style>
 
       <section className="bg-[#fcfaf7] py-10 sm:py-12 md:py-16 font-['DM_Sans']">
@@ -417,14 +279,12 @@ const ProductSection = () => {
             className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5 md:gap-6"
           >
             {filtered.map((p, i) => (
-              /* Entire card is a Link to /products-{slug} */
               <Link
                 key={p.id}
                 href={`/products-${p.slug}`}
                 className="group relative cursor-pointer bg-white border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden rounded-sm block"
                 style={{ animation: `card-in 0.5s ease-out ${i * 0.05}s both` }}
                 onClick={(e) => {
-                  // If user clicks on the image area, open modal instead of navigating
                   const target = e.target as HTMLElement;
                   const isImageArea = target.closest("[data-image-area]");
                   if (isImageArea) {
@@ -436,18 +296,21 @@ const ProductSection = () => {
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] group-hover:opacity-[0.05] transition-opacity" />
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
 
-                {/* Image area — click opens modal, not navigate */}
+                {/* Image area — click opens modal */}
                 <div
                   data-image-area="true"
                   className="relative w-full h-[200px] sm:h-[220px] md:h-[240px] overflow-hidden bg-gray-50 border-b border-gray-50"
                   onClick={(e) => { e.preventDefault(); setSelected(p); }}
                 >
-                  <ImageSlider
-                    images={p.images}
+                  <Image
+                    src={p.image}
                     alt={p.name}
-                    autoPlay={true}
-                    interval={3000 + i * 200}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority={i < 4}
                   />
+
                   {p.isNew && (
                     <span className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 bg-orange-500 text-white text-[7px] sm:text-[8px] px-1.5 sm:px-2 py-0.5 sm:py-1 uppercase tracking-widest font-bold shadow-sm">
                       New
@@ -460,7 +323,7 @@ const ProductSection = () => {
                   </div>
                 </div>
 
-                {/* Text content — clicking navigates to product page */}
+                {/* Text content */}
                 <div className="relative z-10 p-3 sm:p-5 md:p-6 bg-white group-hover:bg-white/95 transition-colors">
                   <h3
                     style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -472,7 +335,6 @@ const ProductSection = () => {
                     {p.desc}
                   </p>
                   <div className="mt-2 sm:mt-5 flex justify-between items-center border-t pt-2 sm:pt-4 border-gray-50">
-                    {/* Category label — also links to product page */}
                     <span className="text-[7px] sm:text-[9px] font-mono text-gray-400 group-hover:text-orange-500 transition-colors uppercase tracking-widest">
                       {p.cat.replace("-", " ")}
                     </span>
@@ -523,11 +385,13 @@ const ProductSection = () => {
 
             {/* Image panel */}
             <div className="relative w-full h-[220px] sm:h-[280px] md:h-auto md:w-1/2 md:min-h-[440px] md:self-stretch flex-shrink-0 overflow-hidden">
-              <ImageSlider
-                images={selected.images}
+              <Image
+                src={selected.image}
                 alt={selected.name}
-                autoPlay={false}
-                showArrowsAlways={true}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+                priority
               />
             </div>
 
@@ -537,7 +401,6 @@ const ProductSection = () => {
                 Premium Industrial Grade
               </span>
 
-              {/* Product name — links to product page */}
               <Link href={`/products-${selected.slug}`}>
                 <h2
                   style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -560,11 +423,6 @@ const ProductSection = () => {
                 ))}
               </div>
 
-              <p className="text-[8px] sm:text-[9px] font-mono text-gray-300 uppercase tracking-widest mb-4 sm:mb-6">
-                {selected.images.length} image{selected.images.length !== 1 ? "s" : ""} — swipe or use arrows to browse
-              </p>
-
-              {/* Enquire Now → navigates to product page */}
               <Link href={`/products-${selected.slug}`}>
                 <button className="w-full bg-[#111] text-white py-3 sm:py-4 text-[9px] sm:text-[10px] font-mono tracking-[3px] sm:tracking-[4px] uppercase hover:text-orange-500 transition-colors">
                   Enquire Now →

@@ -13,7 +13,7 @@ const factoryData = [
     tag: "Uttar Pradesh",
     region: "UP",
     address: "Plot No. 62/2/1&2, Site IV, Industrial Area, Sahibabad-201010 UP.",
-    image: "/team-img/shahibabad.JPG",
+    image: "/team-img/shahibabad.png",
     featured: true,
   },
   {
@@ -23,7 +23,7 @@ const factoryData = [
     tag: "Jharkhand",
     region: "JH",
     address: "Shed no.1, Plot No-743, Ghamaria, Jamshedpur, Jharkhand - 832108",
-    image: "/team-img/jamshedpur-team.JPG",
+    image: "/team-img/jamshedpur-plant.png",
     featured: false,
   },
   {
@@ -43,7 +43,7 @@ const factoryData = [
     tag: "Karnataka",
     region: "KA",
     address: "Property No-5331481412, Kurekuppa Village, Sandur, Ballari, Karnataka - 583119",
-    image: "/team-img/kanatka2.JPG",
+    image: "/team-img/kanatka2.png",
     featured: false,
   },
   {
@@ -53,7 +53,7 @@ const factoryData = [
     tag: "International",
     region: "BD",
     address: "South Kashimpur Panchagachia, Mohipal Feni, Bangladesh",
-    image: "/about-img/about-bg.jpg",
+    image: "/team-img/bangladesh.png",
     featured: false,
   },
 ];

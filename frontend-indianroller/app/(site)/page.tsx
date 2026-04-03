@@ -11,8 +11,12 @@ import TeamSection from "@/components/TeamSection";
 import { getSeoMetadataByPath } from "@/lib/seo";
 import IndustrialSourcesSection from "@/components/IndustrialSourcesSection";
 import ProductSection from "@/components/ProductSection";
-import JourneyMissionVision from "@/components/Journey";
+import JourneyMissionVision from "@/components/JourneyTimeline";
 import LocationSection from "@/components/Location";
+import DirectorMessageH from "@/components/DirectorMsg";
+import MissionVision from "@/components/Missionvision";
+import JourneyTimeline from "@/components/JourneyTimeline";
+import SShapeTimeline from "@/components/JourneyTimeline";
 
 export async function generateMetadata() {
   return getSeoMetadataByPath("/", {
@@ -27,7 +31,10 @@ export default function Home() {
       <Hero />
      <AboutSection />
      <ProductSection/>
-      <JourneyMissionVision/>
+     <DirectorMessageH/>
+     <SShapeTimeline/>
+      {/* <JourneyTimeline/> */}
+      <MissionVision/>
       <TeamSection/>
       <Advantages />
       {/* <IndustrialSourcesSection/> */}

@@ -6,7 +6,7 @@ const factoryGallery = [
     id: "01",
     name: "Sahibabad Unit",
     location: "Ghaziabad, Uttar Pradesh",
-    image: "/team-img/shahibabad.JPG",
+    image: "/team-img/shahibabad.png",
     accent: "from-orange-500 via-orange-400 to-amber-200",
     summary:
       "The flagship manufacturing floor where precision roller development, finishing, and high-volume execution come together.",
@@ -16,7 +16,7 @@ const factoryGallery = [
     id: "02",
     name: "Jamshedpur Unit",
     location: "Jamshedpur, Jharkhand",
-    image: "/team-img/jamshedpur-team.JPG",
+    image: "/team-img/jamshedpur-plant.png",
     accent: "from-cyan-400 via-sky-400 to-slate-200",
     summary:
       "A steel-belted production environment tuned for robust industrial demand and disciplined process flow.",
@@ -36,7 +36,7 @@ const factoryGallery = [
     id: "04",
     name: "Ballari Unit",
     location: "Ballari, Karnataka",
-    image: "/team-img/kanatka2.JPG",
+    image: "/team-img/kanatka2.png",
     accent: "from-lime-300 via-orange-400 to-stone-200",
     summary:
       "Built for southern coverage with a sharp focus on industrial uptime, coatings, and responsive support.",
@@ -46,7 +46,7 @@ const factoryGallery = [
     id: "05",
     name: "Bangladesh Unit",
     location: "Feni, Bangladesh",
-    image: "/about-img/about-bg.jpg",
+    image: "/team-img/bangladesh.png",
     accent: "from-orange-500 via-yellow-300 to-white",
     summary:
       "An international production touchpoint extending Indian Roller capability beyond borders with the same quality intent.",
@@ -55,14 +55,14 @@ const factoryGallery = [
 ];
 
 const photoStrip = [
-  "/team-img/shahibabad.JPG",
-  "/team-img/jamshedpur-team.JPG",
+  "/team-img/shahibabad.png",
+  "/team-img/jamshedpur-plant.png",
   "/team-img/ahmdabad.JPG",
   "/team-img/ahmdabad2.JPG",
   "/team-img/kanataka.JPG",
-  "/team-img/kanatka2.JPG",
+  "/team-img/kanatka2.png",
   "/about-img/factory-img.jpg",
-  "/about-img/about-bg.jpg",
+  "/team-img/bangladesh.png",
 ];
 
 export async function generateMetadata() {

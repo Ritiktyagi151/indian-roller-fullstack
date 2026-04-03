@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, Variants } from "framer-motion";
 
 const carouselSlides = [
-  { src: "/homepage-img/factory-view.JPG", label: "Precision Engineering" },
+  { src: "/homepage-img/facyory-view.png", label: "Precision Engineering" },
   { src: "/homepage-img/factory-view3.JPG", label: "Precision Engineering" },
-  { src: "/homepage-img/factory-view2.JPG", label: "Precision Engineering" },
+  { src: "/homepage-img/factory-view22.png", label: "Precision Engineering" },
   { src: "/homepage-img/factory-view4.JPG", label: "Precision Engineering" },
   { src: "/homepage-img/factory-view5.JPG", label: "Precision Engineering" },
 
@@ -90,7 +90,7 @@ const AboutSection = () => {
             viewport={{ once: false, amount: 0.8 }}
           >
             <p className="text-gray-500 font-bold text-sm leading-relaxed mb-6 uppercase tracking-wider italic border-l-4 border-orange-500 pl-4">
-              Guided by a simple philosophy, the Indian Roller brand was established in 1990 as a rubber and polyurethane roller manufacturing company by a dedicated team of young, energetic professionals.
+              Guided by a simple philosophy, the Indian Roller brand was established in 1990 as a rubber and polyurethane roller manufacturing company by a highly experienced and dedicated team of professionals.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-400 text-[13px] leading-7 font-medium">
@@ -137,7 +137,7 @@ const AboutSection = () => {
             {/* Main Large Image */}
             <div className="col-span-12 md:col-span-7 overflow-hidden h-[300px] md:h-[450px]">
               <img
-                src="/about-img/factory-img.jpg"
+                src="/homepage-img/indian-factoryview.png"
                 alt="Manufacturing Unit"
                 className="w-full h-full object-cover transition-all duration-700"
               />
