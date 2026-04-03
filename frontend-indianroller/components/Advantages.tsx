@@ -91,7 +91,7 @@ export default function AdvantagesSection() {
           className="absolute inset-0 z-0"
         >
           <Image src="/homepage-img/factory-area.JPG" alt="bg" fill className="object-cover" />
-          <div className="absolute inset-0 bg-orange-500/90 mix-blend-multiply"></div>
+          <div className="absolute inset-0 bg-orange-500/60 mix-blend-multiply"></div>
         </motion.div>
 
         <motion.div 

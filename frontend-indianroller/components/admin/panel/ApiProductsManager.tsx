@@ -19,6 +19,7 @@ type Product = {
   slug?: string;
   sku?: string;
   category?: { _id: string; name: string } | string | null;
+  categories?: Array<{ _id: string; name: string } | string>;
   shortDescription?: string;
   image?: string;
   images?: string[];
@@ -46,7 +47,7 @@ type ProductForm = {
   name: string;
   slug: string;
   sku: string;
-  categoryId: string;
+  categoryIds: string[];
   shortDescription: string;
   imageFile: File | null;
   fullDescription: string;
@@ -72,7 +73,7 @@ const emptyProduct: ProductForm = {
   name: "",
   slug: "",
   sku: "",
-  categoryId: "",
+  categoryIds: [],
   shortDescription: "",
   imageFile: null,
   fullDescription: "",
@@ -86,9 +87,18 @@ const emptyProduct: ProductForm = {
   relatedProducts: [],
 };
 
-function categoryIdOf(category: Product["category"]) {
-  if (!category) return "";
-  return typeof category === "string" ? category : category._id;
+function categoryIdsOf(product: Product) {
+  if (Array.isArray(product.categories) && product.categories.length) {
+    return product.categories
+      .map((category) => (typeof category === "string" ? category : category?._id))
+      .filter(Boolean) as string[];
+  }
+
+  if (!product.category) {
+    return [];
+  }
+
+  return [typeof product.category === "string" ? product.category : product.category._id].filter(Boolean);
 }
 
 export default function ApiProductsManager({ initialTab }: Props) {
@@ -183,8 +193,8 @@ export default function ApiProductsManager({ initialTab }: Props) {
   }
 
   async function saveProduct() {
-    if (!productForm.name.trim() || !productForm.categoryId) {
-      setError("Product name and category are required.");
+    if (!productForm.name.trim() || !productForm.categoryIds.length) {
+      setError("Product name and at least one category are required.");
       return;
     }
 
@@ -197,7 +207,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
       formData.append("name", productForm.name.trim());
       formData.append("slug", productForm.slug.trim());
       formData.append("sku", productForm.sku.trim());
-      formData.append("categoryId", productForm.categoryId);
+      formData.append("categoryIds", JSON.stringify(productForm.categoryIds));
       formData.append("shortDescription", productForm.shortDescription.trim());
       formData.append("fullDescription", productForm.fullDescription.trim());
       formData.append("description", productForm.fullDescription.trim());
@@ -273,7 +283,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
       name: product.name || "",
       slug: product.slug || "",
       sku: product.sku || "",
-      categoryId: categoryIdOf(product.category),
+      categoryIds: categoryIdsOf(product),
       shortDescription: product.shortDescription || "",
       imageFile: null,
       fullDescription: product.fullDescription || product.description || "",
@@ -453,10 +463,10 @@ export default function ApiProductsManager({ initialTab }: Props) {
             <input value={productForm.name} onChange={(event) => setProductForm((current) => ({ ...current, name: event.target.value }))} placeholder="Product Name" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <input value={productForm.slug} onChange={(event) => setProductForm((current) => ({ ...current, slug: event.target.value }))} placeholder="Slug" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <input value={productForm.sku} onChange={(event) => setProductForm((current) => ({ ...current, sku: event.target.value }))} placeholder="SKU" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
-            <select value={productForm.categoryId} onChange={(event) => setProductForm((current) => ({ ...current, categoryId: event.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950">
-              <option value="">Select category</option>
+            <select multiple value={productForm.categoryIds} onChange={(event) => setProductForm((current) => ({ ...current, categoryIds: Array.from(event.target.selectedOptions).map((option) => option.value) }))} className="min-h-36 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950">
               {categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)}
             </select>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Hold Ctrl or Cmd to select multiple categories.</p>
             <textarea rows={3} value={productForm.shortDescription} onChange={(event) => setProductForm((current) => ({ ...current, shortDescription: event.target.value }))} placeholder="Short Description" className="md:col-span-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <div className="md:col-span-2">
   <RichTextEditor

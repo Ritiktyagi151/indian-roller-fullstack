@@ -19,8 +19,25 @@ function getFilePath(file) {
   return file ? `/uploads/${file.filename}` : "";
 }
 
+function normalizeCategoryIds(value) {
+  const parsed = parseJson(value, value);
+
+  if (!parsed) {
+    return [];
+  }
+
+  if (Array.isArray(parsed)) {
+    return parsed.filter(Boolean);
+  }
+
+  return [parsed].filter(Boolean);
+}
+
 function normalizeProductData(body, files) {
   const data = { ...body };
+  const hasCategoryIds = Object.prototype.hasOwnProperty.call(body, "categoryIds");
+  const hasCategoryId = Object.prototype.hasOwnProperty.call(body, "categoryId");
+  const hasCategory = Object.prototype.hasOwnProperty.call(body, "category");
   const restrictedFields = [
     "metaTitle",
     "metaDescription",
@@ -43,9 +60,18 @@ function normalizeProductData(body, files) {
       : slugify(data.name, { lower: true, strict: true });
   }
 
-  if (data.categoryId) {
-    data.category = data.categoryId;
+  if (hasCategoryIds || hasCategoryId || hasCategory) {
+    const categoryIds = normalizeCategoryIds(data.categoryIds);
+    const legacyCategoryIds = normalizeCategoryIds(data.categoryId || data.category);
+    const mergedCategoryIds = Array.from(
+      new Set([...categoryIds, ...legacyCategoryIds].filter(Boolean)),
+    );
+
+    data.categories = mergedCategoryIds;
+    data.category = mergedCategoryIds[0] || undefined;
   }
+
+  delete data.categoryIds;
 
   const primaryImage = getFilePath(files.image?.[0]);
   const galleryImages = (files.images || []).map(getFilePath).filter(Boolean);
@@ -85,14 +111,17 @@ function normalizeProductData(body, files) {
   return data;
 }
 
+function productPopulate(query) {
+  return query
+    .populate("category", "name slug")
+    .populate("categories", "name slug")
+    .populate("relatedProducts", "name slug image");
+}
+
 // ✅ OPTIMIZED - Sirf zaruri fields fetch karta hai
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find()
-      .select("name slug image shortDescription category")
-      .populate("category", "name slug")
-      .populate("relatedProducts", "name slug image")
-      .sort({ createdAt: -1 });
+    const products = await productPopulate(Product.find()).sort({ createdAt: -1 });
     res.json(products || []);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -103,14 +132,15 @@ exports.createProduct = async (req, res) => {
   try {
     const data = normalizeProductData(req.body, req.files || {});
 
-    if (!data.name || !data.category) {
+    if (!data.name || !data.categories?.length) {
       return res
         .status(400)
-        .json({ message: "Product name and category are required." });
+        .json({ message: "Product name and at least one category are required." });
     }
 
     const product = await Product.create(data);
-    res.status(201).json(product);
+    const populatedProduct = await productPopulate(Product.findById(product._id));
+    res.status(201).json(populatedProduct);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -123,9 +153,11 @@ exports.getProductsByCategory = async (req, res) => {
     const Category = require("../models/Category");
     const category = await Category.findOne({ slug: categorySlug });
     if (!category) return res.json([]);
-    const products = await Product.find({ category: category._id })
-      .select("name slug image shortDescription category")
-      .populate("category", "name slug")
+    const products = await productPopulate(
+      Product.find({
+        $or: [{ category: category._id }, { categories: category._id }],
+      }).select("name slug image shortDescription category categories"),
+    )
       .sort({ createdAt: -1 });
     res.json(products || []);
   } catch (error) {
@@ -136,9 +168,7 @@ exports.getProductsByCategory = async (req, res) => {
 exports.getProductBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    const product = await Product.findOne({ slug })
-      .populate("category")
-      .populate("relatedProducts", "name slug image");
+    const product = await productPopulate(Product.findOne({ slug }));
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -153,6 +183,12 @@ exports.updateProduct = async (req, res) => {
     const { id } = req.params;
     const updateData = normalizeProductData(req.body, req.files || {});
 
+    if (updateData.categories && !updateData.categories.length) {
+      return res
+        .status(400)
+        .json({ message: "At least one category is required." });
+    }
+
     const product = await Product.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
@@ -161,7 +197,8 @@ exports.updateProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.json(product);
+    const populatedProduct = await productPopulate(Product.findById(product._id));
+    res.json(populatedProduct);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

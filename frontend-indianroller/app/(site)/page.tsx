@@ -30,7 +30,7 @@ export default function Home() {
       <JourneyMissionVision/>
       <TeamSection/>
       <Advantages />
-      <IndustrialSourcesSection/>
+      {/* <IndustrialSourcesSection/> */}
       {/* <Projects/> */}
       <Partners/>
       <Insights/>

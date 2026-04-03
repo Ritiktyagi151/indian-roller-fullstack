@@ -20,6 +20,8 @@ const INDUSTRY_SLUGS = [
   "food-industry",
   "plywood-industry",
   "rexene-industry",
+  "cement-industry",
+  "turnkey-project"
 ];
 
 const Navbar = () => {
