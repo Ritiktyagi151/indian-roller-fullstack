@@ -75,17 +75,24 @@ const productData = [
     specs: [{ val: "Food-Grade Rubber", lbl: "Material" }, { val: "White / Custom", lbl: "Colour" }],
     isNew: true,
   },
-  {
-    id: 5,
-    name: "Turnkey Projects",
-    slug: "turnkey-project",
-    cat: "special",
-    desc: "Comprehensive turnkey solutions covering design, fabrication, rubber bonding, precision grinding, and final installation.",
-    image: "/product-img/world-data-locator-map-russia.webp",
-    tags: ["Design", "Installation"],
-    specs: [{ val: "End-to-End", lbl: "Scope" }, { val: "ISO Certified", lbl: "Quality" }],
-    isNew: true,
-  },
+     {
+  id: 5,
+  name: "Cement Industry ",
+  slug: "cement-industry",
+  cat: "rubber-rollers",
+  desc: "Heavy-duty rubber rollers designed for the cement industry, built to withstand abrasive materials, high loads, and harsh operating conditions. These rollers are widely used in conveyor systems, clinker handling, raw material transport, and grinding units, ensuring smooth operation, durability, and minimal maintenance in demanding environments.",
+  image: "/industry-img/cement-industries.png",
+  tags: ["Conveyor", "Clinker Handling", "Heavy Duty", "Abrasion Resistant"],
+  specs: [
+    { val: "NR / SBR / Nitrile / EPDM", lbl: "Material" },
+    { val: "High Abrasion Resistant", lbl: "Surface Property" },
+    { val: "Up to 120°C", lbl: "Temperature Resistance" },
+    { val: "Custom (Bespoke)", lbl: "Dimensions" },
+    { val: "High Load Bearing", lbl: "Capacity" }
+  ],
+  isNew: false,
+},
+  
   {
     id: 6,
     name: "Miscellaneous Rollers",
@@ -97,23 +104,18 @@ const productData = [
     specs: [{ val: "NR / SBR / Nitrile", lbl: "Material" }, { val: "Bespoke", lbl: "Dimensions" }],
     isNew: false,
   },
-   {
-  id: 7,
-  name: "Cement Industry ",
-  slug: "cement-industry",
-  cat: "rubber-rollers",
-  desc: "Heavy-duty rubber rollers designed for the cement industry, built to withstand abrasive materials, high loads, and harsh operating conditions. These rollers are widely used in conveyor systems, clinker handling, raw material transport, and grinding units, ensuring smooth operation, durability, and minimal maintenance in demanding environments.",
-  image: "/industry-img/cememt-industry.png",
-  tags: ["Conveyor", "Clinker Handling", "Heavy Duty", "Abrasion Resistant"],
-  specs: [
-    { val: "NR / SBR / Nitrile / EPDM", lbl: "Material" },
-    { val: "High Abrasion Resistant", lbl: "Surface Property" },
-    { val: "Up to 120°C", lbl: "Temperature Resistance" },
-    { val: "Custom (Bespoke)", lbl: "Dimensions" },
-    { val: "High Load Bearing", lbl: "Capacity" }
-  ],
-  isNew: false,
-}
+  {
+    id: 7,
+    name: "Turnkey Projects",
+    slug: "turnkey-project",
+    cat: "special",
+    desc: "Comprehensive turnkey solutions covering design, fabrication, rubber bonding, precision grinding, and final installation.",
+    image: "/product-img/world-data-locator-map-russia.webp",
+    tags: ["Design", "Installation"],
+    specs: [{ val: "End-to-End", lbl: "Scope" }, { val: "ISO Certified", lbl: "Quality" }],
+    isNew: true,
+  },
+
 ];
 
 const FILTERS = [

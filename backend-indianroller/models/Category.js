@@ -1,32 +1,35 @@
 const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema({
-  name: { 
-    type: String, 
-    required: true 
+  name: {
+    type: String,
+    required: true
   },
-  slug: { 
-    type: String, 
-    unique: true 
+  slug: {
+    type: String,
+    unique: true
   },
-  image: { 
-    type: String 
+  image: {
+    type: String
   },
-  description: { 
-    type: String // Rich Text/Quill HTML Content
+  description: {
+    type: String
   },
-  // 🔥 SEO Master Fields
-  metaTitle: { 
-    type: String 
+  navbarOrder: {
+    type: Number,
+    default: 0
   },
-  metaDescription: { 
-    type: String 
+  metaTitle: {
+    type: String
   },
-  metaKeywords: { 
-    type: String 
+  metaDescription: {
+    type: String
   },
-  canonicalUrl: { 
-    type: String 
+  metaKeywords: {
+    type: String
+  },
+  canonicalUrl: {
+    type: String
   }
 }, { timestamps: true });
 

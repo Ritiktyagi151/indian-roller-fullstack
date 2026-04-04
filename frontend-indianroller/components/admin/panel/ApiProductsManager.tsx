@@ -10,6 +10,7 @@ type TabKey = "categories" | "products" | "add";
 type Category = {
   _id: string;
   name: string;
+  slug?: string;
   description?: string;
 };
 
@@ -38,6 +39,7 @@ type Props = {
 type CategoryForm = {
   id: string;
   name: string;
+  slug: string;
   description: string;
   imageFile: File | null;
 };
@@ -64,6 +66,7 @@ type ProductForm = {
 const emptyCategory: CategoryForm = {
   id: "",
   name: "",
+  slug: "",
   description: "",
   imageFile: null,
 };
@@ -167,6 +170,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
     try {
       const formData = new FormData();
       formData.append("name", categoryForm.name.trim());
+      formData.append("slug", categoryForm.slug.trim());
       formData.append("description", categoryForm.description.trim());
       if (categoryForm.imageFile) formData.append("image", categoryForm.imageFile);
 
@@ -271,6 +275,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
     setCategoryForm({
       id: category._id,
       name: category.name || "",
+      slug: category.slug || "",
       description: category.description || "",
       imageFile: null,
     });
@@ -352,7 +357,13 @@ export default function ApiProductsManager({ initialTab }: Props) {
               <input
                 value={categoryForm.name}
                 onChange={(event) => setCategoryForm((current) => ({ ...current, name: event.target.value }))}
-                placeholder="Category name"
+                placeholder="Category Name"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950"
+              />
+              <input
+                value={categoryForm.slug}
+                onChange={(event) => setCategoryForm((current) => ({ ...current, slug: event.target.value }))}
+                placeholder="Category Slug (URL)"
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950"
               />
               <textarea
@@ -386,6 +397,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
                 <div key={category._id} className="flex items-center justify-between rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
                   <div>
                     <p className="font-medium text-slate-900 dark:text-white">{category.name}</p>
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Slug: {category.slug || "-"}</p>
                     <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{category.description}</p>
                   </div>
                   <div className="flex gap-2">
@@ -460,8 +472,8 @@ export default function ApiProductsManager({ initialTab }: Props) {
             </div>
           ) : null}
           <div className="grid gap-4 md:grid-cols-2">
-            <input value={productForm.name} onChange={(event) => setProductForm((current) => ({ ...current, name: event.target.value }))} placeholder="Product Name" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
-            <input value={productForm.slug} onChange={(event) => setProductForm((current) => ({ ...current, slug: event.target.value }))} placeholder="Slug" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
+            <input value={productForm.name} onChange={(event) => setProductForm((current) => ({ ...current, name: event.target.value }))} placeholder="Product Name (Display)" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
+            <input value={productForm.slug} onChange={(event) => setProductForm((current) => ({ ...current, slug: event.target.value }))} placeholder="Product Slug (URL)" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <input value={productForm.sku} onChange={(event) => setProductForm((current) => ({ ...current, sku: event.target.value }))} placeholder="SKU" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <select multiple value={productForm.categoryIds} onChange={(event) => setProductForm((current) => ({ ...current, categoryIds: Array.from(event.target.selectedOptions).map((option) => option.value) }))} className="min-h-36 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950">
               {categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)}

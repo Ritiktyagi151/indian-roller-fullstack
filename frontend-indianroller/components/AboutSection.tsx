@@ -66,10 +66,10 @@ const AboutSection = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.8 }}
-              className="text-4xl md:text-5xl font-black uppercase leading-tight tracking-tighter text-black"
+              className="text-4xl md:text-4xl font-black uppercase leading-tight tracking-tighter text-black"
             >
-              Greetings From <br /> All Of Us <br />
-              <span className="text-orange-500 text-3xl md:text-4xl">IRI ISO 9001:2008 Certified</span>
+              Greetings From <br /> <span className="text-4xl md:text-3xl" >Indian Roller Industires </span> <br />
+              <span className="text-orange-500 text-3xl md:text-4xl"> ISO 9001:2008 Certified</span>
             </motion.h2>
 
             <motion.div
@@ -90,8 +90,8 @@ const AboutSection = () => {
             viewport={{ once: false, amount: 0.8 }}
           >
             <p className="text-gray-500 font-bold text-sm leading-relaxed mb-6 uppercase tracking-wider italic border-l-4 border-orange-500 pl-4">
-              Guided by a simple philosophy, the Indian Roller brand was established in 1990 as a rubber and polyurethane roller manufacturing company by a highly experienced and dedicated team of professionals.
-            </p>
+  Guided by a simple philosophy, the Indian Roller brand was established in 1990 as a rubber and polyurethane roller manufacturing company by a team of highly experienced and dedicated professionals.
+</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-400 text-[13px] leading-7 font-medium">
               <div className="space-y-4">

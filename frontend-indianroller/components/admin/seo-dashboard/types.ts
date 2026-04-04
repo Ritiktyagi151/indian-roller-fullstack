@@ -104,6 +104,7 @@ export type GlobalSettings = {
   organizationName: string;
   organizationUrl: string;
   robotsDefault: string;
+  navbarProductDropdownLimit: number;
 };
 
 export type SitemapState = {

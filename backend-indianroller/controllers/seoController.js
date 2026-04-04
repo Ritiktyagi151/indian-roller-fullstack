@@ -89,6 +89,7 @@ async function getSettings() {
       organizationName: "Indian Roller",
       organizationUrl: "https://indianroller.com",
       robotsDefault: "index, follow",
+      navbarProductDropdownLimit: 8,
     });
   }
   return settings;

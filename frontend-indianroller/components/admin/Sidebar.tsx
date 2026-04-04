@@ -8,6 +8,7 @@ import {
   FolderKanban,
   Globe,
   LayoutDashboard,
+  ListOrdered,
   Mail,
   Package,
   Settings2,
@@ -27,6 +28,7 @@ const navGroups = [
     title: "Products",
     items: [
       { label: "Product Categories", href: "/admin/categories", icon: FolderKanban },
+      { label: "Navbar Dropdown", href: "/admin/navbar-settings", icon: ListOrdered },
       { label: "All Products", href: "/admin/products", icon: SquareLibrary },
       { label: "Add Product", href: "/admin/add-product", icon: Package },
     ],

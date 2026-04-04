@@ -160,6 +160,7 @@ export const initialGlobalSettings: GlobalSettings = {
   organizationName: "Indian Roller",
   organizationUrl: "https://indianroller.com",
   robotsDefault: "index, follow",
+  navbarProductDropdownLimit: 8,
 };
 
 export const initialSitemap: SitemapState = {

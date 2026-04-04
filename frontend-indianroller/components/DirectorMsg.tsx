@@ -65,7 +65,7 @@ const DirectorMessageH = () => {
             <div className="absolute -top-3 -left-3 w-full h-full border-2 border-orange-200 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
             <div className="relative overflow-hidden aspect-[3/4]">
               <img
-                src="/images/founder.jpg"
+                src="/team-img/dicrectorsample.png"
                 alt="Founder"
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
               />
@@ -185,7 +185,7 @@ const DirectorMessageH = () => {
                   [Sunny Sharma]
                 </p>
                 <p className="text-orange-300 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
-                  Director, IRI
+                  Managing Director, IRI
                 </p>
               </div>
             </div>

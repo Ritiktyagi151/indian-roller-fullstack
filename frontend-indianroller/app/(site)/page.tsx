@@ -40,7 +40,7 @@ export default function Home() {
       {/* <IndustrialSourcesSection/> */}
       {/* <Projects/> */}
       <Partners/>
-      <Insights/>
+      {/* <Insights/> */}
       <WhyChooseUs/>
       <LocationSection/>
       <BlogSlider/>

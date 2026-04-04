@@ -35,6 +35,7 @@ const seoSettingsSchema = new mongoose.Schema(
     organizationName: { type: String, default: "" },
     organizationUrl: { type: String, default: "" },
     robotsDefault: { type: String, default: "index, follow" },
+    navbarProductDropdownLimit: { type: Number, default: 8, min: 1 },
   },
   { timestamps: true },
 );

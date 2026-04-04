@@ -40,6 +40,7 @@ const emptySettings: GlobalSettings = {
   organizationName: "",
   organizationUrl: "",
   robotsDefault: "index, follow",
+  navbarProductDropdownLimit: 8,
 };
 
 export default function ApiSeoPanel({ initialSection }: Props) {
@@ -436,6 +437,19 @@ export default function ApiSeoPanel({ initialSection }: Props) {
             <input value={settings.organizationUrl} onChange={(event) => setSettings((current) => ({ ...current, organizationUrl: event.target.value }))} placeholder="Organization URL" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <input value={settings.schemaType} onChange={(event) => setSettings((current) => ({ ...current, schemaType: event.target.value }))} placeholder="Schema Type" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
             <input value={settings.robotsDefault} onChange={(event) => setSettings((current) => ({ ...current, robotsDefault: event.target.value }))} placeholder="Default Robots" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
+            <input
+              type="number"
+              min={1}
+              value={settings.navbarProductDropdownLimit}
+              onChange={(event) =>
+                setSettings((current) => ({
+                  ...current,
+                  navbarProductDropdownLimit: Math.max(1, Number(event.target.value) || 1),
+                }))
+              }
+              placeholder="Navbar Product Dropdown Items Per Section"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950"
+            />
           </div>
           <button type="button" onClick={saveSettings} disabled={saving} className="mt-6 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60 dark:bg-orange-500">
             Save Global Settings
