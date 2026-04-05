@@ -283,7 +283,7 @@ const ProductSection = () => {
             {filtered.map((p, i) => (
               <Link
                 key={p.id}
-                href={`/products-${p.slug}`}
+                href={`/${p.slug}`}
                 className="group relative cursor-pointer bg-white border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden rounded-sm block"
                 style={{ animation: `card-in 0.5s ease-out ${i * 0.05}s both` }}
                 onClick={(e) => {
@@ -403,7 +403,7 @@ const ProductSection = () => {
                 Premium Industrial Grade
               </span>
 
-              <Link href={`/products-${selected.slug}`}>
+              <Link href={`/${selected.slug}`}>
                 <h2
                   style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#111] leading-none mb-3 sm:mb-6 hover:text-orange-500 transition-colors cursor-pointer"
@@ -425,7 +425,7 @@ const ProductSection = () => {
                 ))}
               </div>
 
-              <Link href={`/products-${selected.slug}`}>
+              <Link href={`/${selected.slug}`}>
                 <button className="w-full bg-[#111] text-white py-3 sm:py-4 text-[9px] sm:text-[10px] font-mono tracking-[3px] sm:tracking-[4px] uppercase hover:text-orange-500 transition-colors">
                   Enquire Now →
                 </button>

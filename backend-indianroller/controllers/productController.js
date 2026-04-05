@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 const slugify = require("slugify");
 
 function parseJson(value, fallback) {
@@ -33,6 +34,39 @@ function normalizeCategoryIds(value) {
   return [parsed].filter(Boolean);
 }
 
+function normalizeManualSlug(slug) {
+  return String(slug || "").trim().replace(/^\/+|\/+$/g, "");
+}
+
+function resolveProductSlug(slug, name) {
+  const manualSlug = normalizeManualSlug(slug);
+  if (manualSlug) {
+    return manualSlug;
+  }
+
+  return slugify(String(name || "").trim(), { lower: true, strict: true });
+}
+
+function isValidSlug(slug) {
+  return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(slug);
+}
+
+async function ensureSlugAvailable(slug, productId) {
+  const productConflict = await Product.findOne({
+    slug,
+    ...(productId ? { _id: { $ne: productId } } : {}),
+  }).select("_id");
+
+  if (productConflict) {
+    throw new Error("This slug is already in use by another product.");
+  }
+
+  const categoryConflict = await Category.findOne({ slug }).select("_id");
+  if (categoryConflict) {
+    throw new Error("This slug is already in use by a category.");
+  }
+}
+
 function normalizeProductData(body, files) {
   const data = { ...body };
   const hasCategoryIds = Object.prototype.hasOwnProperty.call(body, "categoryIds");
@@ -55,9 +89,7 @@ function normalizeProductData(body, files) {
   restrictedFields.forEach((field) => delete data[field]);
 
   if (data.name) {
-    data.slug = data.slug
-      ? slugify(data.slug, { lower: true, strict: true })
-      : slugify(data.name, { lower: true, strict: true });
+    data.slug = resolveProductSlug(data.slug, data.name);
   }
 
   if (hasCategoryIds || hasCategoryId || hasCategory) {
@@ -138,6 +170,14 @@ exports.createProduct = async (req, res) => {
         .json({ message: "Product name and at least one category are required." });
     }
 
+    if (!data.slug || !isValidSlug(data.slug)) {
+      return res.status(400).json({
+        message: "Slug must use only letters, numbers, and single hyphens.",
+      });
+    }
+
+    await ensureSlugAvailable(data.slug);
+
     const product = await Product.create(data);
     const populatedProduct = await productPopulate(Product.findById(product._id));
     res.status(201).json(populatedProduct);
@@ -187,6 +227,16 @@ exports.updateProduct = async (req, res) => {
       return res
         .status(400)
         .json({ message: "At least one category is required." });
+    }
+
+    if (updateData.slug) {
+      if (!isValidSlug(updateData.slug)) {
+        return res.status(400).json({
+          message: "Slug must use only letters, numbers, and single hyphens.",
+        });
+      }
+
+      await ensureSlugAvailable(updateData.slug, id);
     }
 
     const product = await Product.findByIdAndUpdate(id, updateData, {

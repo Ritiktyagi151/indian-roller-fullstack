@@ -10,6 +10,12 @@ import { getSeoMetadataByPath } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
   const { slug } = await params;
+  if (!slug || slug.length === 0) {
+    return {
+      title: "Indian Roller | Premium Industrial Solutions",
+      description: "Industrial rollers, coatings, and engineered solutions from Indian Roller.",
+    };
+  }
   const fullPath = slug[0];
 
   return getSeoMetadataByPath(`/${fullPath}`, {
@@ -24,6 +30,14 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
 
   const fullPath = slug[0];
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  if (!API_URL) {
+    return notFound();
+  }
+
+  if (slug.length > 1) {
+    return notFound();
+  }
 
   if (fullPath.startsWith('blogs-')) {
     const actualSlug = fullPath.replace('blogs-', '');
@@ -55,28 +69,32 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     );
   }
 
-  let productData = null;
-  try {
-    const productRes = await axios.get(`${API_URL}/products/slug/${fullPath}`);
-    productData = productRes.data;
-  } catch {}
+  const [productResult, categoryResult] = await Promise.allSettled([
+    axios.get(`${API_URL}/products/slug/${fullPath}`),
+    axios.get(`${API_URL}/products/category/${fullPath}`),
+  ]);
 
-  if (productData) {
-    return <ProductDetailClient product={productData} />;
+  const productData =
+    productResult.status === "fulfilled" ? productResult.value.data : null;
+  const categoryData =
+    categoryResult.status === "fulfilled" ? categoryResult.value.data : null;
+
+  const hasProductMatch = Boolean(productData);
+  const hasCategoryMatch = Array.isArray(categoryData)
+    ? categoryData.length > 0
+    : Boolean(categoryData);
+
+  if (hasProductMatch && hasCategoryMatch) {
+    console.error(`Slug conflict detected for "${fullPath}" between product and category.`);
+    return notFound();
   }
 
-  if (fullPath.startsWith('products-')) {
-    const identifier = fullPath.replace('products-', '');
-    let productsData = null;
+  if (hasCategoryMatch) {
+    return <ProductListingClient categorySlug={fullPath} initialProducts={categoryData} />;
+  }
 
-    try {
-      const productsRes = await axios.get(`${API_URL}/products/category/${identifier}`);
-      productsData = productsRes.data;
-    } catch {
-      return notFound();
-    }
-
-    return <ProductListingClient categorySlug={identifier} initialProducts={productsData} />;
+  if (hasProductMatch) {
+    return <ProductDetailClient product={productData} />;
   }
 
   return notFound();

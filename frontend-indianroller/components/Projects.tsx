@@ -6,14 +6,14 @@ import { motion, Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const projects = [
-  { id: 7, title: "Steel Industry",               img: "/industry-img/steel.webp",      colSpan: "lg:col-span-3", height: "h-[420px]", href: "/products-steel-industry" },
-  { id: 6, title: "Textile Industry",             img: "/industry-img/textiles.webp",   colSpan: "lg:col-span-3", height: "h-[420px]", href: "/products-textile-industry" },
-  { id: 4, title: "Paper And Packaging Industry", img: "/industry-img/paper.webp",      colSpan: "lg:col-span-4", height: "h-[380px]", href: "/products-paper-and-packaging-industry" },
-  { id: 1, title: "Food Industry",                img: "/industry-img/industry1.webp",  colSpan: "lg:col-span-2", height: "h-[380px]", href: "/products-food-industry" },
-  { id: 5, title: "Plywood Industry",             img: "/industry-img/plywood.webp",    colSpan: "lg:col-span-2", height: "h-[400px]", href: "/products-plywood-industry" },
-  { id: 2, title: "Turnkey Project",              img: "/industry-img/mislinious.jpg",  colSpan: "lg:col-span-2", height: "h-[400px]", highlight: true, href: "/products-turnkey-project" },
-  { id: 3, title: "Miscellaneous Roller",         img: "/industry-img/mislinious.webp", colSpan: "lg:col-span-2", height: "h-[400px]", href: "/products-miscellaneous-roller" },
-  { id: 8, title: "Rexene Industry",              img: "/industry-img/rexene.webp",     colSpan: "lg:col-span-6", height: "h-[260px]", href: "/products-rexene-industry" },
+  { id: 7, title: "Steel Industry",               img: "/industry-img/steel.webp",      colSpan: "lg:col-span-3", height: "h-[420px]", href: "/steel-industry" },
+  { id: 6, title: "Textile Industry",             img: "/industry-img/textiles.webp",   colSpan: "lg:col-span-3", height: "h-[420px]", href: "/textile-industry" },
+  { id: 4, title: "Paper And Packaging Industry", img: "/industry-img/paper.webp",      colSpan: "lg:col-span-4", height: "h-[380px]", href: "/paper-and-packaging-industry" },
+  { id: 1, title: "Food Industry",                img: "/industry-img/industry1.webp",  colSpan: "lg:col-span-2", height: "h-[380px]", href: "/food-industry" },
+  { id: 5, title: "Plywood Industry",             img: "/industry-img/plywood.webp",    colSpan: "lg:col-span-2", height: "h-[400px]", href: "/plywood-industry" },
+  { id: 2, title: "Turnkey Project",              img: "/industry-img/mislinious.jpg",  colSpan: "lg:col-span-2", height: "h-[400px]", highlight: true, href: "/turnkey-project" },
+  { id: 3, title: "Miscellaneous Roller",         img: "/industry-img/mislinious.webp", colSpan: "lg:col-span-2", height: "h-[400px]", href: "/miscellaneous-roller" },
+  { id: 8, title: "Rexene Industry",              img: "/industry-img/rexene.webp",     colSpan: "lg:col-span-6", height: "h-[260px]", href: "/rexene-industry" },
 ];
 
 const Projects = () => {

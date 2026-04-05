@@ -1,5 +1,39 @@
 const Category = require("../models/Category");
+const Product = require("../models/Product");
 const slugify = require("slugify");
+
+function normalizeManualSlug(slug) {
+  return String(slug || "").trim().replace(/^\/+|\/+$/g, "");
+}
+
+function resolveCategorySlug(slug, name) {
+  const manualSlug = normalizeManualSlug(slug);
+  if (manualSlug) {
+    return manualSlug;
+  }
+
+  return slugify(String(name || "").trim(), { lower: true, strict: true });
+}
+
+function isValidSlug(slug) {
+  return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(slug);
+}
+
+async function ensureSlugAvailable(slug, categoryId) {
+  const categoryConflict = await Category.findOne({
+    slug,
+    ...(categoryId ? { _id: { $ne: categoryId } } : {}),
+  }).select("_id");
+
+  if (categoryConflict) {
+    throw new Error("This slug is already in use by another category.");
+  }
+
+  const productConflict = await Product.findOne({ slug }).select("_id");
+  if (productConflict) {
+    throw new Error("This slug is already in use by a product.");
+  }
+}
 
 exports.createCategory = async (req, res) => {
   try {
@@ -11,12 +45,19 @@ exports.createCategory = async (req, res) => {
       ? Number(navbarOrder)
       : (lastCategory?.navbarOrder ?? -1) + 1;
 
+    const resolvedSlug = resolveCategorySlug(slug, name);
+    if (!resolvedSlug || !isValidSlug(resolvedSlug)) {
+      return res.status(400).json({
+        message: "Slug must use only letters, numbers, and single hyphens.",
+      });
+    }
+
+    await ensureSlugAvailable(resolvedSlug);
+
     const data = {
       name,
       description,
-      slug: slug
-        ? slugify(slug, { lower: true, strict: true })
-        : slugify(name, { lower: true, strict: true }),
+      slug: resolvedSlug,
       navbarOrder: nextOrder,
     };
 
@@ -60,10 +101,16 @@ exports.updateCategory = async (req, res) => {
       "robots",
     ].forEach((field) => delete updateData[field]);
 
-    if (updateData.slug) {
-      updateData.slug = slugify(updateData.slug, { lower: true, strict: true });
-    } else if (updateData.name) {
-      updateData.slug = slugify(updateData.name, { lower: true, strict: true });
+    if (Object.prototype.hasOwnProperty.call(updateData, "slug") || updateData.name) {
+      const resolvedSlug = resolveCategorySlug(updateData.slug, updateData.name);
+      if (!resolvedSlug || !isValidSlug(resolvedSlug)) {
+        return res.status(400).json({
+          message: "Slug must use only letters, numbers, and single hyphens.",
+        });
+      }
+
+      await ensureSlugAvailable(resolvedSlug, id);
+      updateData.slug = resolvedSlug;
     }
 
     if (Object.prototype.hasOwnProperty.call(updateData, "navbarOrder")) {

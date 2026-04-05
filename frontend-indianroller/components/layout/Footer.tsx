@@ -81,7 +81,7 @@ const Footer = () => {
             {categories.slice(0, 6).map((item) => ( 
               <li key={item._id || item.slug} className="group">
                 <Link 
-                  href={`/products-${item.slug}`} 
+                  href={`/${item.slug}`} 
                   className="text-gray-400 hover:text-orange-500 flex items-center gap-2 text-[13px] transition-all uppercase font-semibold tracking-tight"
                 >
                   <FaChevronRight size={10} className="text-orange-500 group-hover:translate-x-1 transition-transform"/>

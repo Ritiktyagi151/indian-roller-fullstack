@@ -132,7 +132,7 @@ function buildCategoryDefinition(category) {
     entityType: "category",
     entityId: String(category._id),
     name: category.name,
-    url: `/products-${category.slug}`,
+    url: `/${category.slug}`,
     updatedAt: category.updatedAt,
     indexed: true,
   };

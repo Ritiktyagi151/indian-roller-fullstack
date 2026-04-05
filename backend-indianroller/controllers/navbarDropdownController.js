@@ -198,7 +198,7 @@ exports.getNavbarDropdownData = async (req, res) => {
               enabled: item.enabled,
               icon: item.icon || "",
               categoryReference: "",
-              href: `/products/${category.slug}`,
+              href: `/${category.slug}`,
             };
           }
 
@@ -213,7 +213,7 @@ exports.getNavbarDropdownData = async (req, res) => {
             enabled: item.enabled,
             icon: item.icon || "",
             categoryReference: item.categoryReference || deriveProductCategoryReference(product),
-            href: `/products/${product.slug}`,
+            href: `/${product.slug}`,
           };
         })
         .filter(Boolean);

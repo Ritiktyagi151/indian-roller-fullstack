@@ -44,6 +44,14 @@ type DropdownSection = {
   items: DropdownItem[];
 };
 
+const normalizeProductHref = (href: string, slug: string) => {
+  if (!href) {
+    return `/${slug}`;
+  }
+
+  return href.startsWith("/") ? href : `/${href}`;
+};
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -230,7 +238,7 @@ const Navbar = () => {
                       {section.items.map((item) => (
                         <motion.div key={`${section.key}-${item.type}-${item.refId}`} whileHover={{ x: 5 }}>
                           <Link
-                            href={item.href}
+                            href={normalizeProductHref(item.href, item.slug)}
                             onClick={closeMenus}
                             className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/50 hover:bg-orange-600/5 transition-all group"
                           >
@@ -322,7 +330,7 @@ const Navbar = () => {
                             {section.items.map((item) => (
                               <Link
                                 key={`${section.key}-${item.type}-${item.refId}`}
-                                href={item.href}
+                                href={normalizeProductHref(item.href, item.slug)}
                                 onClick={closeMenus}
                                 className="flex items-center gap-3 p-3 bg-white/5 rounded-lg text-gray-300 text-sm font-bold uppercase italic"
                               >
