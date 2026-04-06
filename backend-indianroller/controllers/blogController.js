@@ -49,12 +49,12 @@ exports.getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find()
       .select(
-        "title slug image shortDescription category customDate createdAt status author",
+        "title slug image description category customDate createdAt updatedAt status author",
       )
       .sort({ customDate: -1, createdAt: -1 });
     res.status(200).json(blogs);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: "Failed to fetch blogs.", error: err.message });
   }
 };
 
@@ -110,6 +110,27 @@ exports.updateBlog = async (req, res) => {
         : new Date();
     }
 
+    if (
+      Object.prototype.hasOwnProperty.call(updateData, "title") &&
+      !String(updateData.title || "").trim()
+    ) {
+      return res.status(400).json({ message: "Title is required." });
+    }
+
+    if (
+      Object.prototype.hasOwnProperty.call(updateData, "category") &&
+      !String(updateData.category || "").trim()
+    ) {
+      return res.status(400).json({ message: "Category is required." });
+    }
+
+    if (
+      Object.prototype.hasOwnProperty.call(updateData, "description") &&
+      !String(updateData.description || "").trim()
+    ) {
+      return res.status(400).json({ message: "Description is required." });
+    }
+
     if (req.file) updateData.image = `/uploads/${req.file.filename}`;
 
     const updated = await Blog.findByIdAndUpdate(
@@ -120,9 +141,15 @@ exports.updateBlog = async (req, res) => {
         returnDocument: "after",
       },
     );
+    if (!updated) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
     res.status(200).json(updated);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({
+      message: "Error updating blog.",
+      error: err.message,
+    });
   }
 };
 

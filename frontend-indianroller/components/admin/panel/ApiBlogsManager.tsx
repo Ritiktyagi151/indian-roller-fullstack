@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { PencilLine, Plus, Trash2 } from "lucide-react";
 import api from "@/lib/axios";
@@ -40,6 +41,7 @@ export default function ApiBlogsManager() {
   const [form, setForm] = useState(blankForm);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -47,17 +49,36 @@ export default function ApiBlogsManager() {
     setLoading(true);
     setError("");
 
-    try {
-      const [blogsRes, categoriesRes] = await Promise.all([
-        api.get("/blogs"),
-        api.get("/categories"),
-      ]);
+    const [blogsResult, categoriesResult] = await Promise.allSettled([
+      api.get("/blogs"),
+      api.get("/categories"),
+    ]);
 
-      setBlogs(Array.isArray(blogsRes.data) ? blogsRes.data : []);
-      setCategories(Array.isArray(categoriesRes.data) ? categoriesRes.data : []);
+    try {
+      if (blogsResult.status === "fulfilled") {
+        setBlogs(Array.isArray(blogsResult.value.data) ? blogsResult.value.data : []);
+      } else {
+        console.error(blogsResult.reason);
+        setBlogs([]);
+      }
+
+      if (categoriesResult.status === "fulfilled") {
+        setCategories(Array.isArray(categoriesResult.value.data) ? categoriesResult.value.data : []);
+      } else {
+        console.error(categoriesResult.reason);
+        setCategories([]);
+      }
+
+      if (blogsResult.status === "rejected" && categoriesResult.status === "rejected") {
+        setError("Blogs and categories could not be loaded.");
+      } else if (blogsResult.status === "rejected") {
+        setError("Blogs could not be loaded.");
+      } else if (categoriesResult.status === "rejected") {
+        setError("Categories could not be loaded.");
+      }
     } catch (loadError) {
       console.error(loadError);
-      setError("Blogs or categories could not be loaded.");
+      setError("Blog data could not be loaded.");
     } finally {
       setLoading(false);
     }
@@ -106,7 +127,11 @@ export default function ApiBlogsManager() {
       await loadData();
     } catch (saveError) {
       console.error(saveError);
-      setError("Blog could not be saved.");
+      if (axios.isAxiosError(saveError)) {
+        setError(saveError.response?.data?.message || "Blog could not be saved.");
+      } else {
+        setError("Blog could not be saved.");
+      }
     } finally {
       setSaving(false);
     }
@@ -123,20 +148,43 @@ export default function ApiBlogsManager() {
     }
   }
 
-  function editBlog(blog: Blog) {
-    setForm({
-      id: blog._id,
-      title: blog.title || "",
-      slug: blog.slug || "",
-      category: blog.category || "",
-      customDate: blog.customDate
-        ? new Date(blog.customDate).toISOString().split("T")[0]
-        : "",
-      status: blog.status || "Draft",
-      author: blog.author || "Admin",
-      description: blog.description || "",
-      imageFile: null,
-    });
+  function resetForm() {
+    setForm(blankForm);
+    setEditing(false);
+  }
+
+  async function editBlog(blog: Blog) {
+    setEditing(true);
+    setError("");
+    setMessage("");
+
+    try {
+      const response = await api.get(`/blogs/${blog._id}`);
+      const fullBlog = response.data as Blog;
+
+      setForm({
+        id: fullBlog._id,
+        title: fullBlog.title || "",
+        slug: fullBlog.slug || "",
+        category: fullBlog.category || "",
+        customDate: fullBlog.customDate
+          ? new Date(fullBlog.customDate).toISOString().split("T")[0]
+          : "",
+        status: fullBlog.status || "Draft",
+        author: fullBlog.author || "Admin",
+        description: fullBlog.description || "",
+        imageFile: null,
+      });
+      setEditing(false);
+    } catch (editError) {
+      console.error(editError);
+      setEditing(false);
+      if (axios.isAxiosError(editError)) {
+        setError(editError.response?.data?.message || "Blog details could not be loaded.");
+      } else {
+        setError("Blog details could not be loaded.");
+      }
+    }
   }
 
   return (
@@ -161,15 +209,22 @@ export default function ApiBlogsManager() {
               </select>
             </div>
             <input value={form.author} onChange={(event) => setForm((current) => ({ ...current, author: event.target.value }))} placeholder="Author" className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950" />
-          <RichTextEditor
-  value={form.description}
-  onChange={(val) => setForm((current) => ({ ...current, description: val }))}
-/>
+            <RichTextEditor
+              value={form.description}
+              onChange={(val) => setForm((current) => ({ ...current, description: val }))}
+            />
             <input type="file" accept="image/*" onChange={(event) => setForm((current) => ({ ...current, imageFile: event.target.files?.[0] ?? null }))} className="w-full text-sm" />
-            <button type="button" onClick={saveBlog} disabled={saving} className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60 dark:bg-orange-500">
-              <Plus className="h-4 w-4" />
-              {form.id ? "Update Blog" : "Add Blog"}
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button type="button" onClick={saveBlog} disabled={saving || editing} className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60 dark:bg-orange-500">
+                <Plus className="h-4 w-4" />
+                {editing ? "Loading..." : form.id ? "Update Blog" : "Add Blog"}
+              </button>
+              {form.id ? (
+                <button type="button" onClick={resetForm} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 dark:border-slate-800 dark:text-slate-200">
+                  Cancel Edit
+                </button>
+              ) : null}
+            </div>
           </div>
         </section>
 
@@ -185,7 +240,7 @@ export default function ApiBlogsManager() {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <button type="button" onClick={() => editBlog(blog)} className="rounded-xl border border-slate-200 p-2 dark:border-slate-800">
+                  <button type="button" onClick={() => void editBlog(blog)} className="rounded-xl border border-slate-200 p-2 dark:border-slate-800">
                     <PencilLine className="h-4 w-4" />
                   </button>
                   <button type="button" onClick={() => deleteBlog(blog._id)} className="rounded-xl border border-rose-200 p-2 text-rose-600 dark:border-rose-900 dark:text-rose-300">
