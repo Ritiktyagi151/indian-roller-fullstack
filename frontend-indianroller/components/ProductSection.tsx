@@ -70,7 +70,7 @@ const productData = [
     slug: "food-industry",
     cat: "industries",
     desc: "FDA-compliant, food-grade rollers for bakery, confectionery, and dairy processing. Features non-toxic, easy-clean silicone formulations.",
-    image: "/industry-img/food-industry.png",
+    image: "/industry-img/food-industry1.png",
     tags: ["FDA Grade", "Food Safe"],
     specs: [{ val: "Food-Grade Rubber", lbl: "Material" }, { val: "White / Custom", lbl: "Colour" }],
     isNew: true,
