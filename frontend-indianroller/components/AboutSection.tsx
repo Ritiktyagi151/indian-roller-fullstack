@@ -96,7 +96,7 @@ const AboutSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-400 text-[13px] leading-7 font-medium">
               <div className="space-y-4">
                 <p>
-                 Our facility is located across a 36,000 sq. ft. area in the industrial town of Sahibabad, Ghaziabad (Delhi NCR). Equipped with state-of-the-art machinery, we ensure every product meets international quality standards.
+                 Our facility is located across a 2,00,000 sq. ft. area in the industrial town of Sahibabad, Ghaziabad (Delhi NCR). Equipped with state-of-the-art machinery, we ensure every product meets international quality standards.
                 </p>
               </div>
               <div className="space-y-4">
@@ -107,7 +107,7 @@ const AboutSection = () => {
             </div>
 
             {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12 border-t border-gray-100 pt-8">
+            {/* <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12 border-t border-gray-100 pt-8">
               <div>
                 <h3 className="text-3xl font-black text-black">35+</h3>
                 <p className="text-orange-500 text-[10px] uppercase tracking-widest font-bold">Years Experience</p>
@@ -120,7 +120,7 @@ const AboutSection = () => {
                 <h3 className="text-3xl font-black text-black">100%</h3>
                 <p className="text-orange-500 text-[10px] uppercase tracking-widest font-bold">Quality Assured</p>
               </div>
-            </div>
+            </div> */}
           </motion.div>
         </div>
 

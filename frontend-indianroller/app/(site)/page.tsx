@@ -42,7 +42,7 @@ export default function Home() {
       <Partners/>
       {/* <Insights/> */}
       <WhyChooseUs/>
-      <LocationSection/>
+      {/* <LocationSection/> */}
       <BlogSlider/>
     </main>
   );

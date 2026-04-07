@@ -24,7 +24,7 @@ const logos = [
   "/clients-imgs/client21.png",
   "/clients-imgs/client22.png",
   "/clients-imgs/client23.png",
-  "/clients-imgs/client24.png",
+  "/logo/client24-new.png",
 
   "/clients-imgs/client25.png",
   "/clients-imgs/client26.png",
@@ -81,7 +81,7 @@ const MarqueeRow = ({ logos, direction, duration, tilt }: MarqueeRowProps) => {
               alt={`Partner ${i + 1}`}
               width={110}
               height={60}
-              className="object-contain relative z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+              className="object-fill relative z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-300"
             />
           </div>
         ))}

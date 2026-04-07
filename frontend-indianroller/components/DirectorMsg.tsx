@@ -65,7 +65,7 @@ const DirectorMessageH = () => {
             <div className="absolute -top-3 -left-3 w-full h-full border-2 border-orange-200 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
             <div className="relative overflow-hidden aspect-[3/4]">
               <img
-                src="/team-img/dicrectorsample.png"
+                src="/team-img/satpal-sharma.jpeg"
                 alt="Founder"
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
               />
@@ -75,7 +75,7 @@ const DirectorMessageH = () => {
                   Est. 1990
                 </span>
                 <p className="text-white font-black text-sm uppercase tracking-tight leading-tight">
-                   [Founder Name]
+                   Mr. Satpal Sharma
                 </p>
                 <p className="text-orange-300 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
                   Founder & Visionary
@@ -106,23 +106,27 @@ const DirectorMessageH = () => {
               className="h-0.5 bg-orange-500 mb-5"
             />
 
-            <p className="text-gray-500 text-[13px] leading-relaxed border-l-2 border-orange-400 pl-4 mb-5 italic">
-              Since our inception in 1990, IRI has been guided by one philosophy:
-              create products that are honestly made and sincerely served.
-            </p>
+           <p className="text-gray-500 text-[13px] leading-relaxed border-l-2 border-orange-400 pl-4 mb-5 italic">
+  “To Evolve is to Last Forever” — this belief defines our journey.
+</p>
 
-            <p className="text-gray-400 text-[12px] sm:text-[13px] leading-6 mb-6">
-              From a dedicated team's vision to a premier ISO 9001:2008 certified
-              hub spanning 36,000 sq. ft. in Sahibabad, Delhi NCR — equipped with
-              a Dust-Proof PU Casting chamber and Baule Machine (France) tie-up —
-              every product meets the most stringent global standards.
-            </p>
+<p className="text-gray-400 text-[12px] sm:text-[13px] leading-6 mb-5">
+  At IRI, we are driven by innovation, precision, and an unwavering commitment to quality.
+  From a vision built on trust and integrity, we have grown into a globally trusted name
+  in precision-engineered roller solutions.
+</p>
+
+<p className="text-gray-400 text-[12px] sm:text-[13px] leading-6">
+  With advanced manufacturing, cutting-edge PU casting technology, and global collaborations,
+  we deliver products that meet the highest international standards while creating lasting value
+  for our clients.
+</p>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-2 mb-6">
               {[
                 ["1990", "Established"],
-                ["36K", "Sq. Ft."],
+                ["6 Lakh", "Sq. Ft."],
                 ["35+", "Yrs Legacy"],
               ].map(([val, lbl], i) => (
                 <motion.div
@@ -145,7 +149,7 @@ const DirectorMessageH = () => {
             </div>
 
             {/* Signature */}
-            <div className="border-t border-gray-100 pt-4">
+            {/* <div className="border-t border-gray-100 pt-4">
               <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">
                 Warm Regards,
               </p>
@@ -158,7 +162,7 @@ const DirectorMessageH = () => {
               <p className="text-gray-300 text-[9px] uppercase tracking-widest mt-0.5">
                 ISO 9001:2008 Certified
               </p>
-            </div>
+            </div> */}
           </motion.div>
 
           {/* COL 3 — Director */}
@@ -179,13 +183,13 @@ const DirectorMessageH = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
                 <span className="inline-block bg-orange-500 text-white text-[8px] font-black uppercase tracking-[2px] px-2 py-0.5 mb-1.5">
-                  Current Leadership
+                  Our Leadership
                 </span>
                 <p className="text-white font-black text-sm uppercase tracking-tight leading-tight">
-                  [Sunny Sharma]
+                  Sunny Sharma
                 </p>
                 <p className="text-orange-300 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
-                  Managing Director, IRI
+                  Managing Director
                 </p>
               </div>
             </div>

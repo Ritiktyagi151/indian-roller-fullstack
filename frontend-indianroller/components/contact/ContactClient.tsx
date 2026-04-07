@@ -212,12 +212,13 @@ export default function ContactClient() {
           className="h-[400px] lg:h-auto bg-gray-900 relative"
         >
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.957591605664!2d77.33878797616644!3d28.661001183115497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfb2e6178619d%3A0xc6657c9f6929e577!2sINDIAN%20ROLLER%20(I)%20PVT.%20LTD.!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.7380788525893!2d77.33786397529018!3d28.660832475649286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfae0b0c6e759%3A0x32138b87c8ed56c0!2sIndian%20Roller%20Industries%20Pvt.%20Ltd.!5e1!3m2!1sen!2sin!4v1775540140795!5m2!1sen!2sin" 
             className="w-full h-full border-0 grayscale invert opacity-70 contrast-125 hover:grayscale-0 hover:invert-0 hover:opacity-100 transition-all duration-1000"
             allowFullScreen={true}
             title="IRI Location Map"
           />
         </motion.div>
+       
       </section>
 
       {/* --- FOOTPRINT SECTION WITH UNIT IMAGES --- */}
