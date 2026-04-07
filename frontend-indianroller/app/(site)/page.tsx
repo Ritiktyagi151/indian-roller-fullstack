@@ -17,6 +17,7 @@ import DirectorMessageH from "@/components/DirectorMsg";
 import MissionVision from "@/components/Missionvision";
 import JourneyTimeline from "@/components/JourneyTimeline";
 import SShapeTimeline from "@/components/JourneyTimeline";
+import GrowthRoadmap from "@/components/GrowthRoadmap";
 
 export async function generateMetadata() {
   return getSeoMetadataByPath("/", {
@@ -33,6 +34,7 @@ export default function Home() {
      <ProductSection/>
      <DirectorMessageH/>
      <SShapeTimeline/>
+     {/* <GrowthRoadmap/> */}
       {/* <JourneyTimeline/> */}
       <MissionVision/>
       <TeamSection/>

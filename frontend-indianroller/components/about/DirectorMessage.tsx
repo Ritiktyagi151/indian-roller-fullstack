@@ -95,7 +95,7 @@ export default function DirectorMessage() {
                 . What began as a vision by a dedicated team of energetic
                 professionals has today grown into a premier ISO 9001:2008
                 certified manufacturing hub, spanning{" "}
-                <span className="font-semibold text-[#C2410C]">36,000 sq. feet</span>{" "}
+                <span className="font-semibold text-[#C2410C]">2,00,000 sq. feet</span>{" "}
                 in the industrial heart of Sahibabad (Delhi NCR).
               </p>
               <p>
@@ -160,7 +160,7 @@ export default function DirectorMessage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-2xl font-extrabold text-[#C2410C]">36K</p>
+                    <p className="text-2xl font-extrabold text-[#C2410C]">2 Lakh</p>
                     <p className="text-xs text-[#78716C] uppercase tracking-widest font-mono mt-0.5">
                       Sq. Ft.
                     </p>

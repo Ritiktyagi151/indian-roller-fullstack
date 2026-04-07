@@ -64,8 +64,8 @@ const AboutDetails = () => {
             </div>
 
             {/* Main Heading */}
-            <h2 className="text-3xl md:text-5xl font-black text-black uppercase tracking-tighter leading-tight mb-8">
-              Greetings From All Of Us IRI Is An <span className="text-orange-500">ISO 9001 : 2008 Certified</span> Company
+            <h2 className="text-3xl md:text-4xl font-black text-black uppercase tracking-tighter leading-tight mb-8">
+              GREETINGS FROM IRI GROUP <br /> <span className="text-orange-500">AN ISO 9001:2008 CERTIFIED </span> COMPANY
             </h2>
 
             {/* Description Text */}
@@ -75,7 +75,7 @@ const AboutDetails = () => {
               </p>
               
               <p>
-                Our unit is located in a 36,000 sq. Feet area in the industrial town of Sahibabad, Dist. Ghaziabad (Delhi & NCR).
+                Our unit is located in a 2,00,000 sq. Feet area in the industrial town of Sahibabad, Dist. Ghaziabad (Delhi & NCR).
               </p>
               
               <p className="font-bold text-black uppercase tracking-wider text-sm">

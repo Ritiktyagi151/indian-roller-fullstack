@@ -65,7 +65,7 @@ const DirectorMessageH = () => {
             <div className="absolute -top-3 -left-3 w-full h-full border-2 border-orange-200 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
             <div className="relative overflow-hidden aspect-[3/4]">
               <img
-                src="/team-img/satpal-sharma.jpeg"
+                src="/team-img/satpal-sharma-sir.jpeg"
                 alt="Founder"
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
               />
@@ -78,7 +78,7 @@ const DirectorMessageH = () => {
                    Mr. Satpal Sharma
                 </p>
                 <p className="text-orange-300 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
-                  Founder & Visionary
+                  Chairman
                 </p>
               </div>
             </div>
@@ -186,7 +186,7 @@ const DirectorMessageH = () => {
                   Our Leadership
                 </span>
                 <p className="text-white font-black text-sm uppercase tracking-tight leading-tight">
-                  Sunny Sharma
+                  MR. Sunny Sharma
                 </p>
                 <p className="text-orange-300 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
                   Managing Director
