@@ -160,7 +160,6 @@ const Navbar = () => {
       </div>
 
       <nav
-        onMouseLeave={() => setShowProducts(false)}
         className={`transition-all duration-500 px-6 w-full ${
           isScrolled ? "bg-black/90 backdrop-blur-md shadow-2xl" : " backdrop-blur-[4px]"
         }`}
@@ -187,8 +186,61 @@ const Navbar = () => {
           <div className="hidden lg:flex gap-10 items-center font-black text-[14px] tracking-[2px] text-white">
             <Link href="/" className="hover:text-orange-500 transition-colors">HOME</Link>
             <Link href="/about" className="hover:text-orange-500 transition-colors">ABOUT</Link>
-            <div onMouseEnter={() => setShowProducts(true)} className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors py-2 uppercase">
-              Products <FaChevronDown className={`text-[10px] transition-transform duration-300 ${showProducts ? "rotate-180" : ""}`} />
+            <div
+              onMouseEnter={() => setShowProducts(true)}
+              onMouseLeave={() => setShowProducts(false)}
+            >
+              <div className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors py-2 uppercase">
+                Products <FaChevronDown className={`text-[10px] transition-transform duration-300 ${showProducts ? "rotate-180" : ""}`} />
+              </div>
+
+              <AnimatePresence>
+                {showProducts && dropdownSections.length > 0 && (
+                  <motion.div
+                    variants={megaMenuVars}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="absolute left-0 top-full w-full bg-[#0a0a0b] border-t-2 border-orange-600 shadow-2xl hidden lg:block"
+                  >
+                    <div className="max-w-[1400px] mx-auto p-10 grid gap-10 xl:grid-cols-2">
+                      {dropdownSections.map((section) => (
+                        <div key={section.key} className="min-w-0">
+                          <div className="flex items-center gap-2 mb-5">
+                            <span className="w-3 h-3 bg-orange-500 rounded-sm inline-block shrink-0"></span>
+                            <h3 className="text-orange-500 text-[11px] font-black uppercase tracking-[3px]">{section.title}</h3>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            {section.items.map((item) => (
+                              <motion.div key={`${section.key}-${item.type}-${item.refId}`} whileHover={{ x: 5 }}>
+                                <Link
+                                  href={normalizeProductHref(item.href, item.slug)}
+                                  onClick={closeMenus}
+                                  className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/50 hover:bg-orange-600/5 transition-all group"
+                                >
+                                  <div className="text-lg text-orange-500 group-hover:scale-110 transition-transform p-2 bg-orange-500/5 rounded-lg shrink-0">
+                                    {getIcon(item.slug, item.icon)}
+                                  </div>
+                                  <div className="min-w-0">
+                                    <span className="block text-[11px] font-black text-gray-300 group-hover:text-white uppercase leading-tight tracking-tight transition-colors">
+                                      {item.name}
+                                    </span>
+                                    {item.type === "product" && item.categoryReference ? (
+                                      <span className="block mt-1 text-[9px] font-bold text-gray-500 uppercase tracking-[0.18em]">
+                                        {item.categoryReference}
+                                      </span>
+                                    ) : null}
+                                  </div>
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             <Link href="/blogs" className="hover:text-orange-500 transition-colors">BLOG</Link>
             <Link href="/gallery" className="hover:text-orange-500 transition-colors">GALLERY</Link>
@@ -215,56 +267,6 @@ const Navbar = () => {
             {isMenuOpen ? <FaTimes className="text-orange-500" /> : <FaBars />}
           </button>
         </div>
-
-        <AnimatePresence>
-          {showProducts && dropdownSections.length > 0 && (
-            <motion.div
-              variants={megaMenuVars}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              onMouseEnter={() => setShowProducts(true)}
-              onMouseLeave={() => setShowProducts(false)}
-              className="absolute left-0 top-full w-full bg-[#0a0a0b] border-t-2 border-orange-600 shadow-2xl hidden lg:block"
-            >
-              <div className="max-w-[1400px] mx-auto p-10 grid gap-10 xl:grid-cols-2">
-                {dropdownSections.map((section) => (
-                  <div key={section.key} className="min-w-0">
-                    <div className="flex items-center gap-2 mb-5">
-                      <span className="w-3 h-3 bg-orange-500 rounded-sm inline-block shrink-0"></span>
-                      <h3 className="text-orange-500 text-[11px] font-black uppercase tracking-[3px]">{section.title}</h3>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      {section.items.map((item) => (
-                        <motion.div key={`${section.key}-${item.type}-${item.refId}`} whileHover={{ x: 5 }}>
-                          <Link
-                            href={normalizeProductHref(item.href, item.slug)}
-                            onClick={closeMenus}
-                            className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/50 hover:bg-orange-600/5 transition-all group"
-                          >
-                            <div className="text-lg text-orange-500 group-hover:scale-110 transition-transform p-2 bg-orange-500/5 rounded-lg shrink-0">
-                              {getIcon(item.slug, item.icon)}
-                            </div>
-                            <div className="min-w-0">
-                              <span className="block text-[11px] font-black text-gray-300 group-hover:text-white uppercase leading-tight tracking-tight transition-colors">
-                                {item.name}
-                              </span>
-                              {item.type === "product" && item.categoryReference ? (
-                                <span className="block mt-1 text-[9px] font-bold text-gray-500 uppercase tracking-[0.18em]">
-                                  {item.categoryReference}
-                                </span>
-                              ) : null}
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
 
       <AnimatePresence>

@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import axios from "axios";
 import type { Metadata } from "next";
-import ProductDetailClient from "@/components/products/ProductDetailClient";
 import ProductListingClient from "@/components/products/ProductListingClient";
 import { getSeoMetadataByPath } from "@/lib/seo";
 
@@ -29,8 +28,8 @@ export default async function CategoryListingPage({ params }: { params: Promise<
 
   const fullSlug = `products-${resolvedParams.category}`;
   const [productResult, categoryResult] = await Promise.allSettled([
-    axios.get(`${API_URL}/products/slug/${fullSlug}`),
     axios.get(`${API_URL}/products/category/${fullSlug}`),
+    axios.get(`${API_URL}/categories/slug/${fullSlug}`),
   ]);
 
   const productData =
@@ -38,22 +37,8 @@ export default async function CategoryListingPage({ params }: { params: Promise<
   const categoryData =
     categoryResult.status === "fulfilled" ? categoryResult.value.data : null;
 
-  const hasProductMatch = Boolean(productData);
-  const hasCategoryMatch = Array.isArray(categoryData)
-    ? categoryData.length > 0
-    : Boolean(categoryData);
-
-  if (hasProductMatch && hasCategoryMatch) {
-    console.error(`Slug conflict detected for "${fullSlug}" between product and category.`);
-    return notFound();
-  }
-
-  if (hasCategoryMatch) {
-    return <ProductListingClient categorySlug={fullSlug} initialProducts={categoryData} />;
-  }
-
-  if (hasProductMatch) {
-    return <ProductDetailClient product={productData} />;
+  if (categoryData) {
+    return <ProductListingClient categorySlug={fullSlug} initialProducts={Array.isArray(productData) ? productData : []} category={categoryData} />;
   }
 
   return notFound();

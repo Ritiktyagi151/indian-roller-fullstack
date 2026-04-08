@@ -138,7 +138,7 @@ const Footer = () => {
                 className="object-contain w-auto h-10 "
               />
             </Link>
-            <span className="text-gray-400 text-[11px] border-gray-800 sm:border-l sm:pl-6 py-1">
+            <span className="text-gray-400 text-[11px] uppercase border-gray-800 sm:border-l sm:pl-6 py-1">
               © 2026. All rights reserved.
             </span>
           </div>

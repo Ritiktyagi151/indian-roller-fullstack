@@ -38,7 +38,7 @@ export default function BlogContent({ data }: { data: BlogContentData | null }) 
       
       {/* Featured Image */}
       <div className="w-full aspect-video bg-zinc-900 border border-white/5 rounded-[2rem] md:rounded-[3.5rem] mb-12 overflow-hidden shadow-2xl">
-         <img src={getImageUrl(data.image)} alt={data.title} className="w-full h-full object-cover opacity-90" />
+         <img src={getImageUrl(data.image)} alt={data.title} className="w-full h-full object-fill opacity-90" />
       </div>
 
       {/* 🔥 Structured Pure White Content Area */}

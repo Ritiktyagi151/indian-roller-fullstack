@@ -1,6 +1,8 @@
 const Category = require("../models/Category");
 const Product = require("../models/Product");
 const slugify = require("slugify");
+const fs = require("fs");
+const path = require("path");
 
 function normalizeManualSlug(slug) {
   return String(slug || "").trim().replace(/^\/+|\/+$/g, "");
@@ -35,9 +37,34 @@ async function ensureSlugAvailable(slug, categoryId) {
   }
 }
 
+function normalizeBoolean(value) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    return value === "true" || value === "1";
+  }
+
+  return false;
+}
+
+function relativeUploadPath(file) {
+  return file ? `/uploads/${file.filename}` : "";
+}
+
+function removeLocalUpload(filePath) {
+  if (!filePath || typeof filePath !== "string" || !filePath.startsWith("/uploads/")) {
+    return;
+  }
+
+  const absolutePath = path.join(__dirname, "..", filePath.replace(/^\//, ""));
+  fs.promises.unlink(absolutePath).catch(() => {});
+}
+
 exports.createCategory = async (req, res) => {
   try {
-    const { name, description, navbarOrder, slug } = req.body;
+    const { name, description, navbarOrder, slug, bannerHeight } = req.body;
     if (!name) return res.status(400).json({ message: "Name is required" });
 
     const lastCategory = await Category.findOne().sort({ navbarOrder: -1, createdAt: -1 });
@@ -59,10 +86,27 @@ exports.createCategory = async (req, res) => {
       description,
       slug: resolvedSlug,
       navbarOrder: nextOrder,
+      banner: {
+        desktop: "",
+        mobile: "",
+        height: String(bannerHeight || "").trim(),
+      },
     };
 
-    if (req.file) {
-      data.image = `/uploads/${req.file.filename}`;
+    const desktopBanner = relativeUploadPath(req.files?.bannerDesktop?.[0]);
+    const mobileBanner = relativeUploadPath(req.files?.bannerMobile?.[0]);
+    const legacyImage = relativeUploadPath(req.files?.image?.[0]);
+
+    if (desktopBanner) {
+      data.banner.desktop = desktopBanner;
+    }
+    if (mobileBanner) {
+      data.banner.mobile = mobileBanner;
+    }
+    if (legacyImage) {
+      data.image = legacyImage;
+    } else if (desktopBanner) {
+      data.image = desktopBanner;
     }
 
     const category = await Category.create(data);
@@ -75,9 +119,26 @@ exports.createCategory = async (req, res) => {
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find()
-      .select("name slug image description navbarOrder createdAt updatedAt")
+      .select("name slug image banner description navbarOrder createdAt updatedAt")
       .sort({ navbarOrder: 1, createdAt: 1 });
     res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getCategoryBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const category = await Category.findOne({ slug }).select(
+      "name slug image banner description navbarOrder createdAt updatedAt",
+    );
+
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    res.json(category);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -87,6 +148,12 @@ exports.updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = { ...req.body };
+    const category = await Category.findById(id);
+
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
     [
       "metaTitle",
       "metaDescription",
@@ -119,18 +186,67 @@ exports.updateCategory = async (req, res) => {
         : 0;
     }
 
-    if (req.file) {
-      updateData.image = `/uploads/${req.file.filename}`;
+    const nextBanner = {
+      desktop: category.banner?.desktop || "",
+      mobile: category.banner?.mobile || "",
+      height: Object.prototype.hasOwnProperty.call(updateData, "bannerHeight")
+        ? String(updateData.bannerHeight || "").trim()
+        : (category.banner?.height || ""),
+    };
+
+    const removeDesktopBanner = normalizeBoolean(updateData.removeDesktopBanner);
+    const removeMobileBanner = normalizeBoolean(updateData.removeMobileBanner);
+    delete updateData.removeDesktopBanner;
+    delete updateData.removeMobileBanner;
+    delete updateData.bannerHeight;
+
+    const nextDesktopBanner = relativeUploadPath(req.files?.bannerDesktop?.[0]);
+    const nextMobileBanner = relativeUploadPath(req.files?.bannerMobile?.[0]);
+    const nextLegacyImage = relativeUploadPath(req.files?.image?.[0]);
+
+    if (removeDesktopBanner && category.banner?.desktop) {
+      removeLocalUpload(category.banner.desktop);
+      nextBanner.desktop = "";
     }
 
-    const category = await Category.findByIdAndUpdate(id, updateData, {
+    if (removeMobileBanner && category.banner?.mobile) {
+      removeLocalUpload(category.banner.mobile);
+      nextBanner.mobile = "";
+    }
+
+    if (nextDesktopBanner) {
+      if (category.banner?.desktop && category.banner.desktop !== nextDesktopBanner) {
+        removeLocalUpload(category.banner.desktop);
+      }
+      nextBanner.desktop = nextDesktopBanner;
+    }
+
+    if (nextMobileBanner) {
+      if (category.banner?.mobile && category.banner.mobile !== nextMobileBanner) {
+        removeLocalUpload(category.banner.mobile);
+      }
+      nextBanner.mobile = nextMobileBanner;
+    }
+
+    if (nextLegacyImage) {
+      if (category.image && category.image !== nextLegacyImage) {
+        removeLocalUpload(category.image);
+      }
+      updateData.image = nextLegacyImage;
+    } else if (nextDesktopBanner) {
+      updateData.image = nextDesktopBanner;
+    } else if (removeDesktopBanner && category.image === category.banner?.desktop) {
+      updateData.image = "";
+    }
+
+    updateData.banner = nextBanner;
+
+    const updatedCategory = await Category.findByIdAndUpdate(id, updateData, {
       new: true,
+      runValidators: true,
     });
-    if (!category) {
-      return res.status(404).json({ message: "Category not found" });
-    }
 
-    res.json(category);
+    res.json(updatedCategory);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -155,7 +271,7 @@ exports.updateNavbarOrder = async (req, res) => {
     );
 
     const categories = await Category.find()
-      .select("name slug image description navbarOrder createdAt updatedAt")
+      .select("name slug image banner description navbarOrder createdAt updatedAt")
       .sort({ navbarOrder: 1, createdAt: 1 });
 
     res.json(categories);
@@ -171,6 +287,10 @@ exports.deleteCategory = async (req, res) => {
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
+
+    removeLocalUpload(category.image);
+    removeLocalUpload(category.banner?.desktop);
+    removeLocalUpload(category.banner?.mobile);
 
     res.json({ message: "Deleted successfully" });
   } catch (error) {

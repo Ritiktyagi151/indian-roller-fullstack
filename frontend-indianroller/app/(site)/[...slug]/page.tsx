@@ -69,8 +69,9 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     );
   }
 
-  const [productResult, categoryResult] = await Promise.allSettled([
+  const [productResult, categoryResult, categoryProductsResult] = await Promise.allSettled([
     axios.get(`${API_URL}/products/slug/${fullPath}`),
+    axios.get(`${API_URL}/categories/slug/${fullPath}`),
     axios.get(`${API_URL}/products/category/${fullPath}`),
   ]);
 
@@ -78,11 +79,11 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     productResult.status === "fulfilled" ? productResult.value.data : null;
   const categoryData =
     categoryResult.status === "fulfilled" ? categoryResult.value.data : null;
+  const categoryProducts =
+    categoryProductsResult.status === "fulfilled" ? categoryProductsResult.value.data : [];
 
   const hasProductMatch = Boolean(productData);
-  const hasCategoryMatch = Array.isArray(categoryData)
-    ? categoryData.length > 0
-    : Boolean(categoryData);
+  const hasCategoryMatch = Boolean(categoryData);
 
   if (hasProductMatch && hasCategoryMatch) {
     console.error(`Slug conflict detected for "${fullPath}" between product and category.`);
@@ -90,7 +91,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
   }
 
   if (hasCategoryMatch) {
-    return <ProductListingClient categorySlug={fullPath} initialProducts={categoryData} />;
+    return <ProductListingClient categorySlug={fullPath} initialProducts={Array.isArray(categoryProducts) ? categoryProducts : []} category={categoryData} />;
   }
 
   if (hasProductMatch) {

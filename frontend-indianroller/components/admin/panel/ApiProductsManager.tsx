@@ -12,6 +12,12 @@ type Category = {
   name: string;
   slug?: string;
   description?: string;
+  image?: string;
+  banner?: {
+    desktop?: string;
+    mobile?: string;
+    height?: string;
+  };
 };
 
 type Product = {
@@ -41,7 +47,13 @@ type CategoryForm = {
   name: string;
   slug: string;
   description: string;
-  imageFile: File | null;
+  bannerHeight: string;
+  desktopBannerFile: File | null;
+  mobileBannerFile: File | null;
+  existingDesktopBanner: string;
+  existingMobileBanner: string;
+  removeDesktopBanner: boolean;
+  removeMobileBanner: boolean;
 };
 
 type ProductForm = {
@@ -68,7 +80,13 @@ const emptyCategory: CategoryForm = {
   name: "",
   slug: "",
   description: "",
-  imageFile: null,
+  bannerHeight: "",
+  desktopBannerFile: null,
+  mobileBannerFile: null,
+  existingDesktopBanner: "",
+  existingMobileBanner: "",
+  removeDesktopBanner: false,
+  removeMobileBanner: false,
 };
 
 const emptyProduct: ProductForm = {
@@ -102,6 +120,18 @@ function categoryIdsOf(product: Product) {
   }
 
   return [typeof product.category === "string" ? product.category : product.category._id].filter(Boolean);
+}
+
+const allowedBannerMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+const maxBannerSizeBytes = 2 * 1024 * 1024;
+
+function resolveAssetUrl(value?: string) {
+  if (!value) {
+    return "";
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") || "";
+  return value.startsWith("/") ? `${baseUrl}${value}` : value;
 }
 
 export default function ApiProductsManager({ initialTab }: Props) {
@@ -156,6 +186,91 @@ export default function ApiProductsManager({ initialTab }: Props) {
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / 5));
   const safePage = Math.min(page, totalPages);
   const visibleProducts = filteredProducts.slice((safePage - 1) * 5, safePage * 5);
+  const desktopBannerPreview = useMemo(() => {
+    if (categoryForm.desktopBannerFile) {
+      return URL.createObjectURL(categoryForm.desktopBannerFile);
+    }
+
+    return resolveAssetUrl(categoryForm.existingDesktopBanner);
+  }, [categoryForm.desktopBannerFile, categoryForm.existingDesktopBanner]);
+  const mobileBannerPreview = useMemo(() => {
+    if (categoryForm.mobileBannerFile) {
+      return URL.createObjectURL(categoryForm.mobileBannerFile);
+    }
+
+    return resolveAssetUrl(categoryForm.existingMobileBanner);
+  }, [categoryForm.mobileBannerFile, categoryForm.existingMobileBanner]);
+
+  useEffect(() => {
+    return () => {
+      if (desktopBannerPreview.startsWith("blob:")) {
+        URL.revokeObjectURL(desktopBannerPreview);
+      }
+    };
+  }, [desktopBannerPreview]);
+
+  useEffect(() => {
+    return () => {
+      if (mobileBannerPreview.startsWith("blob:")) {
+        URL.revokeObjectURL(mobileBannerPreview);
+      }
+    };
+  }, [mobileBannerPreview]);
+
+  function validateBannerFile(file: File) {
+    if (!allowedBannerMimeTypes.includes(file.type)) {
+      return "Only JPG, PNG, and WEBP images are allowed.";
+    }
+
+    if (file.size > maxBannerSizeBytes) {
+      return "Each banner image must be 2MB or smaller.";
+    }
+
+    return "";
+  }
+
+  function updateCategoryBanner(field: "desktop" | "mobile", file: File | null) {
+    if (file) {
+      const validationError = validateBannerFile(file);
+      if (validationError) {
+        setError(validationError);
+        return;
+      }
+    }
+
+    setError("");
+    setCategoryForm((current) =>
+      field === "desktop"
+        ? {
+            ...current,
+            desktopBannerFile: file,
+            removeDesktopBanner: false,
+          }
+        : {
+            ...current,
+            mobileBannerFile: file,
+            removeMobileBanner: false,
+          },
+    );
+  }
+
+  function removeCategoryBanner(field: "desktop" | "mobile") {
+    setCategoryForm((current) =>
+      field === "desktop"
+        ? {
+            ...current,
+            desktopBannerFile: null,
+            existingDesktopBanner: "",
+            removeDesktopBanner: true,
+          }
+        : {
+            ...current,
+            mobileBannerFile: null,
+            existingMobileBanner: "",
+            removeMobileBanner: true,
+          },
+    );
+  }
 
   async function saveCategory() {
     if (!categoryForm.name.trim()) {
@@ -172,7 +287,15 @@ export default function ApiProductsManager({ initialTab }: Props) {
       formData.append("name", categoryForm.name.trim());
       formData.append("slug", categoryForm.slug.trim());
       formData.append("description", categoryForm.description.trim());
-      if (categoryForm.imageFile) formData.append("image", categoryForm.imageFile);
+      formData.append("bannerHeight", categoryForm.bannerHeight.trim());
+      formData.append("removeDesktopBanner", String(categoryForm.removeDesktopBanner));
+      formData.append("removeMobileBanner", String(categoryForm.removeMobileBanner));
+      if (categoryForm.desktopBannerFile) {
+        formData.append("bannerDesktop", categoryForm.desktopBannerFile);
+      }
+      if (categoryForm.mobileBannerFile) {
+        formData.append("bannerMobile", categoryForm.mobileBannerFile);
+      }
 
       if (categoryForm.id) {
         await api.put(`/categories/${categoryForm.id}`, formData, {
@@ -277,7 +400,13 @@ export default function ApiProductsManager({ initialTab }: Props) {
       name: category.name || "",
       slug: category.slug || "",
       description: category.description || "",
-      imageFile: null,
+      bannerHeight: category.banner?.height || "",
+      desktopBannerFile: null,
+      mobileBannerFile: null,
+      existingDesktopBanner: category.banner?.desktop || category.image || "",
+      existingMobileBanner: category.banner?.mobile || "",
+      removeDesktopBanner: false,
+      removeMobileBanner: false,
     });
     setActiveTab("categories");
   }
@@ -374,11 +503,81 @@ export default function ApiProductsManager({ initialTab }: Props) {
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950"
               />
               <input
-                type="file"
-                accept="image/*"
-                onChange={(event) => setCategoryForm((current) => ({ ...current, imageFile: event.target.files?.[0] ?? null }))}
-                className="w-full text-sm"
+                value={categoryForm.bannerHeight}
+                onChange={(event) => setCategoryForm((current) => ({ ...current, bannerHeight: event.target.value }))}
+                placeholder="Banner Height (e.g. 450px, 60vh)"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none dark:border-slate-800 dark:bg-slate-950"
               />
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Desktop Banner</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">JPG, PNG, WEBP up to 2MB</p>
+                    </div>
+                    {(desktopBannerPreview || categoryForm.desktopBannerFile || categoryForm.existingDesktopBanner) ? (
+                      <button
+                        type="button"
+                        onClick={() => removeCategoryBanner("desktop")}
+                        className="rounded-xl border border-rose-200 px-3 py-2 text-xs font-medium text-rose-600 dark:border-rose-900 dark:text-rose-300"
+                      >
+                        Remove
+                      </button>
+                    ) : null}
+                  </div>
+                  {desktopBannerPreview ? (
+                    <img
+                      src={desktopBannerPreview}
+                      alt="Desktop banner preview"
+                      className="mb-3 h-32 w-full rounded-2xl object-cover border border-slate-200 dark:border-slate-800"
+                    />
+                  ) : (
+                    <div className="mb-3 flex h-32 items-center justify-center rounded-2xl border border-dashed border-slate-300 text-sm text-slate-400 dark:border-slate-700">
+                      No desktop banner selected
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    onChange={(event) => updateCategoryBanner("desktop", event.target.files?.[0] ?? null)}
+                    className="w-full text-sm"
+                  />
+                </div>
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Mobile Banner</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">JPG, PNG, WEBP up to 2MB</p>
+                    </div>
+                    {(mobileBannerPreview || categoryForm.mobileBannerFile || categoryForm.existingMobileBanner) ? (
+                      <button
+                        type="button"
+                        onClick={() => removeCategoryBanner("mobile")}
+                        className="rounded-xl border border-rose-200 px-3 py-2 text-xs font-medium text-rose-600 dark:border-rose-900 dark:text-rose-300"
+                      >
+                        Remove
+                      </button>
+                    ) : null}
+                  </div>
+                  {mobileBannerPreview ? (
+                    <img
+                      src={mobileBannerPreview}
+                      alt="Mobile banner preview"
+                      className="mb-3 h-32 w-full rounded-2xl object-cover border border-slate-200 dark:border-slate-800"
+                    />
+                  ) : (
+                    <div className="mb-3 flex h-32 items-center justify-center rounded-2xl border border-dashed border-slate-300 text-sm text-slate-400 dark:border-slate-700">
+                      No mobile banner selected
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    onChange={(event) => updateCategoryBanner("mobile", event.target.files?.[0] ?? null)}
+                    className="w-full text-sm"
+                  />
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={saveCategory}
@@ -399,6 +598,9 @@ export default function ApiProductsManager({ initialTab }: Props) {
                     <p className="font-medium text-slate-900 dark:text-white">{category.name}</p>
                     <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Slug: {category.slug || "-"}</p>
                     <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{category.description}</p>
+                    <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+                      Desktop banner: {category.banner?.desktop ? "Saved" : "Not set"} | Mobile banner: {category.banner?.mobile ? "Saved" : "Not set"}
+                    </p>
                   </div>
                   <div className="flex gap-2">
                     <button type="button" onClick={() => editCategory(category)} className="rounded-xl border border-slate-200 p-2 dark:border-slate-800">

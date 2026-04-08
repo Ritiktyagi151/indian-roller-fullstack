@@ -3,10 +3,46 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
 
-// Props mein initialProducts add kiya
-export default function ProductListingClient({ categorySlug, initialProducts = [] }: { categorySlug: string, initialProducts: any[] }) {
+type CategoryBannerData = {
+  name?: string;
+  image?: string;
+  banner?: {
+    desktop?: string;
+    mobile?: string;
+    height?: string;
+  };
+} | null;
+
+function resolveAssetUrl(value?: string) {
+  if (!value) {
+    return "";
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") || "";
+  return value.startsWith("/") ? `${baseUrl}${value}` : value;
+}
+
+export default function ProductListingClient({
+  categorySlug,
+  initialProducts = [],
+  category,
+}: {
+  categorySlug: string;
+  initialProducts: any[];
+  category?: CategoryBannerData;
+}) {
   const [mounted, setMounted] = useState(false);
-  const categoryName = categorySlug.replace(/-/g, ' ');
+  const categoryName = category?.name || categorySlug.replace(/-/g, " ");
+  const desktopBanner =
+    resolveAssetUrl(category?.banner?.desktop) ||
+    resolveAssetUrl(category?.image) ||
+    "/banners/productpage-banner.webp";
+  const mobileBanner =
+    resolveAssetUrl(category?.banner?.mobile) ||
+    resolveAssetUrl(category?.banner?.desktop) ||
+    resolveAssetUrl(category?.image) ||
+    "/banners/productpage-banner.webp";
+  const bannerHeight = category?.banner?.height?.trim() || "450px";
 
   useEffect(() => {
     setMounted(true);
@@ -16,12 +52,16 @@ export default function ProductListingClient({ categorySlug, initialProducts = [
 
   return (
     <main className="min-h-screen   pb-20  selection:bg-orange-500/30">
-      <div className="w-full h-[450px] relative">
-        <img
-          className="w-full  h-[450px]"
-          src="/banners/productpage-banner.webp"
-          alt="product banner"
-        />
+      <div className="w-full relative overflow-hidden" style={{ height: bannerHeight }}>
+        <picture>
+          <source media="(max-width: 767px)" srcSet={mobileBanner} />
+          <img
+            className="w-full h-full object-cover"
+            src={desktopBanner}
+            alt={`${categoryName} banner`}
+          />
+        </picture>
+        <div className="absolute inset-0 bg-black/45" />
 
         {/* Text Overlay */}
         <div className="absolute inset-0 flex items-center justify-center">

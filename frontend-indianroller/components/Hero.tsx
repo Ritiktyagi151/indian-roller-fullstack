@@ -32,7 +32,7 @@ const Hero = () => {
 
   const desktopVideos = [
     "/videos/home.mp4",
-    "/videos/news-video.mp4",
+    
   ];
 
   const mobileVideos = [

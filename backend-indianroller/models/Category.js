@@ -12,6 +12,20 @@ const categorySchema = new mongoose.Schema({
   image: {
     type: String
   },
+  banner: {
+    desktop: {
+      type: String,
+      default: ""
+    },
+    mobile: {
+      type: String,
+      default: ""
+    },
+    height: {
+      type: String,
+      default: ""
+    }
+  },
   description: {
     type: String
   },

@@ -92,7 +92,7 @@ export default function ContactClient() {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover grayscale-[40%]"
         >
-          <source src="/videos/news-video.mp4" type="video/mp4" />
+          <source src="/videos/contact-us.mp4" type="video/mp4" />
         </video>
         
         <div className="absolute inset-0 z-10 bg-black/60" /> 
@@ -213,7 +213,7 @@ export default function ContactClient() {
         >
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.7380788525893!2d77.33786397529018!3d28.660832475649286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfae0b0c6e759%3A0x32138b87c8ed56c0!2sIndian%20Roller%20Industries%20Pvt.%20Ltd.!5e1!3m2!1sen!2sin!4v1775540140795!5m2!1sen!2sin" 
-            className="w-full h-full border-0 grayscale invert opacity-70 contrast-125 hover:grayscale-0 hover:invert-0 hover:opacity-100 transition-all duration-1000"
+            className="w-full h-full border-0 "
             allowFullScreen={true}
             title="IRI Location Map"
           />
