@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { 
   Factory, 
   Expand, 
@@ -22,20 +22,20 @@ const milestones = [
 ];
 
 // --- Animations ---
-const cardFadeUp = {
+const cardFadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.5 + (i * 0.2), duration: 0.6, ease: "easeOut" }
+    transition: { delay: 0.5 + (i * 0.2), duration: 0.6, ease: "easeOut" as const }
   })
 };
 
-const lineFlow = {
+const lineFlow: Variants = {
   hidden: { pathLength: 0 },
   visible: { 
     pathLength: 1, 
-    transition: { duration: 2.5, ease: "easeInOut" } 
+    transition: { duration: 2.5, ease: "easeInOut" as const } 
   }
 };
 
