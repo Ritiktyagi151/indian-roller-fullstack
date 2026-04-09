@@ -13,7 +13,7 @@ const AboutHero = ({ title, subtitle, imagePath }: AboutHeroProps) => {
     <section className="relative h-[60vh] min-h-[500px] w-full flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 hover:scale-105"
+        className="absolute inset-0 z-0 bg-cover  bg-center bg-no-repeat transition-transform duration-700 hover:scale-105"
         style={{ backgroundImage: `url('${imagePath}')` }}
       >
         {/* Dark Overlay taaki text saaf dikhe */}

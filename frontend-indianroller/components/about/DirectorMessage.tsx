@@ -42,10 +42,10 @@ export default function DirectorMessage() {
             {/* Name tag pinned at bottom */}
             <div className="absolute bottom-0 left-4 right-4 z-20 bg-gradient-to-r from-[#C2410C] to-[#D97706] px-5 py-4 shadow-xl">
               <p className="text-white font-bold text-lg leading-tight tracking-wide">
-                Director
+                Mr. Sunny Sharma
               </p>
               <p className="text-[#FDE68A] text-sm mt-0.5 tracking-widest uppercase font-mono">
-                Indian Roller (IRI)
+               Managing Director <br /> Indian Roller (IRI)
               </p>
             </div>
 
@@ -71,12 +71,12 @@ export default function DirectorMessage() {
             </h2>
 
             {/* Tagline */}
-            <p className="text-[#D97706] font-semibold text-base italic tracking-wide mb-6 font-mono">
+            <p className="text-[#D97706] font-semibold text-base italic tracking-wide mb-4 font-mono">
               &ldquo;To Evolve is to Last Forever&rdquo;
             </p>
 
             {/* Big decorative quote mark */}
-            <div className="text-[#FBBF24] text-8xl font-serif leading-none mb-1 select-none -ml-1">
+            <div className="text-[#FBBF24] text-7xl font-serif leading-none mb-1 select-none -ml-1">
               &ldquo;
             </div>
 
@@ -141,10 +141,10 @@ export default function DirectorMessage() {
                     className="text-3xl text-[#C2410C] italic"
                     style={{ fontFamily: "Georgia, serif" }}
                   >
-                    Director
+                  Mr. Sunny Sharma  
                   </p>
                   <p className="text-[#D97706] text-xs tracking-[0.25em] uppercase mt-1 font-mono font-semibold">
-                    Indian Roller (IRI)
+                   Managing Director Indian Roller (IRI)
                   </p>
                 </div>
 

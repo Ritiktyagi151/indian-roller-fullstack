@@ -36,9 +36,8 @@ const Hero = () => {
   ];
 
   const mobileVideos = [
-    "/videos/home-mv/mobile-2.mp4",
-    "/videos/home-mv/mobile-3.mp4",
-    "/videos/home-mv/video-mobile-1.mp4",
+    "/videos/home-mv/video-mobileview.mp4",
+   
   ];
 
   const videos = isMobile ? mobileVideos : desktopVideos;

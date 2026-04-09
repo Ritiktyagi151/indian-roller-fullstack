@@ -20,7 +20,7 @@ export default function AboutPage() {
       <AboutHero
         title="About Our Company"
         subtitle="Sincere Service & Honest Manufacturing Since 1990"
-        imagePath="/about-img/about-bg.jpg"
+        imagePath="/team-img/bangladesh.png"
       />
       <AboutDetails />
 <DirectorMessage/>
