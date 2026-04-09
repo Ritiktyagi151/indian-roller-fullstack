@@ -31,7 +31,7 @@ const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   const desktopVideos = [
-    "/videos/home.mp4",
+    "/videos/home-page-landing.mp4",
     
   ];
 
@@ -117,21 +117,28 @@ const Hero = () => {
       >
         {/* ── VIDEOS ── */}
         {videos.map((src, i) => (
-          <video
-            key={`${isMobile ? "mob" : "desk"}-${src}`}
-            ref={(el) => { videoRefs.current[i] = el; }}
-            src={src}
-            muted
-            playsInline
-            autoPlay={i === 0}
-            onEnded={handleVideoEnd}
-            className="absolute inset-0 w-full h-full object-fill transition-opacity duration-1000"
-            style={{
-              opacity: i === videoIndex ? 1 : 0,
-              zIndex: i === videoIndex ? 1 : 0,
-            }}
-          />
-        ))}
+  <video
+    key={`${isMobile ? "mob" : "desk"}-${src}`}
+    ref={(el) => { videoRefs.current[i] = el; }}
+    src={src}
+    muted
+    playsInline
+    // Agar list mein sirf ek hi video hai (Desktop), toh seedha loop use karein
+    loop={videos.length === 1} 
+    autoPlay={i === videoIndex}
+    // Agar ek se zyada videos hain, toh ended hone par next slide par jayein
+    onEnded={() => {
+      if (videos.length > 1) {
+        handleVideoEnd();
+      }
+    }}
+    className="absolute inset-0 w-full h-full object-fill transition-opacity duration-1000"
+    style={{
+      opacity: i === videoIndex ? 1 : 0,
+      zIndex: i === videoIndex ? 1 : 0,
+    }}
+  />
+))}
 
         {/* ── MOBILE GRADIENT OVERLAY ── */}
         {isMobile && (
