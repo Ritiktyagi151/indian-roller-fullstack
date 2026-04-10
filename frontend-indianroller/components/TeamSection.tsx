@@ -209,6 +209,84 @@ const TeamSection = () => {
           ))}
         </div>
 
+     
+{/* Video Section */}
+<motion.div
+  variants={fadeInUp}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: false, amount: 0.2 }}
+  className="mt-10 sm:mt-14 md:mt-16 relative group"
+>
+  {/* Top label bar */}
+  <div className="flex items-center justify-between mb-2 sm:mb-3 px-1">
+    <div className="flex items-center gap-2 sm:gap-3">
+      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-orange-500 animate-pulse" />
+      <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[3px] sm:tracking-[4px] text-gray-400">
+        Live Operations
+      </span>
+    </div>
+    <span className="hidden xs:block text-[8px] sm:text-[10px] font-mono text-gray-300 uppercase tracking-widest">
+      Global Manufacturing — 2026
+    </span>
+  </div>
+
+  {/* Video wrapper */}
+  <div className="relative overflow-hidden rounded-lg sm:rounded-xl border border-gray-200 shadow-md sm:shadow-xl">
+
+    {/* Corner accents — hidden on very small screens */}
+    <span className="hidden sm:block absolute top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-l-2 border-orange-500 z-10 rounded-tl-xl" />
+    <span className="hidden sm:block absolute top-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-orange-500 z-10 rounded-tr-xl" />
+    <span className="hidden sm:block absolute bottom-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-orange-500 z-10 rounded-bl-xl" />
+    <span className="hidden sm:block absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-r-2 border-orange-500 z-10 rounded-br-xl" />
+
+    {/* Bottom overlay */}
+    <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-3 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 pointer-events-none">
+      <div className="flex flex-row items-end justify-between gap-2 sm:gap-4">
+
+        {/* Left — title */}
+        <div className="min-w-0">
+          <p className="text-orange-500 text-[7px] sm:text-[9px] uppercase tracking-[3px] sm:tracking-[4px] font-black mb-0.5 sm:mb-1">
+            Manufacturing Excellence
+          </p>
+          <h3 className="text-white text-base sm:text-2xl md:text-3xl font-black uppercase leading-tight truncate">
+            5 Plants. 1 Vision.
+          </h3>
+        </div>
+
+        {/* Right — stats */}
+        <div className="flex gap-3 sm:gap-5 md:gap-6 flex-shrink-0">
+          {[
+            { num: "35+", lbl: "Years" },
+            { num: "5",   lbl: "Units" },
+            { num: "24/7", lbl: "Running" },
+          ].map(({ num, lbl }) => (
+            <div key={lbl} className="text-center">
+              <div className="text-white text-sm sm:text-xl font-black leading-none">{num}</div>
+              <div className="text-orange-400 text-[6px] sm:text-[8px] uppercase tracking-widest mt-0.5 font-bold">{lbl}</div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+
+    <video
+      className="w-full block max-h-[220px] xs:max-h-[280px] sm:max-h-[400px] md:max-h-[500px] lg:max-h-none object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      src="/videos/worldshow-video.mp4"
+    />
+  </div>
+
+  {/* Bottom caption */}
+  <p className="mt-2 sm:mt-3 text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-[2px] sm:tracking-[3px] text-right font-medium px-1">
+    Rubber Roller Manufacturing — India & International Units
+  </p>
+</motion.div>
+
         {/* CTA Block */}
         <motion.div 
           variants={fadeInUp}
