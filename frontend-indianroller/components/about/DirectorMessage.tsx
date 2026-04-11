@@ -45,8 +45,8 @@ export default function DirectorMessage() {
                 Mr. Sunny Sharma
               </p>
               <p className="text-[#FDE68A] text-sm mt-0.5 tracking-widest uppercase font-mono">
-               Managing Director <br /> Indian Roller (IRI)
-              </p>
+               Managing Director <br /> Indian Roller Industries (IRI) Group
+               </p>
             </div>
 
             {/* ISO badge */}
@@ -144,7 +144,7 @@ export default function DirectorMessage() {
                   Mr. Sunny Sharma  
                   </p>
                   <p className="text-[#D97706] text-xs tracking-[0.25em] uppercase mt-1 font-mono font-semibold">
-                   Managing Director Indian Roller (IRI)
+                   Managing Director <br /> Indian Roller Industries (IRI) Group
                   </p>
                 </div>
 

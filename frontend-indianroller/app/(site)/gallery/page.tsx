@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getSeoMetadataByPath } from "@/lib/seo";
+import { ExhibitionShowcase } from "@/components/gallery/ExhibitionShowcase";
 
 const factoryGallery = [
   {
@@ -239,6 +240,7 @@ export default function GalleryPage() {
           </div>
         </div>
       </section>
+      <ExhibitionShowcase />
     </main>
   );
 }

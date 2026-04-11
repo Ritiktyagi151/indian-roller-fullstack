@@ -23,7 +23,7 @@ export default function AboutPage() {
         imagePath="/team-img/bangladesh.png"
       />
       <AboutDetails />
-<DirectorMessage/>
+      <DirectorMessage/>
       <WhyIRI />
       <Philosophy />
       <Team />
