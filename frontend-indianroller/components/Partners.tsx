@@ -93,7 +93,7 @@ const MarqueeRow = ({ logos, direction, duration, tilt }: MarqueeRowProps) => {
 export default function Partners() {
   return (
     <section
-      className="py-20 overflow-hidden relative"
+      className="py-10 overflow-hidden relative"
       style={{
         backgroundImage: "url('/about-img/factory-img.jpg')",
         backgroundAttachment: "fixed",

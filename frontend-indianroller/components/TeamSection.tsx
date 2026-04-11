@@ -139,11 +139,11 @@ const TeamSection = () => {
   }, [selected]);
 
   return (
-    <section className="pt-12 pb-12 bg-[#fafafa] overflow-hidden">
+    <section className="pt-6 pb-6 bg-[#fafafa] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Heading Section */}
-        <div className="flex flex-col lg:flex-row gap-8 items-start mb-16">
+        <div className="flex flex-col lg:flex-row gap-8 items-start mb-8">
           <div className="lg:w-1/2">
             <motion.p 
               variants={slideFromLeft}
@@ -194,7 +194,7 @@ const TeamSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.1 }}
-          className="flex flex-wrap border-t border-b border-gray-200 mb-20 bg-white shadow-sm"
+          className="flex flex-wrap border-t border-b border-gray-200 mb-8 bg-white shadow-sm"
         >
           <StatCell num="05" label="Global Units" />
           <StatCell num="04" label="Key Regions" />
@@ -216,7 +216,7 @@ const TeamSection = () => {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: false, amount: 0.2 }}
-  className="mt-10 sm:mt-14 md:mt-16 relative group"
+  className="mt-10 sm:mt-14 md:mt-8 relative group"
 >
   {/* Top label bar */}
   <div className="flex items-center justify-between mb-2 sm:mb-3 px-1">
@@ -288,7 +288,7 @@ const TeamSection = () => {
 </motion.div>
 
         {/* CTA Block */}
-        <motion.div 
+        {/* <motion.div 
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -306,7 +306,7 @@ const TeamSection = () => {
               </button>
             </Link>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* Modal Section (Code remains same as original) */}

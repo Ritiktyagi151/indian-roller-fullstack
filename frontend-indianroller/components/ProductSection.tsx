@@ -145,11 +145,11 @@ const ProductSection = () => {
         @keyframes width-grow     { from{width:0px} to{width:80px} }
       `}</style>
 
-      <section className="bg-[#fcfaf7] py-10 sm:py-12 md:py-16 font-['DM_Sans']">
+      <section className="bg-[#fcfaf7] py-10 sm:py-12 md:py-8 font-['DM_Sans']">
         <div className="mx-auto md:max-w-7xl px-4 sm:px-6 lg:px-8">
 
           {/* ── HEADER ── */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-10 sm:mb-12 md:mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-5 mb-10 sm:mb-12 md:mb-8">
             <div className="lg:w-1/2">
               <p
                 ref={labelRef}
@@ -172,7 +172,7 @@ const ProductSection = () => {
 
               <div
                 ref={barRef}
-                className="h-1 bg-orange-500 mt-4 sm:mt-6"
+                className="h-1 bg-orange-500 mt-2 sm:mt-6"
                 style={barInView ? { animation: "width-grow 1s ease-out 0.5s both" } : { width: 0 }}
               />
             </div>

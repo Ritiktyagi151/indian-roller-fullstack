@@ -45,7 +45,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="pt-20 pb-20 bg-white overflow-hidden">
+    <section className="pt-10 pb-5 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-12 items-start">
 
@@ -130,7 +130,7 @@ const AboutSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-20 relative"
+          className="mt-10 relative"
         >
           <div className="grid grid-cols-12 gap-4">
 

@@ -38,11 +38,11 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-24 bg-black text-white overflow-hidden">
+    <section className="py-12 bg-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header Section */}
-        <div className="flex flex-col lg:flex-row items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col lg:flex-row items-end justify-between mb-10 gap-8">
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -65,7 +65,7 @@ const WhyChooseUs = () => {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((item, index) => (
             <motion.div
               key={index}

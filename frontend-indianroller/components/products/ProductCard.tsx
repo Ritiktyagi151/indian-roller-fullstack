@@ -33,7 +33,7 @@ export default function ProductCard({ product }: { product: ProductCardData }) {
           <img 
             src={displayImage || "/placeholder-product.jpg"} 
             alt={product.name}
-            className="w-full h-full object-cover rounded-[2rem] group-hover:scale-110 transition-transform duration-1000"
+            className="w-full h-full object-fill rounded-[2rem] group-hover:scale-110 transition-transform duration-1000"
             onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x600/111/orange?text=INDIAN+ROLLER'; }}
           />
           <div className="absolute top-10 left-10 bg-orange-600 text-white text-[9px] font-black px-4 py-1.5 rounded-full z-20 uppercase tracking-[0.2em] shadow-2xl italic border border-white/10">

@@ -61,11 +61,11 @@ const fadeInUp: Variants = {
 ───────────────────────────────────────────── */
 const MissionVision = () => {
   return (
-    <section className="pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16 lg:pb-20 bg-white overflow-hidden">
+    <section className="pt-12 sm:pt-16 lg:pt-10 pb-12 sm:pb-16 lg:pb-10 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mb-10 lg:mb-16">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mb-10 lg:mb-8">
           <div className="w-full lg:w-1/3">
             <motion.p
               variants={slideFromLeft}

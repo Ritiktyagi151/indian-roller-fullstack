@@ -71,7 +71,7 @@ const DesktopTimeline = () => {
   const pathData = "M 0 150 Q 150 50 300 150 T 600 150 T 900 150";
 
   return (
-    <div className="relative w-full min-h-[500px] flex items-center py-20">
+    <div className="relative w-full min-h-[500px] flex items-center pt-15" pb-4>
       {/* Auto-flowing SVG Path */}
       <svg className="absolute w-full h-full overflow-visible" viewBox="0 0 900 300" fill="none">
         <path d={pathData} stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
@@ -118,7 +118,7 @@ const DesktopTimeline = () => {
 /* ─── MAIN COMPONENT ─── */
 const JourneyTimeline = () => {
   return (
-    <section className="relative py-12 bg-[#050505] text-white overflow-hidden">
+    <section className="relative py-6 bg-[#050505] text-white overflow-hidden">
       {/* Background Ambient Glow */}
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-orange-600/20 blur-[120px] rounded-full" />
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-orange-600/10 blur-[120px] rounded-full" />
