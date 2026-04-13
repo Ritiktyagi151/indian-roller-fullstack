@@ -2,6 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
+
 
 const AboutDetails = () => {
   return (
@@ -20,7 +22,7 @@ const AboutDetails = () => {
             {/* Main Industrial Image */}
             <div className="relative z-10 rounded-sm overflow-hidden shadow-2xl border-b-8 border-orange-500">
               <Image 
-                src="/about-img/about1.jpg" // Aapki di gayi image yahan rakhein
+                src="/about-img/about-img.png" 
                 alt="IRI Industrial Roller Manufacturing" 
                 width={600}
                 height={450}
@@ -84,13 +86,15 @@ const AboutDetails = () => {
             </div>
 
             {/* Action Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="mt-10 bg-black text-white px-10 py-4 text-[10px] font-black uppercase tracking-[2px] hover:bg-orange-500 transition-all duration-300 shadow-xl"
-            >
-              Contact Our Experts
-            </motion.button>
+            <Link href="/contact">
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="mt-10 bg-black text-white px-10 py-4 text-[10px] font-black uppercase tracking-[2px] hover:bg-orange-500 transition-all duration-300 shadow-xl"
+  >
+    Contact Our Experts
+  </motion.button>
+</Link>
           </motion.div>
 
         </div>

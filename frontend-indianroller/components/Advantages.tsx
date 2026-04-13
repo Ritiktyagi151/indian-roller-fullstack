@@ -138,7 +138,7 @@ export default function AdvantagesSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-30 bg-black text-white w-full lg:w-[52%] py-6 px-8 md:px-12 lg:pl-32 mt-[-50px] lg:mt-[-350px]"
+        className="relative z-30 bg-black text-white w-full lg:w-[52%] py-6 px-8 md:px-6 lg:pl-16 mt-[-50px] lg:mt-[-350px]"
       >
         <p className="text-gray-500 font-bold text-[10px] tracking-[4px] uppercase mb-4">Advantages</p>
         <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tighter mb-8 leading-tight">
