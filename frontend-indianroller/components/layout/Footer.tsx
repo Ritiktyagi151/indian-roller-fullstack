@@ -59,7 +59,7 @@ const Footer = () => {
             Useful Links
           </h3>
           <div className="flex flex-wrap gap-2">
-            {['Home', 'About', 'Product', 'Blogs', 'Gallery', 'Career','Contact', 'Admin'].map((tag) => (
+            {['Home', 'About',  'Blogs', 'Gallery', 'Career','Contact', 'Admin'].map((tag) => (
               <Link 
                 key={tag} 
                 href={tag === 'Home' ? '/' : `/${tag.toLowerCase()}`} 

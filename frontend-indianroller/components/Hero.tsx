@@ -31,7 +31,7 @@ const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   const desktopVideos = [
-    "/videos/home-page-landing.mp4",
+    "/videos/newindianroller-video.mp4",
     
   ];
 
