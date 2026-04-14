@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 const units = [
-  { id: "01", name: "Sahibabad Unit (H.O)", address: "Plot No. 62/2/1&2, Site IV, Industrial Area, Sahibabad-201010 UP", phone: "+91-9540408844", mapLink: "https://goo.gl/maps/example1" },
+  { id: "01", name: "Sahibabad Unit (H.O)", address: "Plot No. 62/2/1 & 2, Sahibabad, Site-4, Industrial Area District Ghaziabad, (U.P.) - 201010", phone: "+91-9540408844", mapLink: "https://goo.gl/maps/example1" },
   { id: "02", name: "Jamshedpur Unit", address: "Shed no.1, Plot No-743, Shree Rampur P.O, Ghamaria, Distt Seraikela, Jharkhand - 832108", phone: "+91-8744885000", mapLink: "https://goo.gl/maps/example2" },
   { id: "03", name: "Ahmedabad Unit", address: "Plot No. 226 to 229, Gopalcharan-2, Industrial Park, Road No. 7, Bakrol, Ahmedabad-382433", phone: "+91-9376921082", mapLink: "https://goo.gl/maps/example3" },
-  { id: "04", name: "Bangladesh Unit", address: "South Kashimpur Panchagachia, Mohipal Feni, Bangladesh", phone: "+880-01741064260", mapLink: "https://goo.gl/maps/example4" },
-  { id: "05", name: "Karnataka Unit", address: "Property No-5331481412, Kurekuppa Village, Sandur, Ballari, Karnataka - 583119", phone: "+91-9540404842", mapLink: "https://goo.gl/maps/example5" }
+  { id: "04", name: "Bangladesh Unit", address: "South Kashimpur, Panchagachia, Feni, Bangladesh", phone: "+880-01741064260", mapLink: "https://goo.gl/maps/example4" },
+  { id: "05", name: "Karnataka Unit", address: "Building No -5331481412, Road/Street: Kurekuppa Village, 7 Town: Sandur District: Ballari State: Karnataka", phone: "+91-9540404842", mapLink: "https://goo.gl/maps/example5" }
 ];
 
 const UnitsSection = () => {

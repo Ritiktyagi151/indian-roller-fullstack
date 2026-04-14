@@ -6,35 +6,35 @@ const factoryData = [
   {
     id: "01",
     name: "Unit - 1 (Sahibabad)",
-    location: "Greater Noida, UP",
-    description: "Plot No. 62/2/1&2, Site IV, Industrial Area, Sahibabad-201010 UP.",
+    location: "Plot No. 62/2/1 & 2, Sahibabad, Site-4, Industrial Area District Ghaziabad, (U.P.) - 201010",
+    description: "Innovation lab and final testing facility for all products",
     image: "/team-img/shahibabad.png", // Yahan apni 1st factory ki team photo lagayein
   },
   {
     id: "02",
     name: "Unit - 2 (Jamshedpur)",
-    location: "Shed no.1, Plot No-743, Ghamaria, Jamshedpur, Jharkhand - 832108",
+    location: "Plot No. 743, Shed No-1, Jamshedpur, Distt. Saraikela, Jharkhand - 832108",
     description: "Specialized in high-precision rubber and polymer coating.",
     image: "/team-img/jamshedpur-plant.png", // 2nd factory
   },
   {
     id: "03",
     name: "Unit - 3 (Ahmedabad)",
-    location: " Plot No. 226 to 229 ,Gopalcharan -2, Industrial Park,  Ahmedabad, 382433 ",
+    location: " Plot no. 226 to 229, Gopalcharan Industrial Park, Road no. 7, Bakrol-Bujrang, Daskroi, Ahmedabad – 382433 ",
     description: "Dedicated to metal fabrication and core preparation.",
     image: "/team-img/ahmdabad.JPG", // 3rd factory
   },
   {
     id: "04",
     name: "Unit - 4 (Ballari)",
-    location: "Property No-5331481412, Kurekuppa Village, Sandur, Ballari, Karnataka - 583119",
+    location: "Building No -5331481412, Road/Street: Kurekuppa Village, 7 Town: Sandur District: Ballari State: Karnataka",
     description: "Innovation lab and final testing facility for all products.",
     image: "/team-img/kanatka2.png", // 4th factory
   },
    {
     id: "05",
     name: "Unit - 5 (Bangladesh)",
-    location: "South Kashimpur Panchagachia, Mohipal Feni, Bangladesh",
+    location: "South Kashimpur, Panchagachia, Feni, Bangladesh",
     description: "Innovation lab and final testing facility for all products.",
     image: "/team-img/bangladesh.png", // 4th factory
   },

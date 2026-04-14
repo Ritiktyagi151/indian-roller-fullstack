@@ -118,7 +118,7 @@ const Footer = () => {
             </div>
             <div className="flex items-start gap-3">
               <FaMapMarkerAlt className="text-orange-500 mt-1 flex-shrink-0" />
-              <p className="leading-snug">Plot No. 62/2/1, Sahibabad, Ghaziabad, UP India</p>
+              <p className="leading-snug">Plot No. 62/2/1 & 2, Sahibabad, Site-4, Industrial Area District Ghaziabad, (U.P.) - 201010</p>
             </div>
           </div>
         </div>
