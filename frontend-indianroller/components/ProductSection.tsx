@@ -90,7 +90,7 @@ const productData = [
     {
     id: 8,
     name: "Polyurethane Squeeze Rollers",
-    slug: "/polyurethane-squeeze-roller",
+    slug: "polyurethane-squeeze-roller",
     cat: "special",
     desc: "High-performance polyurethane squeeze rollers designed for efficient liquid removal, uniform pressure distribution, and long-lasting durability in textile, paper, and industrial applications.",
     image: "/industry-img/redpu.jpeg",
