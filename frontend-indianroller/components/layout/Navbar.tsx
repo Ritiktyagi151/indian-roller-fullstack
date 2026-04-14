@@ -284,7 +284,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col space-y-6">
-              {["HOME", "ABOUT", "BLOG", "CONTACT"].map((item, i) => (
+              {["HOME", "ABOUT", "BLOGS", "CONTACT"].map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ x: 50, opacity: 0 }}

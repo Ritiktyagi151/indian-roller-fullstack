@@ -22,7 +22,7 @@ const AboutDetails = () => {
             {/* Main Industrial Image */}
             <div className="relative z-10 rounded-sm overflow-hidden shadow-2xl border-b-8 border-orange-500">
               <Image 
-                src="/about-img/about-img.png" 
+                src="/about-img/about-imgg.png" 
                 alt="IRI Industrial Roller Manufacturing" 
                 width={600}
                 height={450}
