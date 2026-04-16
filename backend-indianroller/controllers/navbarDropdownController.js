@@ -18,17 +18,18 @@ const DEFAULT_SECTIONS = [
   { key: "material", title: "By Material", displayType: "category" },
 ];
 
+// ✅ In-memory cache
+let dropdownCache = null;
+let dropdownCacheTime = 0;
+const CACHE_TTL = 60 * 1000; // 1 minute
+
 function safeNumber(value, fallback = 0) {
   return Number.isFinite(Number(value)) ? Number(value) : fallback;
 }
 
 function normalizeItems(items) {
-  if (!Array.isArray(items)) {
-    return [];
-  }
-
+  if (!Array.isArray(items)) return [];
   const seen = new Set();
-
   return items
     .map((item) => ({
       type: item?.type === "product" ? "product" : "category",
@@ -49,22 +50,26 @@ function normalizeItems(items) {
 
 function buildDefaultSections(categories) {
   const industryCategories = categories
-    .filter((category) => INDUSTRY_SLUGS.includes(category.slug))
-    .sort((a, b) => safeNumber(a.navbarOrder, 0) - safeNumber(b.navbarOrder, 0));
+    .filter((c) => INDUSTRY_SLUGS.includes(c.slug))
+    .sort(
+      (a, b) => safeNumber(a.navbarOrder, 0) - safeNumber(b.navbarOrder, 0),
+    );
   const materialCategories = categories
-    .filter((category) => !INDUSTRY_SLUGS.includes(category.slug))
-    .sort((a, b) => safeNumber(a.navbarOrder, 0) - safeNumber(b.navbarOrder, 0));
+    .filter((c) => !INDUSTRY_SLUGS.includes(c.slug))
+    .sort(
+      (a, b) => safeNumber(a.navbarOrder, 0) - safeNumber(b.navbarOrder, 0),
+    );
 
   return [
     {
       key: "industry",
       title: "By Industry",
       displayType: "category",
-      items: industryCategories.map((category, index) => ({
+      items: industryCategories.map((c, i) => ({
         type: "category",
-        refId: String(category._id),
+        refId: String(c._id),
         enabled: true,
-        order: index + 1,
+        order: i + 1,
         icon: "",
         categoryReference: "",
       })),
@@ -73,11 +78,11 @@ function buildDefaultSections(categories) {
       key: "material",
       title: "By Material",
       displayType: "category",
-      items: materialCategories.map((category, index) => ({
+      items: materialCategories.map((c, i) => ({
         type: "category",
-        refId: String(category._id),
+        refId: String(c._id),
         enabled: true,
-        order: index + 1,
+        order: i + 1,
         icon: "",
         categoryReference: "",
       })),
@@ -87,26 +92,33 @@ function buildDefaultSections(categories) {
 
 function normalizeSections(sections, categories) {
   const defaults = buildDefaultSections(categories);
-
   return DEFAULT_SECTIONS.map((fallbackSection) => {
     const existing = Array.isArray(sections)
-      ? sections.find((section) => section?.key === fallbackSection.key)
+      ? sections.find((s) => s?.key === fallbackSection.key)
       : null;
-    const defaultSection = defaults.find((section) => section.key === fallbackSection.key) || fallbackSection;
-
+    const defaultSection =
+      defaults.find((s) => s.key === fallbackSection.key) || fallbackSection;
     return {
       key: fallbackSection.key,
-      title: String(existing?.title || defaultSection.title || fallbackSection.title).trim(),
+      title: String(
+        existing?.title || defaultSection.title || fallbackSection.title,
+      ).trim(),
       displayType: existing?.displayType === "product" ? "product" : "category",
-      items: normalizeItems(existing?.items?.length ? existing.items : defaultSection.items || []),
+      items: normalizeItems(
+        existing?.items?.length ? existing.items : defaultSection.items || [],
+      ),
     };
   });
 }
 
+// ✅ lean() added
 async function ensureSettings() {
-  const categories = await Category.find().select("_id slug navbarOrder").sort({ navbarOrder: 1, createdAt: 1 });
-  let settings = await NavbarDropdownSettings.findOne();
+  const categories = await Category.find()
+    .select("_id slug navbarOrder")
+    .sort({ navbarOrder: 1, createdAt: 1 })
+    .lean();
 
+  let settings = await NavbarDropdownSettings.findOne();
   if (!settings) {
     settings = await NavbarDropdownSettings.create({
       sections: buildDefaultSections(categories),
@@ -115,8 +127,8 @@ async function ensureSettings() {
   }
 
   const normalizedSections = normalizeSections(settings.sections, categories);
-  const changed = JSON.stringify(settings.sections) !== JSON.stringify(normalizedSections);
-
+  const changed =
+    JSON.stringify(settings.sections) !== JSON.stringify(normalizedSections);
   if (changed) {
     settings.sections = normalizedSections;
     await settings.save();
@@ -125,18 +137,35 @@ async function ensureSettings() {
   return settings;
 }
 
+// ✅ lean() added, categories ek hi baar fetch
 async function loadResolvedData() {
-  const settings = await ensureSettings();
-  const [categories, products] = await Promise.all([
-    Category.find().select("_id name slug description navbarOrder"),
-    Product.find()
-      .select("_id name slug category categories image")
-      .populate("category", "_id name slug")
-      .populate("categories", "_id name slug"),
-  ]);
+  const categories = await Category.find()
+    .select("_id name slug description navbarOrder")
+    .lean();
 
-  const categoryMap = new Map(categories.map((category) => [String(category._id), category]));
-  const productMap = new Map(products.map((product) => [String(product._id), product]));
+  let settings = await NavbarDropdownSettings.findOne();
+  if (!settings) {
+    settings = await NavbarDropdownSettings.create({
+      sections: buildDefaultSections(categories),
+    });
+  } else {
+    const normalizedSections = normalizeSections(settings.sections, categories);
+    const changed =
+      JSON.stringify(settings.sections) !== JSON.stringify(normalizedSections);
+    if (changed) {
+      settings.sections = normalizedSections;
+      await settings.save();
+    }
+  }
+
+  const products = await Product.find()
+    .select("_id name slug category categories")
+    .populate("category", "_id name slug")
+    .populate("categories", "_id name slug")
+    .lean();
+
+  const categoryMap = new Map(categories.map((c) => [String(c._id), c]));
+  const productMap = new Map(products.map((p) => [String(p._id), p]));
 
   return { settings, categoryMap, productMap };
 }
@@ -145,7 +174,9 @@ function deriveProductCategoryReference(product) {
   if (!product) return "";
   if (Array.isArray(product.categories) && product.categories.length > 0) {
     const primary = product.categories[0];
-    return typeof primary === "string" ? primary : primary?.slug || primary?.name || "";
+    return typeof primary === "string"
+      ? primary
+      : primary?.slug || primary?.name || "";
   }
   if (product.category && typeof product.category !== "string") {
     return product.category.slug || product.category.name || "";
@@ -164,12 +195,17 @@ exports.getNavbarDropdownSettings = async (req, res) => {
 
 exports.updateNavbarDropdownSettings = async (req, res) => {
   try {
-    const categories = await Category.find().select("_id slug navbarOrder").sort({ navbarOrder: 1, createdAt: 1 });
+    const categories = await Category.find()
+      .select("_id slug navbarOrder")
+      .sort({ navbarOrder: 1, createdAt: 1 })
+      .lean();
     const settings = await ensureSettings();
     const sections = normalizeSections(req.body?.sections, categories);
-
     settings.sections = sections;
     await settings.save();
+
+    // ✅ Cache clear on update
+    dropdownCache = null;
 
     res.json(settings);
   } catch (error) {
@@ -177,8 +213,14 @@ exports.updateNavbarDropdownSettings = async (req, res) => {
   }
 };
 
+// ✅ Cache + lean() + single categories fetch
 exports.getNavbarDropdownData = async (req, res) => {
   try {
+    // ✅ Cache hit - instant response
+    if (dropdownCache && Date.now() - dropdownCacheTime < CACHE_TTL) {
+      return res.json(dropdownCache);
+    }
+
     const { settings, categoryMap, productMap } = await loadResolvedData();
 
     const sections = (settings.sections || []).map((section) => {
@@ -201,7 +243,6 @@ exports.getNavbarDropdownData = async (req, res) => {
               href: `/${category.slug}`,
             };
           }
-
           const product = productMap.get(item.refId);
           if (!product) return null;
           return {
@@ -212,7 +253,8 @@ exports.getNavbarDropdownData = async (req, res) => {
             order: safeNumber(item.order, 0),
             enabled: item.enabled,
             icon: item.icon || "",
-            categoryReference: item.categoryReference || deriveProductCategoryReference(product),
+            categoryReference:
+              item.categoryReference || deriveProductCategoryReference(product),
             href: `/${product.slug}`,
           };
         })
@@ -226,7 +268,13 @@ exports.getNavbarDropdownData = async (req, res) => {
       };
     });
 
-    res.json({ sections });
+    const result = { sections };
+
+    // ✅ Cache save
+    dropdownCache = result;
+    dropdownCacheTime = Date.now();
+
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
