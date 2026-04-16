@@ -90,10 +90,10 @@ const productData = [
     {
     id: 8,
     name: "Special PolyUrethane Parts",
-    slug: "polyurethane-squeeze-roller",
+    slug: "special-pu-parts",
     cat: "special",
     desc: "High-performance polyurethane squeeze rollers designed for efficient liquid removal, uniform pressure distribution, and long-lasting durability in textile, paper, and industrial applications.",
-    image: "/industry-img/redpu.jpeg",
+    image: "/industry-img/polyutharane-parts.png",
     tags: ["Design", "Installation"],
     specs: [{ val: "End-to-End", lbl: "Scope" }, { val: "ISO Certified", lbl: "Quality" }],
     isNew: true,

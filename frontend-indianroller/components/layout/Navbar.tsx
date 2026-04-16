@@ -11,6 +11,7 @@ import {
   FaFacebookF,
   FaBars,
   FaTimes,
+  FaSearch,
   FaChevronDown,
   FaLinkedinIn,
   FaYoutube,
@@ -44,6 +45,15 @@ type DropdownSection = {
   items: DropdownItem[];
 };
 
+type SearchProduct = {
+  _id?: string;
+  name: string;
+  slug?: string;
+  sku?: string;
+  category?: { _id?: string; name?: string } | string | null;
+  categories?: Array<{ _id?: string; name?: string } | string>;
+};
+
 const normalizeProductHref = (href: string, slug: string) => {
   if (!href) {
     return `/${slug}`;
@@ -59,6 +69,9 @@ const Navbar = () => {
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [dropdownSections, setDropdownSections] = useState<DropdownSection[]>([]);
+  const [searchProducts, setSearchProducts] = useState<SearchProduct[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const getIcon = (slug: string, iconKey?: string): React.ReactNode => {
     const iconMap: { [key: string]: React.ReactNode } = {
@@ -103,8 +116,11 @@ const Navbar = () => {
   useEffect(() => {
     const fetchNavbarData = async () => {
       try {
-        const response = await api.get("/navbar/products-dropdown");
-        const sections = Array.isArray(response.data?.sections) ? response.data.sections : [];
+        const [dropdownResponse, productsResponse] = await Promise.all([
+          api.get("/navbar/products-dropdown"),
+          api.get("/products"),
+        ]);
+        const sections = Array.isArray(dropdownResponse.data?.sections) ? dropdownResponse.data.sections : [];
         setDropdownSections(
           sections
             .map((section: DropdownSection) => ({
@@ -115,6 +131,7 @@ const Navbar = () => {
             }))
             .filter((section: DropdownSection) => section.items.length > 0),
         );
+        setSearchProducts(Array.isArray(productsResponse.data) ? productsResponse.data : []);
       } catch (err) {
         console.error("Navbar API Error:", err);
       }
@@ -135,10 +152,45 @@ const Navbar = () => {
     exit: { opacity: 0, y: 15, rotateX: -10, transition: { duration: 0.3 } },
   };
 
+  const searchableProducts = searchProducts
+    .filter((product) => product.slug && product.name)
+    .map((product) => {
+      const categoryNames = [
+        ...(Array.isArray(product.categories) ? product.categories : []),
+        ...(product.category ? [product.category] : []),
+      ]
+        .map((category) => (typeof category === "string" ? category : category?.name || ""))
+        .filter(Boolean)
+        .join(", ");
+
+      return {
+        refId: product._id || product.slug || product.name,
+        name: product.name,
+        slug: product.slug || "",
+        href: `/${product.slug || ""}`,
+        icon: undefined,
+        categoryReference: categoryNames,
+        sectionTitle: "Products",
+        sku: product.sku || "",
+      };
+    });
+
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+  const filteredSearchResults = normalizedSearchQuery
+    ? searchableProducts.filter((item) =>
+        [item.name, item.slug, item.categoryReference, item.sectionTitle, item.sku]
+          .filter(Boolean)
+          .some((value) => String(value).toLowerCase().includes(normalizedSearchQuery)),
+      )
+    : [];
+  const showSearchResults = isSearchFocused || normalizedSearchQuery.length > 0;
+
   const closeMenus = () => {
     setShowProducts(false);
     setIsMenuOpen(false);
     setMobileProductOpen(false);
+    setSearchQuery("");
+    setIsSearchFocused(false);
   };
 
   return (
@@ -245,6 +297,76 @@ const Navbar = () => {
             <Link href="/blogs" className="hover:text-orange-500 transition-colors">BLOG</Link>
             <Link href="/gallery" className="hover:text-orange-500 transition-colors">GALLERY</Link>
             <Link href="/contact" className="hover:text-orange-500 transition-colors">CONTACT</Link>
+            <div className="relative">
+              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-white/80 backdrop-blur-md transition-colors focus-within:border-orange-500/70 focus-within:bg-white/10">
+                <FaSearch className="text-[12px] text-orange-500" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onBlur={() => {
+                    window.setTimeout(() => setIsSearchFocused(false), 120);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      setSearchQuery("");
+                      setIsSearchFocused(false);
+                    }
+                  }}
+                  placeholder="Search products"
+                  aria-label="Search products"
+                  className="w-40 xl:w-52 bg-transparent text-[11px] font-bold tracking-[0.18em] uppercase text-white placeholder:text-white/45 focus:outline-none"
+                />
+              </div>
+
+              <AnimatePresence>
+                {showSearchResults && (
+                  <motion.div
+                    variants={megaMenuVars}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="absolute right-0 top-[calc(100%+14px)] z-[140] w-[360px] rounded-2xl border border-orange-500/20 bg-[#0a0a0b]/95 p-3 shadow-2xl backdrop-blur-xl"
+                  >
+                    {normalizedSearchQuery ? (
+                      filteredSearchResults.length > 0 ? (
+                        <div className="max-h-[360px] space-y-2 overflow-y-auto pr-1">
+                          {filteredSearchResults.map((item) => (
+                            <Link
+                              key={`search-${item.refId}`}
+                              href={normalizeProductHref(item.href, item.slug)}
+                              onClick={closeMenus}
+                              className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/5 p-3 transition-all hover:border-orange-500/40 hover:bg-orange-600/10"
+                            >
+                              <div className="rounded-lg bg-orange-500/10 p-2 text-base text-orange-500">
+                                {getIcon(item.slug, item.icon)}
+                              </div>
+                              <div className="min-w-0">
+                                <span className="block truncate text-[11px] font-black uppercase tracking-[0.14em] text-white">
+                                  {item.name}
+                                </span>
+                                <span className="mt-1 block truncate text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                                  {item.categoryReference || item.sectionTitle}
+                                </span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="px-2 py-5 text-center text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                          No products found
+                        </p>
+                      )
+                    ) : (
+                      <p className="px-2 py-5 text-center text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                        Type to search products
+                      </p>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             <motion.button
               animate={{ rotate: [0, -12, 12, -12, 12, 0] }}
@@ -284,6 +406,49 @@ const Navbar = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col space-y-6">
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <FaSearch className="text-sm text-orange-500" />
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder="Search products"
+                    aria-label="Search products"
+                    className="w-full bg-transparent text-sm font-bold uppercase tracking-[0.18em] text-white placeholder:text-white/45 focus:outline-none"
+                  />
+                </div>
+
+                {normalizedSearchQuery ? (
+                  filteredSearchResults.length > 0 ? (
+                    <div className="mt-4 space-y-2 border-t border-white/10 pt-4">
+                      {filteredSearchResults.map((item) => (
+                        <Link
+                          key={`mobile-search-${item.refId}`}
+                          href={normalizeProductHref(item.href, item.slug)}
+                          onClick={closeMenus}
+                          className="flex items-center gap-3 rounded-xl bg-white/5 p-3 text-left"
+                        >
+                          <span className="text-orange-500">{getIcon(item.slug, item.icon)}</span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-xs font-black uppercase tracking-[0.14em] text-white">
+                              {item.name}
+                            </span>
+                            <span className="mt-1 block truncate text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                              {item.categoryReference || item.sectionTitle}
+                            </span>
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mt-4 border-t border-white/10 pt-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                      No products found
+                    </p>
+                  )
+                ) : null}
+              </div>
+
               {["HOME", "ABOUT", "BLOGS", "CONTACT"].map((item, i) => (
                 <motion.div
                   key={i}
