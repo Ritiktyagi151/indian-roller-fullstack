@@ -7,6 +7,7 @@ const {
   createProduct,
   getAllProducts,
   getProductsByCategory,
+  getProductById,
   getProductBySlug, // ✅ Naya function import karein
   updateProduct,
   deleteProduct,
@@ -70,6 +71,7 @@ router.get("/category/:categorySlug", getProductsByCategory);
 
 // 🔥 Yeh route zaruri hai clean URL ke liye (/ritik-roller)
 router.get("/slug/:slug", getProductBySlug);
+router.get("/:id", getProductById);
 
 router.put(
   "/:id",

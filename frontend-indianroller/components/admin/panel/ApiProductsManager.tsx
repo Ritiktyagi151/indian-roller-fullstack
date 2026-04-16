@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, PencilLine, Plus, Search, Trash2 } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/axios";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 
@@ -30,6 +31,9 @@ type Product = {
   shortDescription?: string;
   image?: string;
   images?: string[];
+  video?: string;
+  technicalDrawings?: string[];
+  catalogDownload?: string;
   fullDescription?: string;
   description?: string;
   specifications?: Array<{ label: string; value: string }>;
@@ -64,11 +68,16 @@ type ProductForm = {
   categoryIds: string[];
   shortDescription: string;
   imageFile: File | null;
+  existingImage: string;
   fullDescription: string;
   imageFiles: File[];
+  existingImages: string[];
   videoFile: File | null;
+  existingVideo: string;
   technicalDrawingFile: File | null;
+  existingTechnicalDrawings: string[];
   catalogFile: File | null;
+  existingCatalogFile: string;
   specifications: Array<{ label: string; value: string }>;
   features: string[];
   faqs: Array<{ question: string; answer: string }>;
@@ -97,11 +106,16 @@ const emptyProduct: ProductForm = {
   categoryIds: [],
   shortDescription: "",
   imageFile: null,
+  existingImage: "",
   fullDescription: "",
   imageFiles: [],
+  existingImages: [],
   videoFile: null,
+  existingVideo: "",
   technicalDrawingFile: null,
+  existingTechnicalDrawings: [],
   catalogFile: null,
+  existingCatalogFile: "",
   specifications: [{ label: "", value: "" }],
   features: [""],
   faqs: [{ question: "", answer: "" }],
@@ -135,6 +149,9 @@ function resolveAssetUrl(value?: string) {
 }
 
 export default function ApiProductsManager({ initialTab }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -146,6 +163,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const editingProductId = searchParams.get("productId");
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -175,6 +193,41 @@ export default function ApiProductsManager({ initialTab }: Props) {
     void loadData();
   }, []);
 
+  useEffect(() => {
+    if (initialTab !== "add" || !editingProductId) {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function hydrateEditingProduct() {
+      setError("");
+
+      try {
+        const response = await api.get(`/products/${editingProductId}`);
+        if (cancelled || !response.data) {
+          return;
+        }
+
+        setMessage("");
+        editProduct(response.data as Product);
+      } catch (loadError) {
+        if (cancelled) {
+          return;
+        }
+
+        console.error(loadError);
+        setError("The selected product could not be loaded for editing.");
+      }
+    }
+
+    void hydrateEditingProduct();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [editingProductId, initialTab]);
+
   const filteredProducts = useMemo(() => {
     return products.filter((product) =>
       `${product.name || ""} ${product.slug || ""} ${product.sku || ""}`
@@ -200,6 +253,13 @@ export default function ApiProductsManager({ initialTab }: Props) {
 
     return resolveAssetUrl(categoryForm.existingMobileBanner);
   }, [categoryForm.mobileBannerFile, categoryForm.existingMobileBanner]);
+  const productPrimaryImagePreview = useMemo(() => {
+    if (productForm.imageFile) {
+      return URL.createObjectURL(productForm.imageFile);
+    }
+
+    return resolveAssetUrl(productForm.existingImage);
+  }, [productForm.existingImage, productForm.imageFile]);
 
   useEffect(() => {
     return () => {
@@ -216,6 +276,14 @@ export default function ApiProductsManager({ initialTab }: Props) {
       }
     };
   }, [mobileBannerPreview]);
+
+  useEffect(() => {
+    return () => {
+      if (productPrimaryImagePreview.startsWith("blob:")) {
+        URL.revokeObjectURL(productPrimaryImagePreview);
+      }
+    };
+  }, [productPrimaryImagePreview]);
 
   function validateBannerFile(file: File) {
     if (!allowedBannerMimeTypes.includes(file.type)) {
@@ -362,6 +430,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
       }
 
       setProductForm(emptyProduct);
+      clearEditingProductParam();
       setActiveTab("products");
       await loadData();
     } catch (saveError) {
@@ -420,17 +489,39 @@ export default function ApiProductsManager({ initialTab }: Props) {
       categoryIds: categoryIdsOf(product),
       shortDescription: product.shortDescription || "",
       imageFile: null,
+      existingImage: product.image || "",
       fullDescription: product.fullDescription || product.description || "",
       imageFiles: [],
+      existingImages: product.images || [],
       videoFile: null,
+      existingVideo: product.video || "",
       technicalDrawingFile: null,
+      existingTechnicalDrawings: product.technicalDrawings || [],
       catalogFile: null,
+      existingCatalogFile: product.catalogDownload || "",
       specifications: product.specifications?.length ? product.specifications : [{ label: "", value: "" }],
       features: product.features?.length ? product.features : [""],
       faqs: product.faqs?.length ? product.faqs : [{ question: "", answer: "" }],
       relatedProducts: (product.relatedProducts || []).map((item) => (typeof item === "string" ? item : item._id)),
     });
     setActiveTab("add");
+  }
+
+  function startProductEdit(productId: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("productId", productId);
+    router.push(`/admin/add-product?${params.toString()}`);
+  }
+
+  function clearEditingProductParam() {
+    if (!editingProductId) {
+      return;
+    }
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("productId");
+    const nextQuery = params.toString();
+    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname);
   }
 
   return (
@@ -629,7 +720,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <button type="button" onClick={() => editProduct(product)} className="rounded-xl border border-slate-200 p-2 dark:border-slate-800">
+                  <button type="button" onClick={() => startProductEdit(product._id)} className="rounded-xl border border-slate-200 p-2 dark:border-slate-800">
                     <PencilLine className="h-4 w-4" />
                   </button>
                   <button type="button" onClick={() => removeProduct(product._id)} className="rounded-xl border border-rose-200 p-2 text-rose-600 dark:border-rose-900 dark:text-rose-300">
@@ -664,10 +755,10 @@ export default function ApiProductsManager({ initialTab }: Props) {
 
       {!loading && activeTab === "add" ? (
         <section className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          {productForm.imageFile ? (
+          {productPrimaryImagePreview ? (
             <div className="mb-4">
               <img
-                src={URL.createObjectURL(productForm.imageFile)}
+                src={productPrimaryImagePreview}
                 alt="Product preview"
                 className="h-24 w-24 rounded-2xl object-cover border border-slate-200 dark:border-slate-800"
               />
@@ -688,6 +779,26 @@ export default function ApiProductsManager({ initialTab }: Props) {
     onChange={(val) => setProductForm((current) => ({ ...current, fullDescription: val }))}
   />
 </div>
+            {productForm.existingImages.length ? (
+              <div className="md:col-span-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+                Saved gallery images: {productForm.existingImages.length}
+              </div>
+            ) : null}
+            {productForm.existingVideo ? (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+                Saved video: {productForm.existingVideo.split("/").pop()}
+              </div>
+            ) : null}
+            {productForm.existingTechnicalDrawings.length ? (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+                Saved drawing files: {productForm.existingTechnicalDrawings.length}
+              </div>
+            ) : null}
+            {productForm.existingCatalogFile ? (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+                Saved catalog: {productForm.existingCatalogFile.split("/").pop()}
+              </div>
+            ) : null}
             <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" onChange={(event) => setProductForm((current) => ({ ...current, imageFile: event.target.files?.[0] ?? null }))} className="w-full text-sm" />
             <input type="file" accept="video/*" onChange={(event) => setProductForm((current) => ({ ...current, videoFile: event.target.files?.[0] ?? null }))} className="w-full text-sm" />
             <input type="file" accept="image/*,.pdf" onChange={(event) => setProductForm((current) => ({ ...current, technicalDrawingFile: event.target.files?.[0] ?? null }))} className="w-full text-sm" />
