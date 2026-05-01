@@ -236,6 +236,7 @@ export default function ProductDetailClient({ product }: { product: ProductDetai
           letter-spacing: 0.3em;
           text-transform: uppercase;
           color: var(--muted);
+          margin: 0;
         }
         .pd-section-rule {
           flex: 1;
@@ -570,7 +571,7 @@ export default function ProductDetailClient({ product }: { product: ProductDetai
                 <motion.div {...fadeUp(0.4)}>
                   <div className="pd-section-header" style={{ marginBottom: "1rem" }}>
                     <span className="pd-section-num">00</span>
-                    <span className="pd-section-title">Key Benefits</span>
+                    <h2 className="pd-section-title">Key Benefits</h2>
                     <div className="pd-section-rule" />
                   </div>
                   <div className="pd-benefits">
@@ -590,7 +591,7 @@ export default function ProductDetailClient({ product }: { product: ProductDetai
 
               <div className="pd-section-header">
                 <span className="pd-section-num">01</span>
-                <span className="pd-section-title">Product Overview</span>
+                <h2 className="pd-section-title">Product Overview</h2>
                 <div className="pd-section-rule" />
               </div>
               
@@ -607,7 +608,7 @@ export default function ProductDetailClient({ product }: { product: ProductDetai
                 <>
                   <div className="pd-section-header">
                     <span className="pd-section-num">02</span>
-                    <span className="pd-section-title">Technical Specifications</span>
+                    <h2 className="pd-section-title">Technical Specifications</h2>
                     <div className="pd-section-rule" />
                   </div>
 

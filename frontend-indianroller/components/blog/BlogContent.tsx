@@ -42,6 +42,7 @@ export default function BlogContent({ data }: { data: BlogContentData | null }) 
       </div>
 
       {/* 🔥 Structured Pure White Content Area */}
+      <h2 className="sr-only">Article Content</h2>
    <div
   className="blog-content"
   dangerouslySetInnerHTML={{ __html: data.description || "" }}

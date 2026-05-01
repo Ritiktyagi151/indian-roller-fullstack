@@ -13,6 +13,8 @@ const categories = [
 export default function ProductsPageClient() {
   return (
     <div className="bg-[#0a0a0b] min-h-screen pt-32 pb-20 px-6">
+      <h1 className="sr-only">Products</h1>
+      <h2 className="sr-only">Product Categories</h2>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
         {categories.map((cat) => (
           <Link key={cat.slug} href={`/${cat.slug}`}>

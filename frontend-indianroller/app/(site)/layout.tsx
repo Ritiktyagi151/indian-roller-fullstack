@@ -31,21 +31,19 @@ export default function RootLayout({
 }) {
   return (
     // suppressHydrationWarning yahan zaroori hai taaki browser extensions error na dein
-    <html lang="en" suppressHydrationWarning>
-      <body 
-        className={`${geistSans.className} antialiased bg-white text-black`}
-        suppressHydrationWarning
-      >
-        <Navbar />
-        
-        {/* Pages ka main content */}
-        <main>{children}</main>
+    <div 
+      className={`${geistSans.className} antialiased bg-white text-black`}
+      suppressHydrationWarning
+    >
+      <Navbar />
+      
+      {/* Pages ka main content */}
+      <main>{children}</main>
 
-        {/* WhatsApp/Call Floating Buttons - Inhe Footer ke upar rakha hai */}
-        <ContactWidget />
+      {/* WhatsApp/Call Floating Buttons - Inhe Footer ke upar rakha hai */}
+      <ContactWidget />
 
-        <Footer/>
-      </body>
-    </html>
+      <Footer/>
+    </div>
   );
 }

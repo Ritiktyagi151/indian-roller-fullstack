@@ -73,9 +73,9 @@ export default function BlogsPageClient() {
       Blog
     </h1>
 
-    <p className="text-gray-300 mt-3 text-sm md:text-lg">
+    <h2 className="text-gray-300 mt-3 text-sm md:text-lg">
       Latest Insights & Articles
-    </p>
+    </h2>
   </motion.div>
 </motion.section>
 

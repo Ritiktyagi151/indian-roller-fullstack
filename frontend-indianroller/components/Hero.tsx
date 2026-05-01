@@ -114,6 +114,7 @@ const Hero = () => {
         className="relative w-full flex items-center justify-center overflow-hidden bg-black"
         style={{ height: isMobile ? "60vh" : "100vh" }}
       >
+        <h1 className="sr-only">Indian Roller Industries</h1>
         {/* ── VIDEOS ── */}
         {videos.map((src, i) => (
   <video
