@@ -17,6 +17,18 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://127.0.0.1:5003/api/:path*',
+      },
+      {
+        source: '/uploads/:path*',
+        destination: 'http://127.0.0.1:5003/uploads/:path*',
+      },
+    ];
+  },
   async redirects() {
     return [
       // PHP pages
@@ -66,7 +78,6 @@ const nextConfig: NextConfig = {
       // Blog detail pages
       { source: '/blog-detail-How-Industrial-Rollers-Drive-Efficiency-in-the-Steel-Industry', destination: '/blogs-detail-how-industrial-rollers-drive-efficiency-in-the-steel-industry', permanent: true },
       { source: '/blog-detail-The-Impact-of-Rubber-Rollers-on-the-Rexene-Industry', destination: '/blogs-detail-the-impact-of-rubber-rollers-on-the-rexene-industry', permanent: true },
-
     ];
   },
 };
