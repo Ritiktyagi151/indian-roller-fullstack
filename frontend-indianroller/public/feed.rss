@@ -1,48 +1,394 @@
-<?xml version="1.0" encoding="utf-8"?>
-		<!--	created with www.mysitemapgenerator.com	-->
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
-	<channel>
-		<title>www.indianroller.com</title>
-		<link><![CDATA[https://www.indianroller.com/]]></link>
-		<description>IndianRoller is a reliable roller manufacturer and sink roller manufacturer, offering precision-engineered, durable rollers for demanding industrial applications.</description>
-		<language>en</language>
-		<pubDate>Wed, 07 Jan 2026 13:10:18 +0000</pubDate>
-		<generator>MySitemapGenerator (www.mysitemapgenerator.com)</generator>
+<?xml version="1.0" encoding="UTF-8"?>
 
-		<item>
-			<guid isPermaLink="false">3909179953</guid>
-			<title>Steel Industries Img Sink Roller</title>
-			<link>https://www.indianroller.com/products-Steel-Industry</link>
-			<pubDate>Wed, 07 Jan 2026 14:10:17 +0100</pubDate>
-			<enclosure url="https://www.indianroller.com/admin/fileupload/Bridle-Roller.png" type="image/png" length="0" />
-		</item>
-		<item>
-			<guid isPermaLink="false">3989057197</guid>
-			<title>Mangle Squeeze Roller</title>
-			<link>https://www.indianroller.com/products-Textile-Industry</link>
-			<pubDate>Wed, 07 Jan 2026 14:10:16 +0100</pubDate>
-			<enclosure url="https://www.indianroller.com/admin/fileupload/Mangle%20Squeeze%20Roller-1.png" type="image/png" length="0" />
-		</item>
-		<item>
-			<guid isPermaLink="false">3100958503</guid>
-			<title>Wire Return Roller</title>
-			<link>https://www.indianroller.com/products-Paper-And-Packaging-Industry</link>
-			<pubDate>Wed, 07 Jan 2026 14:10:15 +0100</pubDate>
-			<enclosure url="https://www.indianroller.com/admin/fileupload/breast-roller.png" type="image/png" length="0" />
-		</item>
-		<item>
-			<guid isPermaLink="false">1632681667</guid>
-			<title>Contact Drum Roller</title>
-			<link>https://www.indianroller.com/products-Plywood-Industry</link>
-			<pubDate>Wed, 07 Jan 2026 14:10:14 +0100</pubDate>
-			<enclosure url="https://www.indianroller.com/admin/fileupload/billey-roller.png" type="image/png" length="0" />
-		</item>
-		<item>
-			<guid isPermaLink="false">224613684</guid>
-			<title>Products Rexene Industry</title>
-			<link>https://www.indianroller.com/products-Rexene-Industry</link>
-			<pubDate>Wed, 07 Jan 2026 14:10:13 +0100</pubDate>
-			<enclosure url="https://www.indianroller.com/admin/fileupload/contact-roller%20(1).png" type="image/png" length="0" />
-		</item>
-	</channel>
+<rss version="2.0"
+xmlns:atom="http://www.w3.org/2005/Atom"
+xmlns:content="http://purl.org/rss/1.0/modules/content/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:media="http://search.yahoo.com/mrss/">
+
+<channel>
+
+<title>Indian Roller Industries | Industrial Roller Manufacturer India</title>
+
+<link>https://www.indianroller.com/</link>
+
+<description>
+Indian Roller Industries (IRI) is an ISO 9001:2008 certified industrial roller manufacturer in India specializing in rubber rollers, polyurethane rollers, steel industry rollers, textile rollers, packaging rollers, plywood rollers, food-grade rollers, and turnkey industrial roller solutions.
+</description>
+
+<language>en-in</language>
+
+<copyright>
+Copyright © 2026 Indian Roller Industries. All Rights Reserved.
+</copyright>
+
+<managingEditor>
+info@indianroller.com (Indian Roller Industries)
+</managingEditor>
+
+<webMaster>
+info@indianroller.com (Indian Roller Industries)
+</webMaster>
+
+<generator>
+Indian Roller Industries Professional RSS Feed v3.0
+</generator>
+
+<lastBuildDate>
+Wed, 07 Jan 2026 15:30:00 +0530
+</lastBuildDate>
+
+<ttl>60</ttl>
+
+<!-- SELF FEED URL -->
+<atom:link
+href="https://www.indianroller.com/feed.xml"
+rel="self"
+type="application/rss+xml" />
+
+<!-- WEBSITE IMAGE -->
+<image>
+<title>Indian Roller Industries</title>
+<link>https://www.indianroller.com/</link>
+<url>https://www.indianroller.com/assets/imgs/logos/LOGO-SKN-T.png</url>
+<width>250</width>
+<height>80</height>
+</image>
+
+<!-- CATEGORIES -->
+<category>Industrial Rollers</category>
+<category>Rubber Rollers</category>
+<category>Polyurethane Rollers</category>
+<category>Steel Industry Rollers</category>
+<category>Textile Industry Rollers</category>
+<category>Paper Industry Rollers</category>
+<category>Food Industry Rollers</category>
+<category>Industrial Manufacturing</category>
+
+<!-- ================================================= -->
+<!-- ITEM 1 -->
+<!-- ================================================= -->
+
+<item>
+
+<title>
+Steel Industry Rollers – Heavy Duty Industrial Roller Solutions
+</title>
+
+<link>
+https://www.indianroller.com/products-Steel-Industry
+</link>
+
+<guid isPermaLink="true">
+https://www.indianroller.com/products-Steel-Industry
+</guid>
+
+<description>
+High-performance steel industry rollers engineered for rolling mills,
+coil processing, strip handling, and high-temperature industrial operations.
+</description>
+
+<content:encoded><![CDATA[
+
+<h2>Steel Industry Roller Solutions</h2>
+
+<p>
+Indian Roller Industries manufactures precision-engineered steel industry rollers
+designed for heavy-duty industrial environments and continuous operations.
+</p>
+
+<ul>
+<li>Rolling Mill Rollers</li>
+<li>Coil Handling Rollers</li>
+<li>Heat Resistant Rollers</li>
+<li>Industrial Rubber Coated Rollers</li>
+<li>Polyurethane Rollers</li>
+</ul>
+
+<p>
+Our rollers are built for superior durability,
+load-bearing performance, and operational reliability.
+</p>
+
+]]></content:encoded>
+
+<pubDate>
+Wed, 07 Jan 2026 14:10:17 +0530
+</pubDate>
+
+<dc:creator>
+Indian Roller Industries
+</dc:creator>
+
+<category>
+Steel Industry Rollers
+</category>
+
+<media:content
+url="https://www.indianroller.com/admin/fileupload/Bridle-Roller.png"
+medium="image" />
+
+</item>
+
+<!-- ================================================= -->
+<!-- ITEM 2 -->
+<!-- ================================================= -->
+
+<item>
+
+<title>
+Textile Industry Rollers – Mangle Squeeze Rollers
+</title>
+
+<link>
+https://www.indianroller.com/products-Textile-Industry
+</link>
+
+<guid isPermaLink="true">
+https://www.indianroller.com/products-Textile-Industry
+</guid>
+
+<description>
+Industrial textile rollers for dyeing, printing,
+fabric finishing, and textile processing applications.
+</description>
+
+<content:encoded><![CDATA[
+
+<h2>Textile Industry Roller Manufacturing</h2>
+
+<p>
+IRI manufactures textile rollers for high-speed textile processing operations.
+</p>
+
+<ul>
+<li>Mangle Squeeze Rollers</li>
+<li>Textile Printing Rollers</li>
+<li>Dyeing Rollers</li>
+<li>Fabric Finishing Rollers</li>
+<li>Chemical Resistant Rollers</li>
+</ul>
+
+<p>
+Our rollers ensure uniform pressure distribution,
+precision performance, and long operational life.
+</p>
+
+]]></content:encoded>
+
+<pubDate>
+Wed, 07 Jan 2026 14:10:16 +0530
+</pubDate>
+
+<dc:creator>
+Indian Roller Industries
+</dc:creator>
+
+<category>
+Textile Industry Rollers
+</category>
+
+<media:content
+url="https://www.indianroller.com/admin/fileupload/Mangle%20Squeeze%20Roller-1.png"
+medium="image" />
+
+</item>
+
+<!-- ================================================= -->
+<!-- ITEM 3 -->
+<!-- ================================================= -->
+
+<item>
+
+<title>
+Paper & Packaging Industry Rollers – Wire Return Rollers
+</title>
+
+<link>
+https://www.indianroller.com/products-Paper-And-Packaging-Industry
+</link>
+
+<guid isPermaLink="true">
+https://www.indianroller.com/products-Paper-And-Packaging-Industry
+</guid>
+
+<description>
+Premium paper and packaging rollers designed for paper mills,
+packaging plants, and industrial converting systems.
+</description>
+
+<content:encoded><![CDATA[
+
+<h2>Paper & Packaging Rollers</h2>
+
+<p>
+Indian Roller Industries manufactures industrial rollers
+for paper mills and packaging industries.
+</p>
+
+<ul>
+<li>Wire Return Rollers</li>
+<li>Paper Mill Rollers</li>
+<li>Glue Spreader Rollers</li>
+<li>Packaging Process Rollers</li>
+<li>Industrial Conveyor Rollers</li>
+</ul>
+
+<p>
+Designed for high-speed operations,
+our rollers improve production efficiency
+and process consistency.
+</p>
+
+]]></content:encoded>
+
+<pubDate>
+Wed, 07 Jan 2026 14:10:15 +0530
+</pubDate>
+
+<dc:creator>
+Indian Roller Industries
+</dc:creator>
+
+<category>
+Paper Industry Rollers
+</category>
+
+<media:content
+url="https://www.indianroller.com/admin/fileupload/breast-roller.png"
+medium="image" />
+
+</item>
+
+<!-- ================================================= -->
+<!-- ITEM 4 -->
+<!-- ================================================= -->
+
+<item>
+
+<title>
+Plywood Industry Rollers – Contact Drum Rollers
+</title>
+
+<link>
+https://www.indianroller.com/products-Plywood-Industry
+</link>
+
+<guid isPermaLink="true">
+https://www.indianroller.com/products-Plywood-Industry
+</guid>
+
+<description>
+Heavy-duty plywood industry rollers for lamination,
+veneer processing, and plywood manufacturing applications.
+</description>
+
+<content:encoded><![CDATA[
+
+<h2>Plywood Industry Roller Solutions</h2>
+
+<p>
+Our industrial plywood rollers are designed
+for high-pressure plywood manufacturing operations.
+</p>
+
+<ul>
+<li>Contact Drum Rollers</li>
+<li>Lamination Rollers</li>
+<li>Veneer Processing Rollers</li>
+<li>Heat Resistant Rollers</li>
+<li>Industrial Rubber Rollers</li>
+</ul>
+
+<p>
+IRI plywood rollers deliver precision bonding,
+surface uniformity, and long-term durability.
+</p>
+
+]]></content:encoded>
+
+<pubDate>
+Wed, 07 Jan 2026 14:10:14 +0530
+</pubDate>
+
+<dc:creator>
+Indian Roller Industries
+</dc:creator>
+
+<category>
+Plywood Industry Rollers
+</category>
+
+<media:content
+url="https://www.indianroller.com/admin/fileupload/billey-roller.png"
+medium="image" />
+
+</item>
+
+<!-- ================================================= -->
+<!-- ITEM 5 -->
+<!-- ================================================= -->
+
+<item>
+
+<title>
+Rexene Industry Rollers – Industrial Rubber Roller Solutions
+</title>
+
+<link>
+https://www.indianroller.com/products-Rexene-Industry
+</link>
+
+<guid isPermaLink="true">
+https://www.indianroller.com/products-Rexene-Industry
+</guid>
+
+<description>
+Precision-engineered rexene industry rollers
+for coating, lamination, and industrial material processing.
+</description>
+
+<content:encoded><![CDATA[
+
+<h2>Rexene Industry Roller Manufacturing</h2>
+
+<p>
+Indian Roller Industries supplies durable
+rexene processing rollers for industrial applications.
+</p>
+
+<ul>
+<li>Industrial Rubber Rollers</li>
+<li>Coating Rollers</li>
+<li>Surface Finishing Rollers</li>
+<li>Polyurethane Rollers</li>
+<li>Material Processing Rollers</li>
+</ul>
+
+<p>
+Our rexene rollers are designed for superior grip,
+high wear resistance, and operational consistency.
+</p>
+
+]]></content:encoded>
+
+<pubDate>
+Wed, 07 Jan 2026 14:10:13 +0530
+</pubDate>
+
+<dc:creator>
+Indian Roller Industries
+</dc:creator>
+
+<category>
+Rexene Industry Rollers
+</category>
+
+<media:content
+url="https://www.indianroller.com/admin/fileupload/contact-roller%20(1).png"
+medium="image" />
+
+</item>
+
+</channel>
 </rss>
