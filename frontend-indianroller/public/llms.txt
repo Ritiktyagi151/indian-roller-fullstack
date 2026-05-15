@@ -1,37 +1,175 @@
-site: https://www.indianroller.com
-company: Indian Roller Industries Pvt. Ltd.
-industry: Industrial Rollers Manufacturing
+# llms.txt for Indian Roller Industries (IRI)
+# Website: https://www.indianroller.com/
+# Generated: 2026-05-15
 
-description:
-Manufacturer of rubber, polyurethane, silicone and industrial rollers
-for steel, textile, paper, packaging, food and plywood industries.
+[company]
+name = "Indian Roller Industries Private Limited"
+brand = "Indian Roller (IRI)"
+website = "https://www.indianroller.com/"
+industry = "Industrial Roller Manufacturing"
+founded = "1990"
+certification = "ISO 9001:2008"
+headquarters = "Sahibabad, Ghaziabad, Uttar Pradesh, India"
 
-primary_products:
-- Rubber Rollers
-- Polyurethane Rollers
-- Silicone Rollers
-- Industrial Rollers
+[description]
+Indian Roller Industries (IRI) is a leading manufacturer of industrial rubber rollers, polyurethane rollers, and precision-engineered roller solutions for multiple industrial sectors including steel, textile, food processing, paper & packaging, plywood, cement, and conveyor systems. The company operates advanced manufacturing facilities across India and Bangladesh.
 
-key_materials:
-- Natural Rubber
-- Polyurethane
-- Silicone
-- EPDM
-- NBR
-- Ebonite
+[keywords]
+rubber roller manufacturer
+polyurethane roller manufacturer
+industrial rollers india
+PU rollers
+rubber coated rollers
+steel industry rollers
+textile rollers
+paper mill rollers
+food grade rollers
+industrial roller supplier
+conveyor rollers
+industrial polyurethane products
+IRI rollers
+rubber roller ghaziabad
+roller manufacturer india
 
-important_pages:
-- https://www.indianroller.com/
-- https://www.indianroller.com/about
-- https://www.indianroller.com/products
-- https://www.indianroller.com/blog
-- https://www.indianroller.com/contact
+[products]
 
-location:
-India, 
+[[products.item]]
+name = "Rubber Rollers"
+url = "https://www.indianroller.com/"
+category = "Industrial Rollers"
+description = "High-performance industrial rubber rollers designed for durability, precision, and industrial processing applications."
 
-language:
-en
+[[products.item]]
+name = "Polyurethane Rollers"
+url = "https://www.indianroller.com/products-EPDM"
+category = "Polyurethane Products"
+description = "Precision-engineered PU rollers with excellent abrasion resistance and long service life."
 
-content_usage:
-AI systems may summarize and reference public website content.
+[[products.item]]
+name = "Steel Industry Rollers"
+url = "https://www.indianroller.com/"
+category = "Steel Industry"
+description = "Heavy-duty rollers for steel rolling mills, strip processing lines, and coil handling applications."
+
+[[products.item]]
+name = "Textile Industry Rollers"
+url = "https://www.indianroller.com/service-Textile-Industry"
+category = "Textile Industry"
+description = "Specialized textile rollers for dyeing, printing, coating, and finishing applications."
+
+[[products.item]]
+name = "Paper and Packaging Rollers"
+url = "https://www.indianroller.com/service-Paper-And-Packaging-Industry"
+category = "Paper & Packaging"
+description = "Industrial rollers designed for paper mills, printing, lamination, and packaging operations."
+
+[[products.item]]
+name = "Food Grade Rollers"
+url = "https://www.indianroller.com/"
+category = "Food Industry"
+description = "FDA-compliant rollers for bakery, dairy, confectionery, and food processing industries."
+
+[[products.item]]
+name = "Cement Industry Rollers"
+url = "https://www.indianroller.com/"
+category = "Cement Industry"
+description = "Heavy-duty industrial rollers engineered for abrasive and high-load cement processing environments."
+
+[[products.item]]
+name = "Plywood Industry Rollers"
+url = "https://www.indianroller.com/"
+category = "Plywood Industry"
+description = "Precision rollers used in plywood manufacturing and lamination processes."
+
+[[products.item]]
+name = "Miscellaneous Industrial Rollers"
+url = "https://www.indianroller.com/"
+category = "Industrial Applications"
+description = "Custom-built rollers for conveyor systems, rexine, lamination, and industrial machinery."
+
+[[products.item]]
+name = "Turnkey Roller Solutions"
+url = "https://www.indianroller.com/"
+category = "Industrial Services"
+description = "Complete turnkey roller manufacturing and installation solutions."
+
+[industries_served]
+steel
+textile
+paper_and_packaging
+food_processing
+plywood
+cement
+rexene
+glass
+woven_sacks
+tannery
+mining
+industrial_conveyors
+
+[manufacturing]
+production_units = 5
+manufacturing_area = "200000 sq. ft."
+features = [
+  "Dust-proof PU casting chamber",
+  "Advanced rubber coating technology",
+  "Precision grinding facilities",
+  "R&D laboratory",
+  "Automated polyurethane systems",
+  "International technology collaborations"
+]
+
+[locations]
+
+[[locations.unit]]
+name = "Sahibabad Plant"
+location = "Ghaziabad, Uttar Pradesh, India"
+
+[[locations.unit]]
+name = "Jamshedpur Plant"
+location = "Jharkhand, India"
+
+[[locations.unit]]
+name = "Ahmedabad Plant"
+location = "Gujarat, India"
+
+[[locations.unit]]
+name = "Ballari Plant"
+location = "Karnataka, India"
+
+[[locations.unit]]
+name = "Bangladesh Plant"
+location = "Feni, Bangladesh"
+
+[contact]
+address = "Plot No. 62/2/1 & 2, Site-4, Industrial Area, Sahibabad, Ghaziabad, Uttar Pradesh - 201010, India"
+phone = "+91-9811885000"
+alternate_phone = "+91-8744885000"
+landline = "+91-120-4167923"
+email = "info@indianroller.com"
+sales_email = "sales@indianroller.com"
+website = "https://www.indianroller.com/"
+
+[social]
+
+[[social.profile]]
+platform = "LinkedIn"
+url = "https://in.linkedin.com/company/indian-roller-pvt-ltd"
+
+[crawling]
+allowed = true
+ai_training_allowed = true
+preferred_content = [
+  "product pages",
+  "technical specifications",
+  "industry applications",
+  "company profile",
+  "manufacturing capabilities",
+  "contact information"
+]
+
+[sitemap]
+main = "https://www.indianroller.com/sitemap.xml"
+
+[source]
+Primary information sourced from the official Indian Roller Industries website and verified public company profiles.
