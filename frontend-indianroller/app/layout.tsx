@@ -3,6 +3,11 @@ import type { Metadata } from "next";
 import Script from "next/script";
 
 export const metadata: Metadata = {
+  title: {
+    default: "Indian Roller | High-Quality Industrial Roller Manufacturer",
+    template: "%s | Indian Roller",
+  },
+  description: "Indian Roller Industries Pvt. Ltd. manufactures industrial rubber rollers, polyurethane rollers, and customized rollers for steel, textile, paper, packaging, food, and plywood industries.",
   icons: {
     icon: "/logo.png",
   },
