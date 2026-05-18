@@ -134,11 +134,11 @@ export default function ContactClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
               <div className="relative group">
                 <input type="text" value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer" placeholder=" " required />
-                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">Your Name *</label>
+                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Your Name *</label>
               </div>
               <div className="relative group">
                 <input type="tel" value={form.phone} onChange={(event) => setForm((current) => ({ ...current, phone: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer" placeholder=" " required />
-                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">Phone Number *</label>
+                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Phone Number *</label>
               </div>
             </div>
 
@@ -146,11 +146,11 @@ export default function ContactClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
               <div className="relative group">
                 <input type="email" value={form.email} onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer" placeholder=" " required />
-                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">Email Address *</label>
+                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Email Address *</label>
               </div>
               <div className="relative group">
                 <input type="text" value={form.company} onChange={(event) => setForm((current) => ({ ...current, company: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer" placeholder=" " />
-                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">Company Name</label>
+                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Company Name</label>
               </div>
             </div>
 
@@ -168,19 +168,19 @@ export default function ContactClient() {
                 </div>
                 <div className="relative group">
                 <input type="text" value={form.quantity} onChange={(event) => setForm((current) => ({ ...current, quantity: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer" placeholder=" " />
-                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">Est. Quantity</label>
+                <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Est. Quantity</label>
                 </div>
             </div>
 
             {/* Row 4: Location */}
             <div className="relative group">
               <input type="text" value={form.location} onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer" placeholder=" " />
-              <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">City / State / Country</label>
+              <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">City / State / Country</label>
             </div>
 
             <div className="relative group">
               <textarea rows={2} value={form.message} onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))} className="w-full bg-transparent border-b border-white/20 p-3 outline-none focus:border-orange-500 transition-all peer resize-none" placeholder=" " />
-              <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] uppercase font-bold tracking-widest">Specific Specifications or Notes</label>
+              <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Specific Specifications or Notes</label>
             </div>
 
             <div className="grid grid-cols-1 gap-3">
