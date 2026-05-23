@@ -81,7 +81,7 @@ const localBusinessSchema = {
 export const metadata: Metadata = {
   title: {
     default: "Indian Roller | High-Quality Industrial Roller Manufacturer",
-    template: "%s | Indian Roller",
+    template: "%s",
   },
   description: "Indian Roller Industries Pvt. Ltd. manufactures industrial rubber rollers, polyurethane rollers, and customized rollers for steel, textile, paper, packaging, food, and plywood industries.",
   icons: {
