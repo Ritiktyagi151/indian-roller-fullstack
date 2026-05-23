@@ -75,6 +75,8 @@ const nextConfig: NextConfig = {
       { source: '/products-Plywood-Industry', destination: '/plywood-industry', permanent: true },
       { source: '/products-Steel-Industries', destination: '/products-steel-industry', permanent: true },
       { source: '/accumulator-roller', destination: '/accumulator-roller-manufacturer', permanent: true },
+      { source: '/products-Miscellaneous-Roller', destination: '/miscellaneous-roller', permanent: true },
+
 
       // Blog detail pages
       { source: '/blog-detail-How-Industrial-Rollers-Drive-Efficiency-in-the-Steel-Industry', destination: '/blogs-detail-how-industrial-rollers-drive-efficiency-in-the-steel-industry', permanent: true },
