@@ -78,7 +78,7 @@ const nextConfig: NextConfig = {
       // 3. PRODUCTS & RUBBER COMPOUNDS REDIRECTS
       // ==========================================
       // { source: '/products-EPDM', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
-      { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
+      // { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
       // { source: '/rubber-compound-EPDM', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
       
       { source: '/products-NBR', destination: '/products-nbr', permanent: true },
