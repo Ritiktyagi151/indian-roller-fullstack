@@ -3,14 +3,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   htmlLimitedBots: /.*/,
+  
+  // FIXED: Deprecation warning fixed by using remotePatterns
   images: {
-    domains: [
-      "picsum.photos",
-      "source.unsplash.com",
-      "images.unsplash.com",
-      "media.istockphoto.com",
+    remotePatterns: [
+      { protocol: 'https', hostname: 'picsum.photos' },
+      { protocol: 'https', hostname: 'source.unsplash.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'media.istockphoto.com' },
     ],
   },
+  
   webpack: (config) => {
     config.snapshot = {
       ...(config.snapshot || {}),
@@ -109,8 +112,8 @@ const nextConfig: NextConfig = {
       { source: '/blog-detail-The-Impact-of-Rubber-Rollers-on-the-Rexene-Industry', destination: '/blogs-detail-the-impact-of-rubber-rollers-on-the-rexene-industry', permanent: true },
       { source: '/blog-detail-How-Industrial-Rollers-Drive-Efficiency-in-the-Steel-Industry', destination: '/blogs-detail-how-industrial-rollers-drive-efficiency-in-the-steel-industry', permanent: true },
       
-      // Broken full URL loop fix (From file row 17)
-      { source: '/https:/www.indianroller.com/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
+      // FIXED: Escaped the colon (\:) so Next.js doesn't parse it as a parameter name
+      { source: '/https\\:/www.indianroller.com/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
     ];
   },
 };
