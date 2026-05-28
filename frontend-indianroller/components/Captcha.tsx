@@ -2,7 +2,7 @@
 
 import ReCAPTCHA from "react-google-recaptcha";
 
-const RECAPTCHA_SITE_KEY = "6LeHo-csAAAAAA-RUUtC-xmee5YqI4LM";
+const RECAPTCHA_SITE_KEY = "6LeHo-csAAAAAA-RUUtC-xmee5YqI4LMF75xMXuV";
 
 interface CaptchaProps {
   error?: string;
