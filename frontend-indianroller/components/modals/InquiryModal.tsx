@@ -6,6 +6,8 @@ import {
   FaCommentAlt, FaBuilding, FaBoxes, FaCheckCircle,
 } from "react-icons/fa";
 import api from "@/lib/axios";
+import Captcha from "@/components/Captcha";
+import { verifyCaptchaToken } from "@/lib/verifyCaptcha";
 
 interface InquiryModalProps {
   isOpen: boolean;
@@ -16,6 +18,8 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
   const [form, setForm] = useState({
     name: "",
     company: "",
@@ -27,10 +31,24 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) {
+      setCaptchaError("Please complete the captcha.");
+      return;
+    }
+
     setIsSubmitting(true);
     setError("");
+    setCaptchaError("");
 
     try {
+      const captchaVerified = await verifyCaptchaToken(captchaToken);
+      if (!captchaVerified) {
+        setCaptchaToken(null);
+        setCaptchaError("Captcha verification failed. Please try again.");
+        setError("Captcha verification failed. Please try again.");
+        return;
+      }
+
       await api.post("/enquiries", {
         name: form.name,
         email: form.email,
@@ -44,6 +62,7 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
         },
       });
 
+      setCaptchaToken(null);
       setSubmitted(true);
     } catch {
       setError("We could not send your inquiry right now. Please try again.");
@@ -58,6 +77,8 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
       setSubmitted(false);
       setIsSubmitting(false);
       setError("");
+      setCaptchaToken(null);
+      setCaptchaError("");
       setForm({
         name: "",
         company: "",
@@ -221,10 +242,15 @@ const InquiryModal = ({ isOpen, onClose }: InquiryModalProps) => {
                       </div>
                     </div>
 
+                    <Captcha error={captchaError} onChange={(token) => {
+                      setCaptchaToken(token);
+                      if (token) setCaptchaError("");
+                    }} />
+
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-orange-600 hover:bg-white hover:text-black py-5 rounded-2xl font-black text-xs uppercase tracking-[4px] transition-all"
+                        className="w-full bg-orange-600 hover:bg-white hover:text-black py-5 rounded-2xl font-black text-xs uppercase tracking-[4px] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                       >
                         {isSubmitting ? "Sending..." : "Send Inquiry Now"}
                       </button>

@@ -1,5 +1,7 @@
 "use client";
 
+import { User } from "lucide-react";
+
 type BlogContentData = {
   title: string;
   category?: string;
@@ -21,7 +23,7 @@ export default function BlogContent({ data }: { data: BlogContentData | null }) 
   };
 
   return (
-    <article className="w-full">
+    <article className="w-full mt-11">
       {/* Header Section */}
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 leading-[1.1] text-white tracking-tighter uppercase italic">
         {data.title}
@@ -31,9 +33,13 @@ export default function BlogContent({ data }: { data: BlogContentData | null }) 
         <span className="bg-orange-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
           {data.category}
         </span>
-        <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest italic">
+        <span className="text-zinc-200 text-xs font-bold uppercase tracking-widest italic">
           {displayDate ? new Date(displayDate).toLocaleDateString() : ""}
         </span>
+         <p className="text-gray-200 text-sm flex items-center gap-1">
+  <User size={14} />
+  Admin
+</p>
       </div>
       
       {/* Featured Image */}

@@ -3,21 +3,45 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ShieldCheck, UserCog } from "lucide-react";
+import Captcha from "@/components/Captcha";
+import { verifyCaptchaToken } from "@/lib/verifyCaptcha";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"super_admin" | "seo_manager">("super_admin");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === "admin@indianroller.com" && password === "Roller@2026") {
-      localStorage.setItem("isAdminLoggedIn", "true");
-      localStorage.setItem("adminRole", role);
-      router.push("/admin/dashboard");
-    } else {
-      alert("Invalid Credentials!");
+    if (!captchaToken) {
+      setCaptchaError("Please complete the captcha.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setCaptchaError("");
+
+    try {
+      const captchaVerified = await verifyCaptchaToken(captchaToken);
+      if (!captchaVerified) {
+        setCaptchaToken(null);
+        setCaptchaError("Captcha verification failed. Please try again.");
+        return;
+      }
+
+      if (email === "admin@indianroller.com" && password === "Roller@2026") {
+        localStorage.setItem("isAdminLoggedIn", "true");
+        localStorage.setItem("adminRole", role);
+        router.push("/admin/dashboard");
+      } else {
+        alert("Invalid Credentials!");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -89,12 +113,19 @@ export default function LoginPage() {
               </button>
             </div>
 
+            <Captcha error={captchaError} onChange={(token) => {
+              setCaptchaToken(token);
+              if (token) setCaptchaError("");
+            }} />
+
             <motion.button
+              type="submit"
+              disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-full shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-full shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Enter Dashboard <span className="text-xl">-&gt;</span>
+              {isSubmitting ? "Verifying..." : "Enter Dashboard"} <span className="text-xl">-&gt;</span>
             </motion.button>
           </form>
         </div>

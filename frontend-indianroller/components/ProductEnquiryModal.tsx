@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "@/lib/axios";
+import Captcha from "@/components/Captcha";
+import { verifyCaptchaToken } from "@/lib/verifyCaptcha";
 
 export interface EnquiryModalProps {
   product: {
@@ -24,6 +26,8 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,6 +47,8 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
         setForm({ name: "", email: "", phone: "", company: "", message: "" });
         setSubmitted(false);
         setError("");
+        setCaptchaToken(null);
+        setCaptchaError("");
       }, 400);
     }
     return () => { document.body.style.overflow = ""; };
@@ -54,10 +60,24 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) {
+      setCaptchaError("Please complete the captcha.");
+      return;
+    }
+
     setLoading(true);
     // ── Replace with your actual API call ──
     setError("");
+    setCaptchaError("");
     try {
+      const captchaVerified = await verifyCaptchaToken(captchaToken);
+      if (!captchaVerified) {
+        setCaptchaToken(null);
+        setCaptchaError("Captcha verification failed. Please try again.");
+        setError("Captcha verification failed. Please try again.");
+        return;
+      }
+
       await api.post("/enquiries", {
         name: form.name,
         email: form.email,
@@ -71,6 +91,7 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
           company: form.company,
         },
       });
+      setCaptchaToken(null);
       setSubmitted(true);
     } catch {
       setError("We could not send your enquiry right now. Please try again.");
@@ -466,6 +487,11 @@ export default function ProductEnquiryModal({ product, isOpen, onClose }: Enquir
                         required
                       />
                     </div>
+
+                    <Captcha error={captchaError} onChange={(token) => {
+                      setCaptchaToken(token);
+                      if (token) setCaptchaError("");
+                    }} />
 
                     <div className="enq-submit-wrap">
                       <div className="enq-cta-bg" />

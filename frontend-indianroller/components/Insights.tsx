@@ -2,11 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion"; // Variants import kiya
 import api from "@/lib/axios";
+import Captcha from "@/components/Captcha";
+import { verifyCaptchaToken } from "@/lib/verifyCaptcha";
 
 export default function Insights() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [email, setEmail] = useState("");
   const [submitState, setSubmitState] = useState<"idle" | "saving" | "success" | "error">("idle");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
 
   const slides = [
     {
@@ -35,9 +39,23 @@ export default function Insights() {
 
   async function handleNewsletterSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!captchaToken) {
+      setCaptchaError("Please complete the captcha.");
+      return;
+    }
+
     setSubmitState("saving");
+    setCaptchaError("");
 
     try {
+      const captchaVerified = await verifyCaptchaToken(captchaToken);
+      if (!captchaVerified) {
+        setCaptchaToken(null);
+        setCaptchaError("Captcha verification failed. Please try again.");
+        setSubmitState("error");
+        return;
+      }
+
       await api.post("/enquiries", {
         name: "Newsletter Subscriber",
         email,
@@ -51,6 +69,7 @@ export default function Insights() {
       });
 
       setEmail("");
+      setCaptchaToken(null);
       setSubmitState("success");
     } catch {
       setSubmitState("error");
@@ -163,20 +182,26 @@ export default function Insights() {
             Good news & event details as well straight to your incoming mail!
           </p>
 
-          <form onSubmit={handleNewsletterSubmit} className="relative flex items-center border-b border-white/50 pb-2 group focus-within:border-white transition-all">
-            <input
-              type="email"
-              required
-              placeholder="Enter Your E-mail"
-              className="bg-transparent border-none outline-none text-white placeholder:text-white/60 text-sm w-full py-2 italic"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            <button type="submit" className="text-white p-2" disabled={submitState === "saving"}>
-              <svg className="w-6 h-6 transform rotate-[-45deg]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </button>
+          <form onSubmit={handleNewsletterSubmit} className="space-y-5">
+            <div className="relative flex items-center border-b border-white/50 pb-2 group focus-within:border-white transition-all">
+              <input
+                type="email"
+                required
+                placeholder="Enter Your E-mail"
+                className="bg-transparent border-none outline-none text-white placeholder:text-white/60 text-sm w-full py-2 italic"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <button type="submit" className="text-white p-2 disabled:opacity-60 disabled:cursor-not-allowed" disabled={submitState === "saving"}>
+                <svg className="w-6 h-6 transform rotate-[-45deg]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </button>
+            </div>
+            <Captcha error={captchaError} onChange={(token) => {
+              setCaptchaToken(token);
+              if (token) setCaptchaError("");
+            }} />
           </form>
           {submitState === "success" ? <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-white">Subscription received. Please check your email.</p> : null}
           {submitState === "error" ? <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-white">Subscription failed. Please try again.</p> : null}

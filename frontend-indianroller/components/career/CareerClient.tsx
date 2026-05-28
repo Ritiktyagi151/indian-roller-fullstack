@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { motion, Variants, useScroll, useTransform } from "framer-motion";
 import { FaIndustry, FaCogs, FaVial, FaRocket, FaCloudUploadAlt, FaChevronRight, FaArrowRight } from "react-icons/fa";
 import api from "@/lib/axios";
+import Captcha from "@/components/Captcha";
+import { verifyCaptchaToken } from "@/lib/verifyCaptcha";
 
 // Diverse & Smooth Slide Animations
 const slideLeft: Variants = {
@@ -56,6 +58,8 @@ export default function CareerClient() {
     resumeFileName: "",
   });
   const [submitState, setSubmitState] = useState<"idle" | "saving" | "success" | "error">("idle");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
@@ -66,9 +70,23 @@ export default function CareerClient() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!captchaToken) {
+      setCaptchaError("Please complete the captcha.");
+      return;
+    }
+
     setSubmitState("saving");
+    setCaptchaError("");
 
     try {
+      const captchaVerified = await verifyCaptchaToken(captchaToken);
+      if (!captchaVerified) {
+        setCaptchaToken(null);
+        setCaptchaError("Captcha verification failed. Please try again.");
+        setSubmitState("error");
+        return;
+      }
+
       await api.post("/enquiries", {
         name: form.name,
         email: form.email,
@@ -89,6 +107,7 @@ export default function CareerClient() {
         position: "",
         resumeFileName: "",
       });
+      setCaptchaToken(null);
       setSubmitState("success");
     } catch {
       setSubmitState("error");
@@ -475,6 +494,11 @@ export default function CareerClient() {
                   }
                 />
               </motion.div>
+
+              <Captcha error={captchaError} onChange={(token) => {
+                setCaptchaToken(token);
+                if (token) setCaptchaError("");
+              }} />
                
               <motion.button 
                 type="submit"

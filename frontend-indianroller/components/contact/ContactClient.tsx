@@ -4,6 +4,8 @@ import { motion, Variants } from "framer-motion";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaIndustry, FaPaperPlane, FaBuilding, FaGlobe } from "react-icons/fa";
 import Image from "next/image";
 import api from "@/lib/axios";
+import Captcha from "@/components/Captcha";
+import { verifyCaptchaToken } from "@/lib/verifyCaptcha";
 
 // --- EXISTING ANIMATIONS ---
 const slideFromLeft: Variants = {
@@ -52,12 +54,28 @@ export default function ContactClient() {
     message: "",
   });
   const [submitState, setSubmitState] = useState<"idle" | "saving" | "success" | "error">("idle");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!captchaToken) {
+      setCaptchaError("Please complete the captcha.");
+      return;
+    }
+
     setSubmitState("saving");
+    setCaptchaError("");
 
     try {
+      const captchaVerified = await verifyCaptchaToken(captchaToken);
+      if (!captchaVerified) {
+        setCaptchaToken(null);
+        setCaptchaError("Captcha verification failed. Please try again.");
+        setSubmitState("error");
+        return;
+      }
+
       await api.post("/enquiries", {
         name: form.name,
         phone: form.phone,
@@ -74,6 +92,7 @@ export default function ContactClient() {
       });
 
       setForm({ name: "", phone: "", email: "", company: "", location: "", interest: "", quantity: "", message: "" });
+      setCaptchaToken(null);
       setSubmitState("success");
     } catch {
       setSubmitState("error");
@@ -183,8 +202,13 @@ export default function ContactClient() {
               <label className="absolute left-0 top-3 text-gray-400 transition-all peer-focus:-top-4 peer-focus:text-orange-500 peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-orange-500 peer-[:not(:placeholder-shown)]:text-[10px] uppercase font-bold tracking-widest">Specific Specifications or Notes</label>
             </div>
 
+            <Captcha error={captchaError} onChange={(token) => {
+              setCaptchaToken(token);
+              if (token) setCaptchaError("");
+            }} />
+
             <div className="grid grid-cols-1 gap-3">
-              <button type="submit" className="w-full py-4 md:py-5 bg-orange-500 font-black uppercase tracking-[3px] text-sm hover:bg-white hover:text-black transition-all duration-500 flex items-center justify-center gap-4 group">
+              <button type="submit" disabled={submitState === "saving"} className="w-full py-4 md:py-5 bg-orange-500 font-black uppercase tracking-[3px] text-sm hover:bg-white hover:text-black transition-all duration-500 flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed">
                 Send Detailed Request <FaPaperPlane className="group-hover:translate-x-2 transition-transform" />
               </button>
               <a href="/catalog.pdf" download target="_blank" rel="noreferrer noopener" className="w-full py-4 md:py-5 border border-orange-500 text-orange-500 font-black uppercase tracking-[3px] text-sm hover:bg-orange-500 hover:text-white transition-all duration-500 text-center">

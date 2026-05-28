@@ -1,5 +1,6 @@
 "use client";
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import { User } from "lucide-react";
 import Link from "next/link";
 
 type BlogCardData = {
@@ -51,9 +52,9 @@ export default function BlogCard({ blog }: { blog: BlogCardData }) {
             <img 
               src={displayImage} 
               alt={blog.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" 
+              className="w-full h-full object-fill group-hover:scale-110 transition-transform duration-700 ease-out" 
             />
-            <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full border border-white/10 z-20">
+            <div className="absolute bottom-4 right-4 bg-black backdrop-blur-md text-white text-[15px] px-3 py-1 rounded-full border border-white/10 z-20">
               {displayDate ? new Date(displayDate).toLocaleDateString() : ""}
             </div>
           </div>
@@ -64,6 +65,10 @@ export default function BlogCard({ blog }: { blog: BlogCardData }) {
               <span className="text-orange-500 font-black tracking-widest text-[10px] uppercase">
                 {blog.category}
               </span>
+              <p className="text-gray-500 text-sm flex items-center gap-1">
+  <User size={14} />
+  Admin
+</p>
             </div>
 
             <h3 className="text-xl font-black text-white leading-tight group-hover:text-orange-400 transition-colors duration-300 line-clamp-2">
