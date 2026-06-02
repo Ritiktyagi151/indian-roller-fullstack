@@ -81,8 +81,8 @@ const nextConfig: NextConfig = {
       // { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
       // { source: '/rubber-compound-EPDM', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
       
-      { source: '/products-NBR', destination: '/products-nbr', permanent: true },
-      { source: '/rubber-compound-NBR', destination: '/products-nbr', permanent: true },
+      { source: '/products-NBR', destination: '/', permanent: true },
+      { source: '/rubber-compound-NBR', destination: '/', permanent: true },
       
       { source: '/products-Hypalon', destination: '/products-hypalon-rubber-roller', permanent: true },
       { source: '/products-Hypalon-Rubber-Roller', destination: '/products-hypalon-rubber-roller', permanent: true },
