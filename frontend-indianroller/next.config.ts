@@ -78,14 +78,14 @@ const nextConfig: NextConfig = {
       // 3. PRODUCTS & RUBBER COMPOUNDS REDIRECTS
       // ==========================================
       { source: '/products-EPDM', destination: '/', permanent: true },
-      { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
+      { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/', permanent: true },
       { source: '/rubber-compound-EPDM', destination: '/', permanent: true },
       
-      { source: '/products-NBR', destination: '/', permanent: true },
+      // { source: '/products-NBR', destination: '/', permanent: true },
       { source: '/rubber-compound-NBR', destination: '/', permanent: true },  
       
       { source: '/products-Hypalon', destination: '/', permanent: true },
-      { source: '/products-Hypalon-Rubber-Roller', destination: '/products-hypalon-rubber-roller', permanent: true },
+      { source: '/products-Hypalon-Rubber-Roller', destination: '/', permanent: true },
       { source: '/rubber-compound-Hypalon', destination: '/', permanent: true },
       
       { source: '/rubber-compound-HNBR', destination: '/products-hnbr', permanent: true },
@@ -114,6 +114,27 @@ const nextConfig: NextConfig = {
       
       // FIXED: Escaped the colon (\:) so Next.js doesn't parse it as a parameter name
       { source: '/https\\:/www.indianroller.com/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
+
+
+       // ==========================================
+      // 5. NEW 404 REDIRECTS (16 URLS)
+      // ==========================================
+      { source: '/blog-detail-Miscellaneous-Rollers-Versatile-Solutions-for-Diverse-Industrial-Needs', destination: '/blogs', permanent: true },
+      { source: '/rubber-compound-Ebonite', destination: '/ebonite-rubber-roller-manufacturer', permanent: true },
+      { source: '/blog-6.php', destination: '/blogs', permanent: true },
+      { source: '/film-production', destination: '/film-manufacturer-industries', permanent: true },
+      { source: '/products-Ebonite', destination: '/ebonite-rubber-roller-manufacturer', permanent: true },
+      { source: '/blog-detail-Rollers-for-Steel-Industry-Precision-and-Strength', destination: '/blogs', permanent: true },
+      { source: '/blog-detail-Best-Squeeze-Roller-for-Industrial-Machinery', destination: '/blogs-detail-best-squeeze-roller-for-industrial-machinery', permanent: true },
+      { source: '/table-rollerconveyor-roller', destination: '/table-roller-conveyor-roller', permanent: true },
+      { source: '/hnbr-rubber', destination: '/products-hnbr', permanent: true },
+      { source: '/category/textile', destination: '/textile-industry', permanent: true },
+      { source: '/blog-detail-Enhancing-Textile-Production-with-Precision-Rollers', destination: '/blogs-detail-enhancing-textile-production-with-precision-rollers', permanent: true },
+      { source: '/silicone-rolle', destination: '/silicone-roller', permanent: true },
+      { source: '/rubber-compound-Natural-Rubber', destination: '/natural-rubber-roller-manufacturer', permanent: true },
+      { source: '/applicator-roller', destination: '/applicator-roller-manufacturer', permanent: true },
+      { source: '/products-Food-Industry', destination: '/food-industry', permanent: true },
+      { source: '/assets/pdf/indain-roller-catalogue.pdf', destination: '/', permanent: true },
     ];
   },
 };
