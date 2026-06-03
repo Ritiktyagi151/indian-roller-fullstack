@@ -77,16 +77,16 @@ const nextConfig: NextConfig = {
       // ==========================================
       // 3. PRODUCTS & RUBBER COMPOUNDS REDIRECTS
       // ==========================================
-      // { source: '/products-EPDM', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
-      // { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
-      // { source: '/rubber-compound-EPDM', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
+      { source: '/products-EPDM', destination: '/', permanent: true },
+      { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
+      { source: '/rubber-compound-EPDM', destination: '/', permanent: true },
       
       { source: '/products-NBR', destination: '/', permanent: true },
-      { source: '/rubber-compound-NBR', destination: '/', permanent: true },
+      { source: '/rubber-compound-NBR', destination: '/', permanent: true },  
       
-      { source: '/products-Hypalon', destination: '/products-hypalon-rubber-roller', permanent: true },
+      { source: '/products-Hypalon', destination: '/', permanent: true },
       { source: '/products-Hypalon-Rubber-Roller', destination: '/products-hypalon-rubber-roller', permanent: true },
-      { source: '/rubber-compound-Hypalon', destination: '/products-hypalon-rubber-roller', permanent: true },
+      { source: '/rubber-compound-Hypalon', destination: '/', permanent: true },
       
       { source: '/rubber-compound-HNBR', destination: '/products-hnbr', permanent: true },
       { source: '/products-rubber-compounds', destination: '/products-hnbr', permanent: true },
