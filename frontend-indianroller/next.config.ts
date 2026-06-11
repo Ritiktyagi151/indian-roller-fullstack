@@ -44,9 +44,13 @@ const nextConfig: NextConfig = {
       { source: '/gallery.php', destination: '/gallery', permanent: true },
       { source: '/blog-4.php', destination: '/blogs', permanent: true },
       { source: '/blog.php', destination: '/blogs', permanent: true },
+      { source: '/blog', destination: '/blogs', permanent: true },
       { source: '/index.php', destination: '/', permanent: true },
       { source: '/index', destination: '/', permanent: true },
       { source: '/applicator-roller.php', destination: '/applicator-roller-manufacturer', permanent: true },
+      { source: '/squeeze-roller.php', destination: '/squeeze-roller', permanent: true },
+      { source: '/nitrile-rubber.php', destination: '/', permanent: true },
+      { source: '/silicone-rubber.php', destination: '/silicone-roller', permanent: true },
       { source: '/digital-marketing-agency', destination: '/', permanent: true },
       { source: '/get-quote', destination: '/', permanent: true },
 
@@ -59,6 +63,7 @@ const nextConfig: NextConfig = {
       { source: '/service-Paper-And-Packaging-Industry', destination: '/paper-and-packaging-industry', permanent: true },
       { source: '/service-NBR', destination: '/products-nbr', permanent: true },
       { source: '/service-Steel-Industry', destination: '/products-steel-industry', permanent: true },
+      { source: '/service-Steel-Industries', destination: '/products-steel-industry', permanent: true },
       { source: '/service-Steel%20Industry', destination: '/products-steel-industry', permanent: true },
       { source: '/service-Ebonite', destination: '/ebonite-rubber-roller-manufacturer', permanent: true },
       { source: '/service-Food-Industry', destination: '/food-industry', permanent: true },
@@ -71,6 +76,7 @@ const nextConfig: NextConfig = {
       { source: '/service-Rexene%20Industry', destination: '/rexene-industry', permanent: true },
       { source: '/service-Turnkey-Project', destination: '/turnkey-project', permanent: true },
       { source: '/service-Turnkey%20Project', destination: '/turnkey-project', permanent: true },
+      { source: '/service-Miscellaneous-Roller', destination: '/miscellaneous-roller', permanent: true },
       { source: '/service-Biscuit-Roller', destination: '/', permanent: true },
       { source: '/service-', destination: '/', permanent: true },
 
@@ -89,6 +95,7 @@ const nextConfig: NextConfig = {
       // { source: '/rubber-compound-Hypalon', destination: '/', permanent: true },
       
       { source: '/rubber-compound-HNBR', destination: '/products-hnbr', permanent: true },
+      { source: '/products-HNBR', destination: '/products-hnbr', permanent: true },
       { source: '/products-rubber-compounds', destination: '/products-hnbr', permanent: true },
       
       { source: '/products-Steel-Industries', destination: '/products-steel-industry', permanent: true },
@@ -108,9 +115,13 @@ const nextConfig: NextConfig = {
       // 4. BLOGS & DETAIL PAGES REDIRECTS
       // ==========================================
       { source: '/blog-detail-Trusted-EPDM-rubber-roller-manufacturer-for-industrial-use', destination: '/blogs-detail-trusted-epdm-rubber-roller-manufacturer-for-industrial-use', permanent: true },
+      { source: '/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
       { source: '/blogs-applicator-roller-for-smooth-and-even-coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
+      { source: '/blog-detail-Accumulator-Roller-with-Durable-and-Strong-Build', destination: '/blogs-detail-accumulator-roller-with-durable-and-strong-build', permanent: true },
       { source: '/blog-detail-The-Impact-of-Rubber-Rollers-on-the-Rexene-Industry', destination: '/blogs-detail-the-impact-of-rubber-rollers-on-the-rexene-industry', permanent: true },
       { source: '/blog-detail-How-Industrial-Rollers-Drive-Efficiency-in-the-Steel-Industry', destination: '/blogs-detail-how-industrial-rollers-drive-efficiency-in-the-steel-industry', permanent: true },
+      { source: '/blog-detail-The-Role-of-Rubber-Compounds-in-Industrial-Rollers-Choosing-the-Right-Material-for-Your-Application', destination: '/blogs-detail-the-role-of-rubber-compounds-in-industrial-rollers-choosing-the-right-material-for-your-application', permanent: true },
+      { source: '/blog-detail-Optimizing-Packaging-Operations-with-High-Speed-Rollers', destination: '/blogs-detail-optimizing-packaging-operations-with-high-speed-rollers', permanent: true },
       
       // FIXED: Escaped the colon (\:) so Next.js doesn't parse it as a parameter name
       { source: '/https\\:/www.indianroller.com/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
