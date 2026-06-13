@@ -21,30 +21,6 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
-
-  // FIXED: CSP headers added to allow Google Fonts, GTM, reCAPTCHA
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "frame-src 'self' https://www.google.com",
-              "img-src 'self' data: https:",
-              "connect-src 'self'",
-            ].join('; '),
-          },
-        ],
-      },
-    ];
-  },
-
   async rewrites() {
     return [
       {
@@ -57,7 +33,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
   async redirects() {
     return [
       // ==========================================
@@ -119,11 +94,9 @@ const nextConfig: NextConfig = {
       // { source: '/products-Hypalon-Rubber-Roller', destination: '/products-hypalon-rubber-roller', permanent: true },
       // { source: '/rubber-compound-Hypalon', destination: '/', permanent: true },
       
-      // TEMPORARILY COMMENTED: /products-hnbr page does not exist yet — will cause redirect loop
       // { source: '/rubber-compound-HNBR', destination: '/products-hnbr', permanent: true },
       // { source: '/products-HNBR', destination: '/products-hnbr', permanent: true },
       // { source: '/products-rubber-compounds', destination: '/products-hnbr', permanent: true },
-      // { source: '/hnbr-rubber', destination: '/products-hnbr', permanent: true },
       
       { source: '/products-Steel-Industries', destination: '/products-steel-industry', permanent: true },
       { source: '/accumulator-roller', destination: '/accumulator-roller-manufacturer', permanent: true },
@@ -153,7 +126,8 @@ const nextConfig: NextConfig = {
       // FIXED: Escaped the colon (\:) so Next.js doesn't parse it as a parameter name
       { source: '/https\\:/www.indianroller.com/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
 
-      // ==========================================
+
+       // ==========================================
       // 5. NEW 404 REDIRECTS (16 URLS)
       // ==========================================
       { source: '/blog-detail-Miscellaneous-Rollers-Versatile-Solutions-for-Diverse-Industrial-Needs', destination: '/blogs', permanent: true },
@@ -164,7 +138,6 @@ const nextConfig: NextConfig = {
       { source: '/blog-detail-Rollers-for-Steel-Industry-Precision-and-Strength', destination: '/blogs', permanent: true },
       { source: '/blog-detail-Best-Squeeze-Roller-for-Industrial-Machinery', destination: '/blogs-detail-best-squeeze-roller-for-industrial-machinery', permanent: true },
       { source: '/table-rollerconveyor-roller', destination: '/table-roller-conveyor-roller', permanent: true },
-      // TEMPORARILY COMMENTED: /products-hnbr page does not exist yet
       // { source: '/hnbr-rubber', destination: '/products-hnbr', permanent: true },
       { source: '/category/textile', destination: '/textile-industry', permanent: true },
       { source: '/blog-detail-Enhancing-Textile-Production-with-Precision-Rollers', destination: '/blogs-detail-enhancing-textile-production-with-precision-rollers', permanent: true },
