@@ -203,7 +203,7 @@ const Navbar = () => {
             <Link href="tel:+911234567890" className="flex items-center gap-2 hover:text-orange-500 transition"><FaPhoneAlt className="text-orange-500" />+91-9811885000</Link>
             <Link href="mailto:info@indianroller.com" className="flex items-center gap-2 hover:text-orange-500 transition"><FaEnvelope className="text-orange-500" /> info@indianroller.com</Link>
           </div>
-          <div className="flex gap-5 text-l
+          <div className="flex gap-5 text-lg">
             <Link href="https://www.facebook.com/indianrollerspvtltd/" target="_blank"><FaFacebookF className="text-[#1877F2] hover:opacity-80 transition-opacity cursor-pointer" /></Link>
             <Link href="https://www.linkedin.com/company/indian-roller-pvt-ltd/" target="_blank"><FaLinkedinIn className="text-[#0A66C2] hover:opacity-80 transition-opacity cursor-pointer" /></Link>
             <Link href="https://www.youtube.com/channel/UC45R-UyW2EaimlwLGIVWl-Q" target="_blank"><FaYoutube className="text-[#FF0000] hover:opacity-80 transition-opacity cursor-pointer" /></Link>

@@ -1,13 +1,7 @@
-import { Geist } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactWidget from "@/components/ContactWidget";
-
-const geistSans = Geist({ 
-  subsets: ["latin"],
-  display: 'swap', // Font loading behaviour improve karne ke liye
-});
 
 export default function RootLayout({
   children,
@@ -17,7 +11,7 @@ export default function RootLayout({
   return (
     // suppressHydrationWarning yahan zaroori hai taaki browser extensions error na dein
     <div 
-      className={`${geistSans.className} antialiased bg-white text-black`}
+      className="font-sans antialiased bg-white text-black"
       suppressHydrationWarning
     >
       <Navbar />
