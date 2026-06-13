@@ -1,10 +1,10 @@
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   htmlLimitedBots: /.*/,
-  
-  // FIXED: Deprecation warning fixed by using remotePatterns
+
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'picsum.photos' },
@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'media.istockphoto.com' },
     ],
   },
-  
+
   webpack: (config) => {
     config.snapshot = {
       ...(config.snapshot || {}),
@@ -21,6 +21,45 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "frame-src 'self' https://www.google.com",
+              "img-src 'self' data: https:",
+              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.google.com https://stats.g.doubleclick.net",
+            ].join('; '),
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
+  },
+
   async rewrites() {
     return [
       {
@@ -33,11 +72,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
   async redirects() {
     return [
-      // ==========================================
-      // 1. PHP & BASE PAGES REDIRECTS
-      // ==========================================
       { source: '/contact.php', destination: '/contact', permanent: true },
       { source: '/career.php', destination: '/career', permanent: true },
       { source: '/about.php', destination: '/about', permanent: true },
@@ -53,13 +90,7 @@ const nextConfig: NextConfig = {
       { source: '/silicone-rubber.php', destination: '/silicone-roller', permanent: true },
       { source: '/digital-marketing-agency', destination: '/', permanent: true },
       { source: '/get-quote', destination: '/', permanent: true },
-
-      // Tracking param
       { source: '/', has: [{ type: 'query', key: 'trk', value: 'public_post-text' }], destination: '/', permanent: true },
-
-      // ==========================================
-      // 2. SERVICE PAGES (HYPHEN / SPACES / MISC)
-      // ==========================================
       { source: '/service-Paper-And-Packaging-Industry', destination: '/paper-and-packaging-industry', permanent: true },
       { source: '/service-NBR', destination: '/products-nbr', permanent: true },
       { source: '/service-Steel-Industry', destination: '/products-steel-industry', permanent: true },
@@ -79,25 +110,12 @@ const nextConfig: NextConfig = {
       { source: '/service-Miscellaneous-Roller', destination: '/miscellaneous-roller', permanent: true },
       { source: '/service-Biscuit-Roller', destination: '/', permanent: true },
       { source: '/service-', destination: '/', permanent: true },
-
-      // ==========================================
-      // 3. PRODUCTS & RUBBER COMPOUNDS REDIRECTS
-      // ==========================================
-      // { source: '/products-EPDM', destination: '/', permanent: true },
-      // { source: '/products-EPDM-Rubber-Roller-Manufacturer', destination: '/products-epdm-rubber-roller-manufacturer', permanent: true },
-      // { source: '/rubber-compound-EPDM', destination: '/', permanent: true },
-      
-      // { source: '/products-NBR', destination: '/', permanent: true },
-      { source: '/rubber-compound-NBR', destination: '/', permanent: true },  
-      
-      // { source: '/products-Hypalon', destination: '/', permanent: true },
-      // { source: '/products-Hypalon-Rubber-Roller', destination: '/products-hypalon-rubber-roller', permanent: true },
-      // { source: '/rubber-compound-Hypalon', destination: '/', permanent: true },
-      
+      { source: '/rubber-compound-NBR', destination: '/', permanent: true },
+      // TEMPORARILY COMMENTED: /products-hnbr page does not exist yet
       // { source: '/rubber-compound-HNBR', destination: '/products-hnbr', permanent: true },
       // { source: '/products-HNBR', destination: '/products-hnbr', permanent: true },
       // { source: '/products-rubber-compounds', destination: '/products-hnbr', permanent: true },
-      
+      // { source: '/hnbr-rubber', destination: '/products-hnbr', permanent: true },
       { source: '/products-Steel-Industries', destination: '/products-steel-industry', permanent: true },
       { source: '/accumulator-roller', destination: '/accumulator-roller-manufacturer', permanent: true },
       { source: '/products-Plywood-Industry', destination: '/plywood-industry', permanent: true },
@@ -110,10 +128,6 @@ const nextConfig: NextConfig = {
       { source: '/rubber-compound-Polyurethane-Rubber', destination: '/polyurethane-roller', permanent: true },
       { source: '/products-Rexene-Industry', destination: '/rexene-industry', permanent: true },
       { source: '/products-Silicone-Rubber', destination: '/silicone-roller', permanent: true },
-
-      // ==========================================
-      // 4. BLOGS & DETAIL PAGES REDIRECTS
-      // ==========================================
       { source: '/blog-detail-Trusted-EPDM-rubber-roller-manufacturer-for-industrial-use', destination: '/blogs-detail-trusted-epdm-rubber-roller-manufacturer-for-industrial-use', permanent: true },
       { source: '/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
       { source: '/blogs-applicator-roller-for-smooth-and-even-coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
@@ -122,14 +136,7 @@ const nextConfig: NextConfig = {
       { source: '/blog-detail-How-Industrial-Rollers-Drive-Efficiency-in-the-Steel-Industry', destination: '/blogs-detail-how-industrial-rollers-drive-efficiency-in-the-steel-industry', permanent: true },
       { source: '/blog-detail-The-Role-of-Rubber-Compounds-in-Industrial-Rollers-Choosing-the-Right-Material-for-Your-Application', destination: '/blogs-detail-the-role-of-rubber-compounds-in-industrial-rollers-choosing-the-right-material-for-your-application', permanent: true },
       { source: '/blog-detail-Optimizing-Packaging-Operations-with-High-Speed-Rollers', destination: '/blogs-detail-optimizing-packaging-operations-with-high-speed-rollers', permanent: true },
-      
-      // FIXED: Escaped the colon (\:) so Next.js doesn't parse it as a parameter name
       { source: '/https\\:/www.indianroller.com/blog-detail-Applicator-Roller-for-Smooth-and-Even-Coating', destination: '/blogs-detail-applicator-roller-for-smooth-and-even-coating', permanent: true },
-
-
-       // ==========================================
-      // 5. NEW 404 REDIRECTS (16 URLS)
-      // ==========================================
       { source: '/blog-detail-Miscellaneous-Rollers-Versatile-Solutions-for-Diverse-Industrial-Needs', destination: '/blogs', permanent: true },
       { source: '/rubber-compound-Ebonite', destination: '/ebonite-rubber-roller-manufacturer', permanent: true },
       { source: '/blog-6.php', destination: '/blogs', permanent: true },
@@ -138,7 +145,6 @@ const nextConfig: NextConfig = {
       { source: '/blog-detail-Rollers-for-Steel-Industry-Precision-and-Strength', destination: '/blogs', permanent: true },
       { source: '/blog-detail-Best-Squeeze-Roller-for-Industrial-Machinery', destination: '/blogs-detail-best-squeeze-roller-for-industrial-machinery', permanent: true },
       { source: '/table-rollerconveyor-roller', destination: '/table-roller-conveyor-roller', permanent: true },
-      // { source: '/hnbr-rubber', destination: '/products-hnbr', permanent: true },
       { source: '/category/textile', destination: '/textile-industry', permanent: true },
       { source: '/blog-detail-Enhancing-Textile-Production-with-Precision-Rollers', destination: '/blogs-detail-enhancing-textile-production-with-precision-rollers', permanent: true },
       { source: '/silicone-rolle', destination: '/silicone-roller', permanent: true },
