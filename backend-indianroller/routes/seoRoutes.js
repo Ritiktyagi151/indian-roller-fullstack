@@ -12,6 +12,7 @@ const {
   createRedirect,
   deleteRedirect,
   getSitemap,
+  generateSitemap,
   getAudit,
 } = require("../controllers/seoController");
 
@@ -25,6 +26,7 @@ router.get("/redirects", getRedirects);
 router.post("/redirects", createRedirect);
 router.delete("/redirects/:id", deleteRedirect);
 router.get("/sitemap", getSitemap);
+router.post("/sitemap/generate", generateSitemap);
 router.get("/audit", getAudit);
 
 module.exports = router;

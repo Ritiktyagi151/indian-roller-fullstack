@@ -55,6 +55,7 @@ export default function ApiSeoPanel({ initialSection }: Props) {
   const [redirectForm, setRedirectForm] = useState({ from: "", to: "", type: "301" as "301" | "302" });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [sitemapGenerating, setSitemapGenerating] = useState(false);
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const [activeSection, setActiveSection] = useState(initialSection);
 
@@ -272,6 +273,20 @@ export default function ApiSeoPanel({ initialSection }: Props) {
     }
   }
 
+  async function generateSitemap() {
+    setSitemapGenerating(true);
+    try {
+      const sitemapRes = await api.post("/seo/sitemap/generate");
+      setSitemap(sitemapRes.data || sitemap);
+      pushToast("Sitemap generated", "Public sitemap.xml has been updated from the admin panel.", "success");
+    } catch (error) {
+      console.error(error);
+      pushToast("Sitemap failed", "The sitemap could not be generated.", "warning");
+    } finally {
+      setSitemapGenerating(false);
+    }
+  }
+
   function downloadSitemap() {
     const blob = new Blob([sitemap.xml], { type: "application/xml" });
     const url = window.URL.createObjectURL(blob);
@@ -280,6 +295,17 @@ export default function ApiSeoPanel({ initialSection }: Props) {
     anchor.download = "sitemap.xml";
     anchor.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  function formatSitemapDate(value: string) {
+    if (!value) {
+      return "-";
+    }
+
+    return new Intl.DateTimeFormat("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(value));
   }
 
   function updateSelectedPage<K extends keyof SeoPage>(field: K, value: SeoPage[K]) {
@@ -461,9 +487,30 @@ export default function ApiSeoPanel({ initialSection }: Props) {
         <section className="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
           <div className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Sitemap manager</p>
-            <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">Last generated: {sitemap.lastGenerated || "-"}</p>
+            <h3 className="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Generate public sitemap.xml</h3>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Total URLs</p>
+                <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">{sitemap.totalUrlCount ?? pages.length}</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Indexable URLs</p>
+                <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">{sitemap.indexableUrlCount ?? 0}</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">In Sitemap</p>
+                <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">{sitemap.includedUrlCount ?? 0}</p>
+              </div>
+            </div>
+            <div className="mt-5 rounded-2xl border border-slate-200 px-4 py-4 text-sm text-slate-600 dark:border-slate-800 dark:text-slate-300">
+              <p>Last generated: {formatSitemapDate(sitemap.lastGenerated)}</p>
+              <p className="mt-2 break-all">Public URL: {sitemap.publicUrl || "/sitemap.xml"}</p>
+            </div>
             <div className="mt-6 grid gap-3">
-              <button type="button" onClick={refreshSitemap} className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white dark:bg-orange-500">Generate Sitemap</button>
+              <button type="button" onClick={generateSitemap} disabled={sitemapGenerating} className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60 dark:bg-orange-500">
+                {sitemapGenerating ? "Generating..." : "Generate / Update Sitemap"}
+              </button>
+              <button type="button" onClick={refreshSitemap} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium dark:border-slate-800">Refresh Status</button>
               <button type="button" onClick={downloadSitemap} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium dark:border-slate-800"><Download className="mr-2 inline h-4 w-4" />Download sitemap.xml</button>
               <button type="button" onClick={refreshSitemap} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium dark:border-slate-800"><ArrowLeftRight className="mr-2 inline h-4 w-4" />Ping Search Engines</button>
             </div>

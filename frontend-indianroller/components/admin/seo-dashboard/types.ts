@@ -111,6 +111,12 @@ export type SitemapState = {
   lastGenerated: string;
   autoGenerate: boolean;
   xml: string;
+  totalUrlCount?: number;
+  availableUrlCount?: number;
+  indexableUrlCount?: number;
+  includedUrlCount?: number;
+  publicUrl?: string;
+  sitemapPath?: string;
 };
 
 export type RedirectRule = {

@@ -4,6 +4,13 @@ const Product = require("../models/Product");
 const Redirect = require("../models/Redirect");
 const SeoEntry = require("../models/SeoEntry");
 const SeoSettings = require("../models/SeoSettings");
+const fs = require("fs/promises");
+const path = require("path");
+
+const sitemapFilePath = path.resolve(
+  __dirname,
+  "../../frontend-indianroller/public/sitemap.xml",
+);
 
 const staticPages = [
   {
@@ -47,6 +54,13 @@ const staticPages = [
     entityId: "products",
     name: "Products",
     url: "/products",
+  },
+  {
+    pageKey: "static:gallery",
+    entityType: "static",
+    entityId: "gallery",
+    name: "Gallery",
+    url: "/gallery",
   },
 ];
 
@@ -242,6 +256,117 @@ async function getMergedPages() {
   };
 }
 
+function getSiteUrl(settings) {
+  return (
+    settings.siteUrl ||
+    settings.organizationUrl ||
+    "https://indianroller.com"
+  ).replace(/\/+$/, "");
+}
+
+function escapeXml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function shouldIncludeInSitemap(page) {
+  const robots = String(page.robots || "").toLowerCase();
+  return (
+    page.includeInSitemap !== false &&
+    page.isIndexed !== false &&
+    page.indexed !== false &&
+    !robots.includes("noindex")
+  );
+}
+
+function createSitemapXml(settings, pages, generatedAt = new Date()) {
+  const siteUrl = getSiteUrl(settings);
+  const lastmod = generatedAt.toISOString();
+  const entries = pages
+    .map((page) => {
+      const changefreq = page.sitemapChangefreq || "weekly";
+      const priority = Number.isFinite(Number(page.sitemapPriority))
+        ? Number(page.sitemapPriority)
+        : 0.5;
+
+      return `  <url>
+    <loc>${escapeXml(`${siteUrl}${page.url}`)}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${escapeXml(changefreq)}</changefreq>
+    <priority>${priority.toFixed(1)}</priority>
+  </url>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</urlset>`;
+}
+
+async function readGeneratedSitemapStats() {
+  try {
+    const [xml, stats] = await Promise.all([
+      fs.readFile(sitemapFilePath, "utf8"),
+      fs.stat(sitemapFilePath),
+    ]);
+
+    return {
+      xml,
+      includedUrlCount: (xml.match(/<url>/g) || []).length,
+      lastGenerated: stats.mtime.toISOString(),
+      sitemapPath: sitemapFilePath,
+    };
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+
+    return {
+      xml: "",
+      includedUrlCount: 0,
+      lastGenerated: "",
+      sitemapPath: sitemapFilePath,
+    };
+  }
+}
+
+async function buildSitemapState({ writeFile = false } = {}) {
+  const { settings, pages } = await getMergedPages();
+  const sitemapPages = pages.filter(shouldIncludeInSitemap);
+  const generatedAt = new Date();
+  const xml = createSitemapXml(settings, sitemapPages, generatedAt);
+
+  if (writeFile) {
+    await fs.writeFile(sitemapFilePath, xml, "utf8");
+  }
+
+  const generatedStats = writeFile
+    ? {
+        xml,
+        includedUrlCount: sitemapPages.length,
+        lastGenerated: generatedAt.toISOString(),
+        sitemapPath: sitemapFilePath,
+      }
+    : await readGeneratedSitemapStats();
+
+  return {
+    lastGenerated: generatedStats.lastGenerated,
+    autoGenerate: true,
+    xml: generatedStats.xml || xml,
+    totalUrlCount: pages.length,
+    availableUrlCount: pages.length,
+    indexableUrlCount: sitemapPages.length,
+    includedUrlCount: generatedStats.includedUrlCount,
+    sitemapPath: generatedStats.sitemapPath,
+    publicUrl: `${getSiteUrl(settings)}/sitemap.xml`,
+  };
+}
+
 async function resolveDefinition(entityType, id) {
   const definitions = await getPageDefinitions();
   return definitions.find(
@@ -429,18 +554,19 @@ exports.deleteRedirect = async (req, res) => {
 
 exports.getSitemap = async (req, res) => {
   try {
-    const { settings, pages } = await getMergedPages();
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
-      .map(
-        (page) =>
-          `  <url>\n    <loc>${settings.organizationUrl || "https://indianroller.com"}${page.url}</loc>\n    <lastmod>${new Date(page.updatedAt).toISOString()}</lastmod>\n  </url>`,
-      )
-      .join("\n")}\n</urlset>`;
+    const sitemap = await buildSitemapState();
+    res.json(sitemap);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+exports.generateSitemap = async (req, res) => {
+  try {
+    const sitemap = await buildSitemapState({ writeFile: true });
     res.json({
-      lastGenerated: new Date().toISOString(),
-      autoGenerate: true,
-      xml,
+      ...sitemap,
+      message: "Sitemap generated successfully",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

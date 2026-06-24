@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "frame-src 'self' https://www.google.com",
               "img-src 'self' data: https:",
-              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.google.com https://stats.g.doubleclick.net",
+              "connect-src 'self' http://localhost:5000 http://127.0.0.1:5000 https://api.indianroller.com https://www.google-analytics.com https://analytics.google.com https://www.google.com https://stats.g.doubleclick.net",
             ].join('; '),
           },
           {
