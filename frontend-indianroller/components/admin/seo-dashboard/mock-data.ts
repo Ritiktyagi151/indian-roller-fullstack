@@ -158,7 +158,7 @@ export const initialGlobalSettings: GlobalSettings = {
   googleVerification: "google-site-verification=indianroller123456",
   schemaType: "Organization",
   organizationName: "Indian Roller",
-  organizationUrl: "https://indianroller.com",
+  organizationUrl: "https://www.indianroller.com",
   robotsDefault: "index, follow",
   navbarProductDropdownLimit: 8,
 };

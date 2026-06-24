@@ -29,7 +29,7 @@ const seoSettingsSchema = new mongoose.Schema(
     facebookPixelId: { type: String, default: "" },
     robotsTxt: { type: String, default: "" },
     htaccessRedirects: { type: String, default: "" },
-    siteUrl: { type: String, default: "https://indianroller.com" },
+    siteUrl: { type: String, default: "https://www.indianroller.com" },
     googleVerification: { type: String, default: "" },
     schemaType: { type: String, default: "Organization" },
     organizationName: { type: String, default: "" },

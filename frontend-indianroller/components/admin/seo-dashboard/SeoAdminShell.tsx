@@ -88,7 +88,7 @@ function createSitemapXml(pages: SeoPage[]) {
   const entries = pages
     .map(
       (page) => `  <url>
-    <loc>https://indianroller.com${page.url}</loc>
+    <loc>https://www.indianroller.com${page.url}</loc>
     <lastmod>${new Date(page.updatedAt).toISOString()}</lastmod>
     <changefreq>${page.status === "complete" ? "weekly" : "monthly"}</changefreq>
   </url>`,
@@ -400,7 +400,7 @@ export default function SeoAdminShell({
         metaTitle: "",
         metaDescription: "",
         keywords: "",
-        canonicalUrl: `https://indianroller.com${nextUrl}`,
+        canonicalUrl: `https://www.indianroller.com${nextUrl}`,
         robots: globalSettings.robotsDefault,
         openGraphTitle: "",
         openGraphDescription: "",

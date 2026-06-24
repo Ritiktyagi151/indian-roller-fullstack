@@ -11,6 +11,7 @@ const sitemapFilePath = path.resolve(
   __dirname,
   "../../frontend-indianroller/public/sitemap.xml",
 );
+const canonicalSiteUrl = "https://www.indianroller.com";
 
 const staticPages = [
   {
@@ -95,13 +96,13 @@ async function getSettings() {
       baiduVerificationCode: "",
       facebookPixelId: "",
       robotsTxt:
-        "User-agent: *\nAllow: /\nSitemap: https://indianroller.com/sitemap.xml",
+        `User-agent: *\nAllow: /\nSitemap: ${canonicalSiteUrl}/sitemap.xml`,
       htaccessRedirects: "",
-      siteUrl: "https://indianroller.com",
+      siteUrl: canonicalSiteUrl,
       googleVerification: "",
       schemaType: "Organization",
       organizationName: "Indian Roller",
-      organizationUrl: "https://indianroller.com",
+      organizationUrl: canonicalSiteUrl,
       robotsDefault: "index, follow",
       navbarProductDropdownLimit: 8,
     });
@@ -174,7 +175,7 @@ function mergeSeo(definition, entry, settings) {
   const metaDescription = entry?.metaDescription || "";
   const canonicalUrl =
     entry?.canonicalUrl ||
-    `${settings.organizationUrl || "https://indianroller.com"}${definition.url}`;
+    `${settings.organizationUrl || canonicalSiteUrl}${definition.url}`;
 
   return {
     id: definition.id,
@@ -257,11 +258,16 @@ async function getMergedPages() {
 }
 
 function getSiteUrl(settings) {
-  return (
+  const siteUrl = (
     settings.siteUrl ||
     settings.organizationUrl ||
-    "https://indianroller.com"
+    canonicalSiteUrl
   ).replace(/\/+$/, "");
+
+  return siteUrl.replace(
+    /^https?:\/\/indianroller\.com$/i,
+    canonicalSiteUrl,
+  );
 }
 
 function escapeXml(value) {
