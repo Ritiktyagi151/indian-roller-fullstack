@@ -16,49 +16,25 @@ type Enquiry = {
   createdAt: string;
 };
 
-const dummyEnquiries: Enquiry[] = [
-  {
-    _id: "dummy-1",
-    sourceType: "contact",
-    formName: "Contact Form",
-    name: "Rahul Verma",
-    email: "rahul@example.com",
-    phone: "+91-9000000001",
-    message: "Need rubber rollers for a paper line upgrade.",
-    status: "unread",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    _id: "dummy-2",
-    sourceType: "website-form",
-    formName: "Product Enquiry Form",
-    name: "Meera Singh",
-    email: "meera@example.com",
-    phone: "+91-9000000002",
-    message: "Please share a catalog and pricing for textile rollers.",
-    status: "read",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-];
-
 type EnquiriesManagerProps = {
   initialTab: "contact" | "forms";
 };
 
 export default function EnquiriesManager({ initialTab }: EnquiriesManagerProps) {
   const [activeTab, setActiveTab] = useState(initialTab);
-  const [enquiries, setEnquiries] = useState<Enquiry[]>(dummyEnquiries);
+  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
+  const [error, setError] = useState("");
   const [selected, setSelected] = useState<Enquiry | null>(null);
 
   useEffect(() => {
     async function load() {
       try {
         const response = await api.get("/enquiries");
-        if (Array.isArray(response.data) && response.data.length) {
+        if (Array.isArray(response.data)) {
           setEnquiries(response.data);
         }
       } catch {
-        setEnquiries(dummyEnquiries);
+        setError("Could not load enquiries. Please refresh and try again.");
       }
     }
 
@@ -84,10 +60,14 @@ export default function EnquiriesManager({ initialTab }: EnquiriesManagerProps) 
   }
 
   async function deleteEnquiry(id: string) {
-    setEnquiries((current) => current.filter((enquiry) => enquiry._id !== id));
+    setError("");
     try {
       await api.delete(`/enquiries/${id}`);
-    } catch {}
+      setEnquiries((current) => current.filter((enquiry) => enquiry._id !== id));
+      setSelected((current) => current?._id === id ? null : current);
+    } catch {
+      setError("Enquiry could not be moved to Trash. Please try again.");
+    }
   }
 
   function exportCsv() {
@@ -155,6 +135,7 @@ export default function EnquiriesManager({ initialTab }: EnquiriesManagerProps) 
         </button>
       </div>
 
+      {error && <p role="alert" className="rounded-xl bg-rose-50 p-4 text-rose-700 dark:bg-rose-950 dark:text-rose-300">{error}</p>}
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <section className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="space-y-3">

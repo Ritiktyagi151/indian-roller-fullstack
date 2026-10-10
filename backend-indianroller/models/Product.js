@@ -92,4 +92,6 @@ const productSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+productSchema.plugin(require("./plugins/trash"));
+
 module.exports = mongoose.model("Product", productSchema);

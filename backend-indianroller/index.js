@@ -33,6 +33,7 @@ mongoose
     console.error("MongoDB Connection Failed:", err.message);
   });
 
+app.use("/api/trash", require("./routes/trashRoutes"));
 app.use("/api/blogs", blogRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);

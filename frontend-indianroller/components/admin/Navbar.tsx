@@ -12,6 +12,7 @@ const pageTitles = {
   "/admin/seo": "SEO Management",
   "/admin/enquiries": "Enquiries",
   "/admin/settings": "Settings",
+  "/admin/trash": "Trash",
   "/admin/blogs": "Blogs",
   "/admin/seo/dashboard": "SEO Dashboard",
   "/admin/seo/pages": "Pages Manager",

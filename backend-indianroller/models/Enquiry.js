@@ -41,4 +41,6 @@ const enquirySchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+enquirySchema.plugin(require("./plugins/trash"));
+
 module.exports = mongoose.model("Enquiry", enquirySchema);

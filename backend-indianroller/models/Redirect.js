@@ -10,4 +10,6 @@ const redirectSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+redirectSchema.plugin(require("./plugins/trash"));
+
 module.exports = mongoose.model("Redirect", redirectSchema);

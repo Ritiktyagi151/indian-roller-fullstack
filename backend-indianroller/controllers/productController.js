@@ -43,13 +43,13 @@ async function ensureSlugAvailable(slug, productId) {
   const productConflict = await Product.findOne({
     slug,
     ...(productId ? { _id: { $ne: productId } } : {}),
-  }).select("_id");
+  }).setOptions({ includeDeleted: true }).select("_id");
   if (productConflict)
-    throw new Error("This slug is already in use by another product.");
+    throw new Error("This slug is reserved by a product, including items in Trash.");
 
-  const categoryConflict = await Category.findOne({ slug }).select("_id");
+  const categoryConflict = await Category.findOne({ slug }).setOptions({ includeDeleted: true }).select("_id");
   if (categoryConflict)
-    throw new Error("This slug is already in use by a category.");
+    throw new Error("This slug is reserved by a category, including items in Trash.");
 }
 
 function normalizeProductData(body, files) {
@@ -262,10 +262,10 @@ exports.updateProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
   try {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    const deletedProduct = await Product.moveToTrash({ _id: req.params.id });
     if (!deletedProduct)
       return res.status(404).json({ message: "Product not found" });
-    res.json({ message: "Product deleted successfully" });
+    res.json({ message: "Product moved to Trash" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

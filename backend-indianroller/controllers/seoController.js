@@ -446,6 +446,9 @@ exports.updateSeoPage = async (req, res) => {
       notes: req.body.notes || "",
     };
 
+    const trashedEntry = await SeoEntry.findOne({ pageKey: definition.pageKey, deletedAt: { $ne: null } }).setOptions({ includeDeleted: true });
+    if (trashedEntry) return res.status(409).json({ message: "Restore or permanently delete this SEO entry from Trash before saving new tags." });
+
     const entry = await SeoEntry.findOneAndUpdate(
       { pageKey: definition.pageKey },
       payload,
@@ -472,8 +475,8 @@ exports.deleteSeoPage = async (req, res) => {
       return res.status(404).json({ message: "SEO page not found" });
     }
 
-    await SeoEntry.findOneAndDelete({ pageKey: definition.pageKey });
-    res.json({ message: "SEO entry deleted successfully" });
+    await SeoEntry.moveToTrash({ pageKey: definition.pageKey });
+    res.json({ message: "SEO entry moved to Trash" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -548,11 +551,11 @@ exports.createRedirect = async (req, res) => {
 
 exports.deleteRedirect = async (req, res) => {
   try {
-    const redirect = await Redirect.findByIdAndDelete(req.params.id);
+    const redirect = await Redirect.moveToTrash({ _id: req.params.id });
     if (!redirect) {
       return res.status(404).json({ message: "Redirect not found" });
     }
-    res.json({ message: "Redirect deleted successfully" });
+    res.json({ message: "Redirect moved to Trash" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -15,4 +15,6 @@ const BlogSchema = new mongoose.Schema({
   status: { type: String, enum: ['Published', 'Draft'], default: 'Published' },
 }, { timestamps: true });
 
+BlogSchema.plugin(require("./plugins/trash"));
+
 module.exports = mongoose.model('Blog', BlogSchema);

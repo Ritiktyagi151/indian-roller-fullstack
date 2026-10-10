@@ -201,7 +201,7 @@ export default function ApiSeoPanel({ initialSection }: Props) {
 
     try {
       await api.delete(`/seo/pages/${selectedPage.entityType}/${selectedPage.id}`);
-      pushToast("SEO tags removed", "Custom SEO tags were deleted for this page.", "success");
+      pushToast("SEO tags removed", "Custom SEO tags were moved to Trash for this page.", "success");
       await loadAll();
     } catch (error) {
       console.error(error);
@@ -243,7 +243,7 @@ export default function ApiSeoPanel({ initialSection }: Props) {
   async function removeRedirect(id: string) {
     try {
       await api.delete(`/seo/redirects/${id}`);
-      pushToast("Redirect removed", "The redirect rule was deleted.", "success");
+      pushToast("Redirect removed", "The redirect rule was moved to Trash.", "success");
       await loadAll();
     } catch (error) {
       console.error(error);

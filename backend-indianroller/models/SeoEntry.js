@@ -201,4 +201,6 @@ const seoEntrySchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+seoEntrySchema.plugin(require("./plugins/trash"));
+
 module.exports = mongoose.model("SeoEntry", seoEntrySchema);

@@ -444,7 +444,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
   async function removeCategory(id: string) {
     try {
       await api.delete(`/categories/${id}`);
-      setMessage("Category deleted.");
+      setMessage("Category moved to Trash.");
       await loadData();
     } catch (deleteError) {
       console.error(deleteError);
@@ -455,7 +455,7 @@ export default function ApiProductsManager({ initialTab }: Props) {
   async function removeProduct(id: string) {
     try {
       await api.delete(`/products/${id}`);
-      setMessage("Product deleted.");
+      setMessage("Product moved to Trash.");
       await loadData();
     } catch (deleteError) {
       console.error(deleteError);

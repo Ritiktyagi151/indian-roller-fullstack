@@ -47,4 +47,6 @@ const categorySchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+categorySchema.plugin(require("./plugins/trash"));
+
 module.exports = mongoose.model("Category", categorySchema);

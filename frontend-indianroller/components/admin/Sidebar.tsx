@@ -14,6 +14,7 @@ import {
   Settings2,
   ShieldCheck,
   SquareLibrary,
+  Trash2,
   UserCog,
 } from "lucide-react";
 import Link from "next/link";
@@ -59,6 +60,7 @@ const navGroups = [
   {
     title: "Settings",
     items: [
+      { label: "Trash", href: "/admin/trash", icon: Trash2 },
       { label: "Admin Profile", href: "/admin/settings?tab=profile", icon: UserCog },
       { label: "Role Permissions", href: "/admin/settings?tab=roles", icon: ShieldCheck },
     ],

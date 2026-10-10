@@ -72,13 +72,13 @@ exports.updateEnquiry = async (req, res) => {
 
 exports.deleteEnquiry = async (req, res) => {
   try {
-    const enquiry = await Enquiry.findByIdAndDelete(req.params.id);
+    const enquiry = await Enquiry.moveToTrash({ _id: req.params.id });
 
     if (!enquiry) {
       return res.status(404).json({ message: "Enquiry not found" });
     }
 
-    res.json({ message: "Enquiry deleted successfully" });
+    res.json({ message: "Enquiry moved to Trash" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -140,7 +140,7 @@ export default function ApiBlogsManager() {
   async function deleteBlog(id: string) {
     try {
       await api.delete(`/blogs/${id}`);
-      setMessage("Blog deleted.");
+      setMessage("Blog moved to Trash.");
       await loadData();
     } catch (deleteError) {
       console.error(deleteError);

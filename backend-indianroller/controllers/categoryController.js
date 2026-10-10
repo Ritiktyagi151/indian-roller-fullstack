@@ -25,15 +25,15 @@ async function ensureSlugAvailable(slug, categoryId) {
   const categoryConflict = await Category.findOne({
     slug,
     ...(categoryId ? { _id: { $ne: categoryId } } : {}),
-  }).select("_id");
+  }).setOptions({ includeDeleted: true }).select("_id");
 
   if (categoryConflict) {
-    throw new Error("This slug is already in use by another category.");
+    throw new Error("This slug is reserved by a category, including items in Trash.");
   }
 
-  const productConflict = await Product.findOne({ slug }).select("_id");
+  const productConflict = await Product.findOne({ slug }).setOptions({ includeDeleted: true }).select("_id");
   if (productConflict) {
-    throw new Error("This slug is already in use by a product.");
+    throw new Error("This slug is reserved by a product, including items in Trash.");
   }
 }
 
@@ -283,16 +283,13 @@ exports.updateNavbarOrder = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const category = await Category.findByIdAndDelete(id);
+    const category = await Category.moveToTrash({ _id: id });
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    removeLocalUpload(category.image);
-    removeLocalUpload(category.banner?.desktop);
-    removeLocalUpload(category.banner?.mobile);
 
-    res.json({ message: "Deleted successfully" });
+    res.json({ message: "Moved to Trash" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
